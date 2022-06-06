@@ -24,9 +24,8 @@ function Portfolio() {
       <ul className="portfolio__pages">
         {
           links.map((item) => (
-            <div className="portfolio__page">
+            <div key={item.title} className="portfolio__page">
               <ExternalLink
-                key={item.title}
                 link={item.link}
                 className="page__link button-hover"
               >

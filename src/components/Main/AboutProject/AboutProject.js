@@ -19,7 +19,7 @@ function AboutProject() {
       </ul>
       <div className="about-project__line">
         <div className="line__colored">
-          <p className="line__text">1 неделя</p>
+          <p className="line__text" style={{ color: '#000' }}>1 неделя</p>
         </div>
         <div className="line">
           <p className="line__text">4 недели</p>

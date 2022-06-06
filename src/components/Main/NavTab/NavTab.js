@@ -6,11 +6,14 @@ function openLink(url) {
   window.open(url, '_blank');
 }
 
-function NavTab({ children, link, anchor }) {
+function NavTab({
+  children, link, anchor, style,
+}) {
   return (
     !anchor
       ? (
         <button
+          style={style}
           className="nav-tab button-hover"
           type="button"
           onClick={() => openLink(link)}

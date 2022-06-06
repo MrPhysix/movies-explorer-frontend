@@ -22,7 +22,7 @@ function AboutMe() {
           <p className="info__text">{about}</p>
           <nav className="about-me_pages">
             {
-              links.map((item) => <ExternalLink link={item.link} className="pages_link link-hover">{item.title}</ExternalLink>)
+              links.map((item) => <ExternalLink key={item.title} link={item.link} className="pages_link link-hover">{item.title}</ExternalLink>)
             }
           </nav>
         </article>

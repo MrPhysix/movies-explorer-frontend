@@ -27,6 +27,7 @@ function Footer() {
           {
             links.map((item) => (
               <ExternalLink
+                key={item.title}
                 link={item.link}
                 className="nav__link link-hover"
               >

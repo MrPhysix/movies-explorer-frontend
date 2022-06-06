@@ -14,7 +14,7 @@ function Techs() {
         <ul className="technology__list">
           {
           stack.map((item) => (
-            <NavTab key={item.title} link={item.link}>{item.title}</NavTab>
+            <NavTab style={{ maxWidth: '90px', minWidth: '84px' }} key={item.title} link={item.link}>{item.title}</NavTab>
           ))
         }
         </ul>
