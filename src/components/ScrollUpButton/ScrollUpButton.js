@@ -1,26 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './ScrollUpButton.css';
 import { animateScroll } from 'react-scroll';
 import Image from '../../images/scroll-up.svg';
+import userScrollPosition from '../../hooks/userScrollPosition';
 
 function ScrollUpButton() {
-  const [scrolled, setScrolled] = useState(false);
-
-  const style = `scroll-up_button button-hover ${scrolled ? ' show' : ''}`;
-
-  function logScroll() {
-    setScrolled(Boolean(window.scrollY > 1100));
-  }
-
-  useEffect(() => {
-    function watchScroll() {
-      window.addEventListener('scroll', logScroll);
-    }
-    watchScroll();
-    return () => {
-      window.removeEventListener('scroll', logScroll);
-    };
-  });
+  const scrolled = Boolean(userScrollPosition() > 100);
+  const style = `scroll-up_button button-hover ${scrolled && ' show'}`;
 
   return (
     <button

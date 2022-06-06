@@ -7,6 +7,10 @@
   max-height: 74px;
   height: 74px;
   width: 100%;
+  position: sticky;
+  top: 0;
+  background-color: #202020;
+  transition: filter .35s ease-in-out;
 }
 
 .header__logo{
@@ -17,4 +21,8 @@
 .header__list {
   display: flex;
   align-items: center;
+}
+
+.shadow {
+  filter: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.4));
 }

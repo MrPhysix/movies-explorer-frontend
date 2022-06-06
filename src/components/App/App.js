@@ -8,7 +8,7 @@ import ScrollUpButton from '../ScrollUpButton/ScrollUpButton';
 function App() {
   return (
     <>
-      <ScrollUpButton />
+      <ScrollUpButton menuScrolled />
       <Header />
       <Main />
       <Footer />
