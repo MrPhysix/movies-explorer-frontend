@@ -22,11 +22,11 @@ function Promo() {
   return (
     <div className="promo">
       <h1 className="promo__title">{title}</h1>
-      <div className="promo__list">
+      <nav className="promo__list">
         {
           buttons.map((item, i) => <NavTab key={i} link={item.link}>{item.text}</NavTab>)
         }
-      </div>
+      </nav>
     </div>
   );
 }

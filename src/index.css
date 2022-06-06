@@ -1,14 +1,16 @@
 @import url('./vendor/normalize.css');
+@import url('./vendor/hover-effect.css');
 
-body {
+body,
+body::after,
+body::before {
   margin: 0;
   padding: 0;
+  box-sizing: border-box
 }
 
-html {
-  margin: 0;
-  padding: 0;
-}
-
-* {border: 1px red solid;}
+/**{*/
+/*  box-sizing: border-box;*/
+/*  border: 1px red solid;*/
+/*}*/
 

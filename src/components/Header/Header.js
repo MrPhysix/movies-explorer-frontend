@@ -8,8 +8,8 @@ function Header() {
     <header className="header">
       <img src={Logo} alt="logo" className="header__logo" />
       <div className="header__list">
-        <HeaderButton className="">Регистрация</HeaderButton>
-        <HeaderButton className="header__button-green">Вход</HeaderButton>
+        <HeaderButton className="link-hover">Регистрация</HeaderButton>
+        <HeaderButton className="header__button-green button-hover">Вход</HeaderButton>
       </div>
     </header>
   );

@@ -3,6 +3,7 @@ import React from 'react';
 import './AboutMe.css';
 import Title from '../Title/Title';
 import AuthorPhoto from '../../../images/about-me.png';
+import ExternalLink from '../../ExternalLink/ExternalLink';
 
 const name = 'Виталий';
 const position = 'Фронтенд-разработчик, 30 лет';
@@ -18,10 +19,6 @@ const links = [{
   ref: 'https://github.com/',
 }];
 
-function openLink(url) {
-  window.open(url, '_blank');
-}
-
 function AboutMe() {
   return (
     <div className="about-me">
@@ -33,7 +30,7 @@ function AboutMe() {
           <p className="info__text">{about}</p>
           <nav className="about-me_pages">
             {
-              links.map(((item) => <button key={item.text} type="button" className="pages_link" onClick={() => openLink(item.ref)}>{item.text}</button>))
+              links.map((item) => <ExternalLink link={item.link} className="pages_link link-hover">{item.text}</ExternalLink>)
             }
           </nav>
         </article>

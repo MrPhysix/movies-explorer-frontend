@@ -1,4 +1,5 @@
 .main {
+  max-width: 1280px;
   margin: 0;
   padding: 0;
   display: flex;

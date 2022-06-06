@@ -10,13 +10,9 @@
   border: none;
   box-sizing: border-box;
   margin-left: 10px;
-  transition: opacity .25s ease-in-out;
+  cursor: pointer;
 }
 
 .nav-tab:first-child {
   margin: 0;
-}
-
-.nav-tab:hover {
-  opacity: .8;
 }

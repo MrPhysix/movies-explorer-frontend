@@ -8,19 +8,11 @@
   max-height: 32px;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
+  cursor: pointer;
   transition: opacity .25s ease-in-out;
 }
 
 .header__button-green {
   color: #000;
   background-color: #3DDC84;
-  transition: opacity .25s ease-in-out;
-}
-
-.header__button:hover {
-  opacity: .7;
-}
-
-.header__button-green:hover {
-  opacity: .8;
 }

@@ -1,4 +1,6 @@
 .header {
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -9,6 +11,7 @@
 
 .header__logo{
   max-width: 38px;
+  cursor: pointer;
 }
 
 .header__list {

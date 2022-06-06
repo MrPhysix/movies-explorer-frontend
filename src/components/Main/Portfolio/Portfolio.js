@@ -1,13 +1,41 @@
 import React from 'react';
 import './Portfolio.css';
+import ExternalLink from '../../ExternalLink/ExternalLink';
 
-// const links = []
+const links = [
+  {
+    title: 'Статичный сайт',
+    link: '',
+  },
+  {
+    title: 'Адаптивный сайт',
+    link: '',
+  },
+  {
+    title: 'Одностраничное приложение',
+    link: '',
+  },
+];
 
 function Portfolio() {
   return (
     <div className="portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
-      <div className="portfolio__pages" />
+      <ul className="portfolio__pages">
+        {
+          links.map((item) => (
+            <div className="portfolio__page">
+              <ExternalLink
+                key={item.title}
+                link={item.link}
+                className="page__link button-hover"
+              >
+                {item.title}
+              </ExternalLink>
+            </div>
+          ))
+        }
+      </ul>
     </div>
   );
 }

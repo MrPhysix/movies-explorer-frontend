@@ -1,0 +1,13 @@
+.button-hover {
+    transition: opacity .25s ease-in-out;
+}
+.button-hover:hover {
+    opacity: .8;
+}
+
+.link-hover {
+    transition: opacity .25s ease-in-out;
+}
+.link-hover:hover {
+    opacity: .7;
+}

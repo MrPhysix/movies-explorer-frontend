@@ -44,7 +44,10 @@
 }
 
 .line {
+  margin: 0;
+  padding: 0;
   width: 75%;
+  height: 36px;
   background-color: #303030;
 }
 
@@ -54,16 +57,22 @@
 }
 
 .line__text {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  text-align: center;
-  vertical-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .line__colored::after
 {
+  margin-top: 14px;
   display: block;
   width: 100%;
   color: #8B8B8B;
@@ -74,7 +83,9 @@
   content: 'Back-end';
 }
 
-.line::after {
+.line::after
+{
+  margin-top: 14px;
   display: block;
   width: 100%;
   color: #8B8B8B;
@@ -82,5 +93,5 @@
   font-weight: 400;
   font-size: 14px;
   text-align: center;
-  content: 'Front-end';
+  content: 'Back-end';
 }

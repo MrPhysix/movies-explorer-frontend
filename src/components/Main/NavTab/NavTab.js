@@ -7,7 +7,7 @@ function openLink(url) {
 
 function NavTab({ children, link }) {
   return (
-    <button className="nav-tab" type="button" onClick={() => openLink(link)}>{children}</button>
+    <button className="nav-tab button-hover" type="button" onClick={() => openLink(link)}>{children}</button>
   );
 }
 
