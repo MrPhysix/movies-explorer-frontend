@@ -1,27 +1,15 @@
 import React from 'react';
 import './AboutProject.css';
 import Title from '../Title/Title';
-
-const article = [{
-  _id: 1,
-  title: 'Дипломный проект включал 5 этапов',
-  text: 'Составление плана, работу над бэкендом, вёрстку, '
-    + 'добавление функциональности и финальные доработки.',
-},
-{
-  _id: 2,
-  title: 'На выполнение диплома ушло 5 недель',
-  text: 'У каждого этапа был мягкий и жёсткий дедлайн, '
-    + 'которые нужно было соблюдать, чтобы успешно защититься.',
-}];
+import { articles } from '../../../utils/landing-consts';
 
 function AboutProject() {
   return (
-    <div className="about-project">
+    <div className="about-project" id="about-project">
       <Title>о проекте</Title>
       <ul className="about-project__articles">
         {
-          article.map((item) => (
+          articles.map((item) => (
             <li className="article" key={item._id}>
               <h3 className="article__title">{item.title}</h3>
               <p className="article__text">{item.text}</p>

@@ -1,7 +1,8 @@
 .about-me {
-  background-color: #202020;
+  max-width: 1440px;
+  padding: 110px 70px 0;
+  width: 100%;
   margin: 0;
-  padding-top: 110px;
 }
 
 .about-me_info {

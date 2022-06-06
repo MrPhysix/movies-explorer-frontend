@@ -1,6 +1,7 @@
 import React from 'react';
 import './Footer.css';
 import ExternalLink from '../ExternalLink/ExternalLink';
+import { facebook, github } from '../../utils/landing-consts';
 
 const title = 'Учебный проект Яндекс.Практикум х BeatFilm.';
 const year = new Date().getFullYear();
@@ -9,14 +10,7 @@ const links = [
     title: 'Яндекс.Практикум',
     link: '',
   },
-  {
-    title: 'Github',
-    link: '',
-  },
-  {
-    title: 'Facebook',
-    link: '',
-  },
+  facebook, github,
 ];
 
 function Footer() {
@@ -34,7 +28,7 @@ function Footer() {
             links.map((item) => (
               <ExternalLink
                 link={item.link}
-                className="nav__link"
+                className="nav__link link-hover"
               >
                 {item.title}
               </ExternalLink>

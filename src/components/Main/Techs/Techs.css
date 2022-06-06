@@ -1,9 +1,18 @@
 .technology {
-  display: flex;
-  flex-direction: column;
   background-color: #272727;
   margin: 0;
   padding: 100px 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.technology_wrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  padding: 0 70px;
+  width: 100%;
 }
 
 .technology__title {
