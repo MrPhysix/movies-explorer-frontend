@@ -1,0 +1,26 @@
+.header__button {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 8px 20px;
+  color: white;
+  border-radius: 3px;
+  max-height: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  transition: opacity .25s ease-in-out;
+}
+
+.header__button-green {
+  color: #000;
+  background-color: #3DDC84;
+  transition: opacity .25s ease-in-out;
+}
+
+.header__button:hover {
+  opacity: .7;
+}
+
+.header__button-green:hover {
+  opacity: .8;
+}

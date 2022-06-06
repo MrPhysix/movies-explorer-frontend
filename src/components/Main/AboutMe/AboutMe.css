@@ -1,0 +1,77 @@
+.about-me {
+  background-color: #202020;
+  margin: 0;
+  padding-top: 110px;
+}
+
+.about-me_info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info__article {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+}
+
+.info__title {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.16;
+  letter-spacing: -0.04em;
+  color: #fff;
+  max-width: 600px;
+  margin: 0;
+  padding: 0;
+}
+
+.info__subtitle {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #fff;
+  mix-blend-mode: normal;
+}
+
+.info__text {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.57;
+  color: #fff;
+  mix-blend-mode: normal;
+}
+
+.about-me_image {
+}
+
+.about-me_pages {
+  margin-top: 100px;
+  padding: 0;
+}
+
+.pages_link {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  transition: opacity .25s ease-in-out;
+
+}
+
+.pages_link:hover {
+  opacity: .7;
+}
