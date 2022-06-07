@@ -1,11 +1,12 @@
 .header__button {
+  padding: 5px 12px;
+  min-width: 55px;
+  min-height: 25px;
   background-color: transparent;
   border: none;
   margin: 0;
-  padding: 8px 20px;
   color: white;
   border-radius: 3px;
-  max-height: 32px;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   cursor: pointer;
@@ -15,4 +16,13 @@
 .header__button-green {
   color: #000;
   background-color: #3DDC84;
+}
+
+@media screen and (min-width: 768px) {
+
+  .header__button {
+    padding: 8px 20px;
+    min-width: 76px;
+    min-height: 32px;
+  }
 }

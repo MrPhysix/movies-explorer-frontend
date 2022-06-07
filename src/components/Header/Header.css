@@ -1,6 +1,6 @@
 .header {
   margin: 0;
-  padding: 0 70px;
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-content: center;
@@ -25,4 +25,19 @@
 
 .shadow {
   filter: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.4));
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+
+  .header {
+    padding: 0 70px;
+  }
 }

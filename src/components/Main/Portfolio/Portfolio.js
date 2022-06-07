@@ -5,15 +5,15 @@ import ExternalLink from '../../ExternalLink/ExternalLink';
 const links = [
   {
     title: 'Статичный сайт',
-    link: '',
+    link: 'https://github.com/MrPhysix/MrPhysix.github.io',
   },
   {
     title: 'Адаптивный сайт',
-    link: '',
+    link: 'https://github.com/MrPhysix/russian-travel',
   },
   {
     title: 'Одностраничное приложение',
-    link: '',
+    link: 'https://github.com/MrPhysix/react-mesto-api-full',
   },
 ];
 

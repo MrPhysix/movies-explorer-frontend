@@ -17,9 +17,11 @@ function AboutMe() {
       <Title>студент</Title>
       <div className="about-me_info">
         <article className="info__article">
-          <h3 className="info__title">{name}</h3>
-          <p className="info__subtitle">{position}</p>
-          <p className="info__text">{about}</p>
+          <div className="info__wrap">
+            <h3 className="info__title">{name}</h3>
+            <p className="info__subtitle">{position}</p>
+            <p className="info__text">{about}</p>
+          </div>
           <nav className="about-me_pages">
             {
               links.map((item) => <ExternalLink key={item.title} link={item.link} className="pages_link link-hover">{item.title}</ExternalLink>)

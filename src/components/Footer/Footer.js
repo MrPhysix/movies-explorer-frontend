@@ -10,7 +10,7 @@ const links = [
     title: 'Яндекс.Практикум',
     link: '',
   },
-  facebook, github,
+  github, facebook,
 ];
 
 function Footer() {
