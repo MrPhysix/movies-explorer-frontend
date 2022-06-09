@@ -82,12 +82,11 @@
     color: #fff;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
 
     .portfolio {
         margin: 90px 0;
-        max-width: 1440px;
-        padding: 0 70px;
+        padding: 0 50px;
         width: 100%;
     }
 
@@ -105,3 +104,26 @@
     }
 }
 
+@media screen and (max-width: 767px) {
+
+    .portfolio {
+        margin: 70px 0;
+        padding: 0 20px;
+    }
+
+    .page__link {
+        font-size: 18px;
+        line-height: 1.56;
+    }
+
+    .portfolio__page::before {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    .portfolio__title {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+}

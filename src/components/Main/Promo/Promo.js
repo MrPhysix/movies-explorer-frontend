@@ -1,9 +1,7 @@
 import React from 'react';
 import './Promo.css';
-
 import NavTab from '../NavTab/NavTab';
 
-const title = 'Учебный проект студента факультета Веб-разработки.';
 const buttons = [
   {
     text: 'О проекте',
@@ -23,7 +21,11 @@ function Promo() {
   return (
     <div className="promo">
       <div className="promo__backplate">
-        <h1 className="promo__title">{title}</h1>
+        <h1 className="promo__title">
+          Учебный проект студента факультета
+          {' '}
+          <span className="promo__title_span">Веб-разработки.</span>
+        </h1>
         <div className="promo__list">
           {
           buttons.map((item) => (
