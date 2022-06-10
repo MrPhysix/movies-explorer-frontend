@@ -7,7 +7,7 @@ import ExternalLink from '../../ExternalLink/ExternalLink';
 
 function Techs() {
   return (
-    <div className="technology" id="techs">
+    <section className="technology" id="techs">
       <div className="technology_wrap">
         <Title>технологии</Title>
         <TypeAnimation
@@ -27,7 +27,7 @@ function Techs() {
         }
         </ul>
       </div>
-    </div>
+    </section>
   );
 }
 

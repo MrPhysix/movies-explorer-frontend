@@ -5,7 +5,7 @@ import { articles } from '../../../utils/landing-consts';
 
 function AboutProject() {
   return (
-    <div className="about-project" id="about-project">
+    <section className="about-project" id="about-project">
       <Title>о проекте</Title>
       <ul className="about-project__articles">
         {
@@ -25,7 +25,7 @@ function AboutProject() {
           <p className="line__text">4 недели</p>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

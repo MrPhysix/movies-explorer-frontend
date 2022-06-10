@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
 import ScrollUpButton from '../ScrollUpButton/ScrollUpButton';
 //
@@ -15,9 +16,12 @@ function App() {
       <Header isLogged={isLogged} />
       <Routes>
         <Route
+          exact
           path="/"
           element={
-            !isLogged && <Main />
+            isLogged
+              ? <Main />
+              : <Movies />
         }
         />
       </Routes>

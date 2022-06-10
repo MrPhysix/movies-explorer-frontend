@@ -19,7 +19,7 @@ const buttons = [
 
 function Promo() {
   return (
-    <div className="promo">
+    <section className="promo">
       <div className="promo__backplate">
         <h1 className="promo__title">
           Учебный проект студента факультета
@@ -40,7 +40,7 @@ function Promo() {
         }
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -13,7 +13,7 @@ const links = [facebook, github];
 
 function AboutMe() {
   return (
-    <div className="about-me" id="about-me">
+    <section className="about-me" id="about-me">
       <Title>студент</Title>
       <div className="about-me__info">
         <article className="info__article">
@@ -30,7 +30,7 @@ function AboutMe() {
         </article>
         <img src={AuthorPhoto} alt="author" className="about-me__image" />
       </div>
-    </div>
+    </section>
   );
 }
 
