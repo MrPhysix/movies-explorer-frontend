@@ -22,5 +22,6 @@ module.exports = {
     'react/prop-types': ['off'],
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'react/no-array-index-key': ['off'],
+    'react/jsx-boolean-value': ['error', 'never', { always: ['personal'] }],
   },
 };

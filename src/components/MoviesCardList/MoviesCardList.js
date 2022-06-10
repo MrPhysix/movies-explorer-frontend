@@ -15,6 +15,8 @@ import img11 from '../../images/test_img11.png';
 import img12 from '../../images/test_img12.png';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
+const ARR_LENGTH = 12;
+
 function getRandImg() {
   const arr = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
   return arr[Math.floor((Math.random() * arr.length))];
@@ -22,7 +24,7 @@ function getRandImg() {
 
 function getImgArr() {
   const arr = [];
-  for (let i = 0; i < 12; i += 1) {
+  for (let i = 0; i < ARR_LENGTH; i += 1) {
     arr.push({
       title: 'В погоне за Бенкси',
       image: getRandImg(),
@@ -36,7 +38,7 @@ function MoviesCardList() {
   return (
     <ul className="movies-cards-list">
       {
-        movies.map((item, i) => <MoviesCard key={i} item={item} />)
+        movies.map((item, i) => <MoviesCard key={i} item={item} isSaved />)
       }
     </ul>
   );

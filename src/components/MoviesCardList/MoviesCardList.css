@@ -3,7 +3,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0px 0px;
+    gap: 30px;
     grid-auto-flow: row;
 }
 
