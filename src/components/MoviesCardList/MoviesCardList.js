@@ -15,7 +15,7 @@ import img11 from '../../images/test_img11.png';
 import img12 from '../../images/test_img12.png';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-const ARR_LENGTH = 12;
+const ARR_LENGTH = 11;
 
 function getRandImg() {
   const arr = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
@@ -36,11 +36,14 @@ const movies = getImgArr();
 
 function MoviesCardList() {
   return (
-    <ul className="movies-cards-list">
-      {
-        movies.map((item, i) => <MoviesCard key={i} item={item} isSaved />)
+    <>
+      <ul className="movies-cards-list">
+        {
+        movies.map((item, i) => <MoviesCard key={i} item={item} isSaved={false} />)
       }
-    </ul>
+      </ul>
+      <button className="show-more-button button-hover" type="button">Еще</button>
+    </>
   );
 }
 

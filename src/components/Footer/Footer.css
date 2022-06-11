@@ -64,15 +64,13 @@
 }
 
 @media screen and (max-width: 1024px) {
-
     .footer {
-        padding: 0 50px;
+        padding: 0 30px;
     }
 }
 
 
 @media screen and (max-width: 767px) {
-
     .footer {
         padding: 0 10px;
     }
