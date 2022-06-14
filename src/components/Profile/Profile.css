@@ -72,12 +72,14 @@
     background-color: #424242;
 }
 
-.profile__button { /* тут надо решить с width, глупо как то 100% на десктопе */
+.profile__button {
     margin: 0;
     padding: 0;
     background-color: transparent;
     border: none;
     color: #fff;
+    width: fit-content;
+    align-self: center;
 }
 
 .profile__button:last-child {

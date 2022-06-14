@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MoviesCard.css';
-import checkMarkIcon from '../../images/check-mark.svg';
+import SaveButton from './SaveButton/SaveButton';
 
-function MoviesCard({ item, isSaved }) {
+function MoviesCard({ item }) {
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handlerSave = () => {
+    setIsSaved(!isSaved);
+  };
+
   return (
     <li className="movies-card">
       <div className="movies-card__header">
@@ -10,20 +16,7 @@ function MoviesCard({ item, isSaved }) {
         <data className="movies-card__time">27 минут</data>
       </div>
       <img className="movies-card__image" src={item.image} alt={item.title} />
-      {
-        !isSaved
-          ? (
-            <button className="movies-card__button button-hover button-active" type="button">
-              Сохранить
-            </button>
-          )
-
-          : (
-            <button className="movies-card__button button-hover button__is-saved button-active" type="button">
-              <img src={checkMarkIcon} alt="checkMarkIcon" className="button__inner" />
-            </button>
-          )
-       }
+      <SaveButton isSaved={isSaved} onClick={handlerSave} />
     </li>
   );
 }

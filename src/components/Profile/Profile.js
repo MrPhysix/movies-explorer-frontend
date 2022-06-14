@@ -28,7 +28,12 @@ function Profile({ handleLogOut }) {
           <i className="line__divider" />
           <ProfileInfoLine header="Email">{info.email}</ProfileInfoLine>
         </div>
-        <button className="profile__button link-hover" type="button">Редактировать</button>
+        <button
+          className="profile__button link-hover"
+          type="button"
+        >
+          Редактировать
+        </button>
         <button
           className="profile__button link-hover"
           type="button"

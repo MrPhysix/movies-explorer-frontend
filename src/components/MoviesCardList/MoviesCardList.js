@@ -20,7 +20,7 @@ function MoviesCardList({ ARR_LENGTH }) {
     <>
       <ul className="movies-cards-list">
         {
-        movies.map((item, i) => <MoviesCard key={i} item={item} isSaved={false} />)
+        movies.map((item, i) => <MoviesCard key={i} item={item} />)
       }
       </ul>
       {

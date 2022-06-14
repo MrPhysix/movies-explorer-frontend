@@ -34,10 +34,12 @@ function App() {
   const handleLogOut = () => {
     setIsLogged(false);
     navigate('/');
+    console.log('out');
   };
 
   const handleLogIn = () => {
     setIsLogged(true);
+    console.log('in');
   };
 
   return (
