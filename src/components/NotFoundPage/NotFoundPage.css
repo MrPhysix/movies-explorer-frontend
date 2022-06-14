@@ -32,14 +32,38 @@
 }
 
 .not-found__link {
+    position: absolute;
+    display: inline-block;
     font-family: inherit;
     font-style: inherit;
     font-weight: inherit;
     font-size: 14px;
     color: #4285F4;
-    position: absolute;
+    text-decoration: none;
     left: 50%;
     transform: translate(-50%, 0);
     bottom: 60px;
-    text-decoration: none;
+}
+
+@media screen and (max-width: 767px) {
+    .not-found__title {
+        font-size: 80px;
+    }
+
+    .not-found__subtitle {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+
+    .not-found__link {
+        font-size: 12px;
+        bottom: 30px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .not-found__link {
+        font-size: 12px;
+        bottom: 220px;
+    }
 }

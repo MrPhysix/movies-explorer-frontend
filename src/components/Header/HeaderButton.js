@@ -1,9 +1,9 @@
 import React from 'react';
 import './HeaderButton.css';
 
-function HeaderButton({ className, children }) {
+function HeaderButton({ className, children, onClick }) {
   return (
-    <button className={`${className} header__button`} type="button">{children}</button>
+    <button className={`${className} header__button`} type="button" onClick={onClick}>{children}</button>
   );
 }
 

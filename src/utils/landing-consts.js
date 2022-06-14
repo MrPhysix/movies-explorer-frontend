@@ -64,3 +64,8 @@ export const github = {
   title: 'Github',
   link: 'https://github.com/MrPhysix',
 };
+
+export const praktikum = {
+  title: 'Яндекс.Практикум',
+  link: 'https://praktikum.yandex.ru/',
+};
