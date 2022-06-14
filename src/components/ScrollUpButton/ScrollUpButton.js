@@ -2,10 +2,10 @@ import React from 'react';
 import './ScrollUpButton.css';
 import { animateScroll } from 'react-scroll';
 import Image from '../../images/scroll-up.svg';
-import userScrollPosition from '../../hooks/userScrollPosition';
+import useScrollPosition from '../../hooks/useScrollPosition';
 
 function ScrollUpButton() {
-  const scrolled = Boolean(userScrollPosition() > 100);
+  const scrolled = Boolean(useScrollPosition() > 100);
   const style = `scroll-up_button button-hover ${scrolled && ' show'}`;
 
   return (

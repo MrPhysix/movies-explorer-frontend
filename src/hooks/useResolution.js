@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-function userResolution() {
+function useResolution(width) {
   const [resolution, setResolution] = useState(
-    window.matchMedia('(max-width: 880px)').matches,
+    window.matchMedia(`(max-width: ${width}px)`).matches,
   );
 
   useEffect(() => {
     const setSize = () => {
-      setResolution(window.matchMedia('(max-width: 880px)').matches);
+      setResolution(window.matchMedia(`(max-width: ${width}px)`).matches);
     };
     window.addEventListener('resize', setSize, false);
     return () => window.removeEventListener('resize', setSize, false);
@@ -16,4 +16,4 @@ function userResolution() {
   return resolution;
 }
 
-export default userResolution;
+export default useResolution;

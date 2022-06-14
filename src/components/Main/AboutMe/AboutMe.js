@@ -6,10 +6,10 @@ import AuthorPhoto from '../../../images/about-me.png';
 import ExternalLink from '../../ExternalLink/ExternalLink';
 import {
   name, position,
-  about, facebook, github,
+  about, github, behance,
 } from '../../../utils/landing-consts';
 
-const links = [facebook, github];
+const links = [behance, github];
 
 function AboutMe() {
   return (

@@ -8,6 +8,13 @@
     border-radius: 6px;
 }
 
+.movies-card:hover {
+    box-shadow: 10px 15px 45px rgba(0, 0, 0, 0.15);
+    background: radial-gradient(50% 0.33% at 50% 100%, #3DDC84 0%, #222222 100%);
+    transition: background .35s ease-in-out, box-shadow .2s linear;
+}
+
+
 .movies-card__header {
     font-family: 'Inter',sans-serif;
     font-style: normal;

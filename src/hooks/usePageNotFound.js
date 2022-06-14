@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-function useResolution(width) {
-  const [resolution, setResolution] = useState(
-    window.matchMedia(`(max-width: ${width}px)`).matches,
-  );
+function usePageNotFound() {
+  const { pathname } = useLocation();
+  const [pageNotFound, setPageNotFound] = useState(false);
 
   useEffect(() => {
-    const setSize = () => {
-      setResolution(window.matchMedia(`(max-width: ${width}px)`).matches);
-    };
-    window.addEventListener('resize', setSize, false);
-    return () => window.removeEventListener('resize', setSize, false);
-  }, []);
+    if (pathname === '/404') setPageNotFound(true);
+    else setPageNotFound(false);
+  }, [pathname]);
 
-  return resolution;
+  return pageNotFound;
 }
 
-export default useResolution;
+export default usePageNotFound;

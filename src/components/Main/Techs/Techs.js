@@ -22,7 +22,7 @@ function Techs() {
         <ul className="technology__list">
           {
           stack.map((item) => (
-            <ExternalLink className="technology__link" link={item.link}>{item.title}</ExternalLink>
+            <ExternalLink key={item.title} className="technology__link" link={item.link}>{item.title}</ExternalLink>
           ))
         }
         </ul>

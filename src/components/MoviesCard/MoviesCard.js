@@ -13,13 +13,13 @@ function MoviesCard({ item, isSaved }) {
       {
         !isSaved
           ? (
-            <button className="movies-card__button button-hover" type="button">
+            <button className="movies-card__button button-hover button-active" type="button">
               Сохранить
             </button>
           )
 
           : (
-            <button className="movies-card__button button-hover button__is-saved" type="button">
+            <button className="movies-card__button button-hover button__is-saved button-active" type="button">
               <img src={checkMarkIcon} alt="checkMarkIcon" className="button__inner" />
             </button>
           )

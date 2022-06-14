@@ -55,9 +55,9 @@ export const about = 'Я родился и живу в Саратове, зак�
   + ' начал заниматься фриланс-заказами и ушёл с постоянной работы.';
 
 // Soc Media
-export const facebook = {
-  title: 'Facebook',
-  link: 'https://facebook.com/',
+export const behance = {
+  title: 'Behance',
+  link: 'https://www.behance.net/pashashalaev',
 };
 
 export const github = {

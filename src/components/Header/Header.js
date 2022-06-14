@@ -3,16 +3,16 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 import Logo from '../../images/logo.svg';
 import HeaderButton from './HeaderButton';
-import userScrollPosition from '../../hooks/userScrollPosition';
+import useScrollPosition from '../../hooks/useScrollPosition';
 
 function Header({ isLogged }) {
-  const scrollPosition = userScrollPosition();
+  const scrollPosition = useScrollPosition();
   const style = `header ${scrollPosition > 0 && ' shadow'}`;
 
   return (
     <header className={style}>
       <div className="header__wrapper">
-        <Link to="/">
+        <Link to={isLogged ? '/movies' : '/'}>
           <img src={Logo} alt="logo" className="header__logo" />
         </Link>
         {
@@ -20,7 +20,7 @@ function Header({ isLogged }) {
           && (
           <nav className="header__menu">
             <Link to="/movies" className="menu_link menu_link_active link-hover">Фильмы</Link>
-            <Link to="/watchlist" className="menu_link link-hover">Сохранённые фильмы</Link>
+            <Link to="/saved-movies" className="menu_link link-hover">Сохранённые фильмы</Link>
           </nav>
           )
         }

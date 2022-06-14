@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 import ExternalLink from '../ExternalLink/ExternalLink';
-import { facebook, github } from '../../utils/landing-consts';
+import { behance, github } from '../../utils/landing-consts';
 
 const title = 'Учебный проект Яндекс.Практикум х BeatFilm.';
 const year = new Date().getFullYear();
@@ -10,7 +10,7 @@ const links = [
     title: 'Яндекс.Практикум',
     link: '',
   },
-  github, facebook,
+  github, behance,
 ];
 
 function Footer() {
