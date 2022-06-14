@@ -42,7 +42,6 @@ function App() {
 
   return (
     <>
-      <ScrollUpButton menuScrolled />
       {
         !pageNotFound && !pageLogin && !pageRegister
         && <Header isLogged={isLogged} handleLogIn={handleLogIn} />
@@ -87,6 +86,7 @@ function App() {
         />
       </Routes>
       {!pageNotFound && !pageProfile && <Footer />}
+      <ScrollUpButton menuScrolled />
     </>
   );
 }

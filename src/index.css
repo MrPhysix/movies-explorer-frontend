@@ -12,10 +12,11 @@ body::before {
   background-color: #202020;
 }
 
+
 *{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  outline: 1px red solid;
+  /*outline: 1px red solid;*/
 }
 
