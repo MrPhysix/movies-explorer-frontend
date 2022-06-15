@@ -13,6 +13,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
+import Register from '../Register/Register';
 //
 function App() {
   // routes etc
@@ -45,7 +46,7 @@ function App() {
   return (
     <>
       {
-        !pageNotFound && !pageLogin && !pageRegister
+        !pageProfile && !pageLogin && !pageRegister
         && <Header isLogged={isLogged} handleLogIn={handleLogIn} />
       }
       <Routes>
@@ -85,6 +86,14 @@ function App() {
         <Route
           path="/profile"
           element={<Profile handleLogOut={handleLogOut} />}
+        />
+        <Route
+          path="/signup"
+          element={<Register />}
+        />
+        <Route
+          path="/signin"
+          element={<div>Hi</div>}
         />
       </Routes>
       {!pageNotFound && !pageProfile && <Footer />}

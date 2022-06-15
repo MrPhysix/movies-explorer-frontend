@@ -7,7 +7,7 @@ function SavedMovies() {
   return (
     <main className="saved-movies">
       <SearchForm />
-      <MoviesCardList ARR_LENGTH={3} />
+      <MoviesCardList ARR_LENGTH={3} inSavedMovies />
     </main>
   );
 }

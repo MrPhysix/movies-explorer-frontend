@@ -4,7 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 import cardListHandle from '../../utils/cardListHandle';
 
-function MoviesCardList({ ARR_LENGTH }) {
+function MoviesCardList({ ARR_LENGTH, inSavedMovies }) {
   const [movies, setMovies] = useState(cardListHandle(ARR_LENGTH));
 
   function showMoreCards() {
@@ -20,7 +20,7 @@ function MoviesCardList({ ARR_LENGTH }) {
     <>
       <ul className="movies-cards-list">
         {
-        movies.map((item, i) => <MoviesCard key={i} item={item} />)
+        movies.map((item, i) => <MoviesCard key={i} item={item} inSavedMovies={inSavedMovies} />)
       }
       </ul>
       {

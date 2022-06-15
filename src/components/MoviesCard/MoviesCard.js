@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './MoviesCard.css';
 import SaveButton from './SaveButton/SaveButton';
 
-function MoviesCard({ item }) {
+function MoviesCard({ item, inSavedMovies }) {
   const [isSaved, setIsSaved] = useState(false);
 
   const handlerSave = () => {
@@ -16,7 +16,7 @@ function MoviesCard({ item }) {
         <data className="movies-card__time">27 минут</data>
       </div>
       <img className="movies-card__image" src={item.image} alt={item.title} />
-      <SaveButton isSaved={isSaved} onClick={handlerSave} />
+      <SaveButton isSaved={isSaved} onClick={handlerSave} cardInSaved={inSavedMovies} />
     </li>
   );
 }

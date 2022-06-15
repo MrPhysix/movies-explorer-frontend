@@ -63,7 +63,6 @@
     outline: none;
     border-bottom: 1px solid #2BE080;
     transition: border .35s ease-in-out;
-
 }
 
 .search__input_wrapper {
@@ -81,22 +80,22 @@
     transform: translate(0, -50%) scale(0);
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
     background-color: transparent;
     border: none;
     width: 20px;
     height: 20px;
     transition: transform .2s ease-in-out;
-    transition-delay: .2s;
     background-image: url("../../images/close-button.svg");
     background-position: center;
     background-size: cover;
+
 }
 
 .search__input:not(:placeholder-shown) + .search__input_reset{
     transform: translate(0, -50%) scale(1);
+    transition-delay: .2s;
 }
+
 
 .search__button {
     border: none;
