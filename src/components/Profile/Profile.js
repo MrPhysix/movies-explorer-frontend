@@ -5,7 +5,6 @@ const info = {
   name: 'Виталий',
   email: 'pochta@yandex.ru',
 };
-// <i className="divider" />
 
 function ProfileInfoLine({ header, children }) {
   return (

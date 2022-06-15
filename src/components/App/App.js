@@ -46,7 +46,7 @@ function App() {
   return (
     <>
       {
-        !pageProfile && !pageLogin && !pageRegister
+        !pageNotFound && !pageLogin && !pageRegister
         && <Header isLogged={isLogged} handleLogIn={handleLogIn} />
       }
       <Routes>
@@ -96,7 +96,7 @@ function App() {
           element={<div>Hi</div>}
         />
       </Routes>
-      {!pageNotFound && !pageProfile && <Footer />}
+      {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
       <ScrollUpButton menuScrolled />
     </>
   );

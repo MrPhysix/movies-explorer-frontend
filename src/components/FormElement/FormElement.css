@@ -1,0 +1,30 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+}
+
+.form__submit {
+    padding: 0;
+    margin-top: 140px;
+    margin-bottom: 15px;
+    width: 100%;
+    color: #fff;
+    background: #4285F4;
+    border-radius: 3px;
+    height: 45px;
+}
+
+.form__under-submit {
+    color: #8B8B8B;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1;
+    align-self: center;
+}
+
+.form__under-submit-link {
+    text-decoration: none;
+    color: #4285F4;
+}
