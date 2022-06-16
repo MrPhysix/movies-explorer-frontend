@@ -17,7 +17,7 @@
 
 .header__wrapper {
   display: flex;
-  align-items: center
+  align-items: center;
 }
 
 .header__logo {
