@@ -51,6 +51,27 @@
   align-items: center;
 }
 
+.header__button {
+  padding: 5px 12px;
+  min-width: 55px;
+  min-height: 25px;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  color: white;
+  border-radius: 3px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .25s ease-in-out;
+  text-decoration: none;
+}
+
+.header__button_green {
+  color: #000;
+  background-color: #3DDC84;
+}
 .profile_button {
   margin: 0;
   padding: 8px 20px;
@@ -88,5 +109,15 @@
 @media screen and (min-width: 1280px) {
   .header {
     padding: 0 70px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .header__button {
+    display: flex;
+    justify-content: center;
+    padding: 8px 20px;
+    min-width: 76px;
+    min-height: 32px;
   }
 }

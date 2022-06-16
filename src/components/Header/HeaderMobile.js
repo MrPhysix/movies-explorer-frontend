@@ -4,7 +4,7 @@ import Logo from '../../images/logo.svg';
 import './HeaderMobile.css';
 import usePage from '../../hooks/usePage';
 
-function HeaderMobile({ isLogged }) {
+function HeaderMobile() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [pageMain, pageMovies, pageSavedMovies] = [
     usePage('/'),
@@ -31,7 +31,7 @@ function HeaderMobile({ isLogged }) {
   return (
     <>
       <div className="header__mobile_wrapper">
-        <Link to={isLogged ? '/movies' : '/'} className="header__mobile_logo">
+        <Link to="/" className="header__mobile_logo">
           <img src={Logo} alt="logo" />
         </Link>
         <button
