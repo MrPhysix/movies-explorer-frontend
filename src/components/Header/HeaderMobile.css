@@ -22,6 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99999;
 }
 
 .mobile_menu__burger {
@@ -57,8 +58,8 @@
 }
 
 .menu__background {
-    position: fixed;
-    left: 0;
+    position: absolute;
+    right: 0;
     top: 0;
     background-color: #202020;
     width: 100vw;
@@ -77,11 +78,6 @@
     justify-content: space-between;
     align-items: center;
     transition: all .8s ease-in-out;
-    transform: translateX(100%);
-}
-
-.menu__nav.open {
-    transform: translateX(0);
 }
 
 .menu__nav_links {
@@ -116,7 +112,6 @@
     background-color: #3DDC84; /* цвет другой, но думаю так получше */
     margin: 5px auto 0;
     transform: scaleX(0);
-    transition: all .3s ease-in-out;
 }
 
 .menu__nav_link.active::after {
@@ -140,6 +135,10 @@
         background-color: rgba(0, 0, 0, 30%);
         align-items: flex-end;
         padding: 0;
+        box-shadow: -10px 18px 32px rgba(0, 0, 0, 1);
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 
     .menu__nav {
