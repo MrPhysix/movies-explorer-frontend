@@ -9,10 +9,10 @@ function Register() {
   return (
     <main className="register">
       <div className="register__wrapper">
-        <Link to="/">
+        <Link to="/" className="register__logo_link">
           <img src={Logo} alt="logo" className="register__logo" />
         </Link>
-        <h1 className="register__title">Добро пожаловать</h1>
+        <h1 className="register__title">Добро пожаловать!</h1>
         <FormElement
           submitText="Зарегистрироваться"
           underText="Уже зарегистрированы?"

@@ -14,6 +14,7 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 //
 function App() {
   // routes etc
@@ -93,7 +94,7 @@ function App() {
         />
         <Route
           path="/signin"
-          element={<div>Hi</div>}
+          element={<Login />}
         />
       </Routes>
       {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}

@@ -12,12 +12,14 @@ function FormElement({
   return (
     <form className="form">
       {children}
-      <button className="form__submit button-hover" type="submit">{submitText}</button>
-      <p className="form__under-submit">
-        {underText}
-        {' '}
-        <Link to={linkToPath} className="form__under-submit-link link-hover">{underLinkText}</Link>
-      </p>
+      <nav className="form__nav">
+        <button className="form__submit button-hover" type="submit">{submitText}</button>
+        <p className="form__under-submit">
+          {underText}
+          {' '}
+          <Link to={linkToPath} className="form__under-submit-link link-hover">{underLinkText}</Link>
+        </p>
+      </nav>
     </form>
   );
 }
