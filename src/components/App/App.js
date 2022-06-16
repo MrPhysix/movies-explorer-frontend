@@ -62,11 +62,7 @@ function App() {
         <Route
           exact
           path="/"
-          element={
-          !isLogged
-            ? <Main />
-            : <Navigate to="/movies" />
-        }
+          element={<Main />}
         />
         <Route
           path="/movies"

@@ -29,7 +29,8 @@
     width: 100%;
     max-height: 3px;
     height: 100%;
-    background-color: #fff;
+
+    background-color: #3DDC84;
     position: relative;
     z-index: 99999;
     transition: all .3s ease-in-out;
@@ -55,6 +56,77 @@
     transform: translateY(7px);
 }
 
+.menu__background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #202020;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 140px 0 50px;
+}
+
+.menu__nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: all .8s ease-in-out;
+    transform: translateX(100%);
+}
+
+.menu__nav.open {
+    transform: translateX(0);
+}
+
+.menu__nav_links {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu__nav_link {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.menu__nav_link:last-child {
+    margin: 0;
+}
+
+.menu__nav_link::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 70px;
+    background-color: #3DDC84; /* цвет другой, но думаю так получше */
+    margin: 5px auto 0;
+    transform: scaleX(0);
+    transition: all .3s ease-in-out;
+}
+
+.menu__nav_link.active::after {
+    transform: scaleX(1);
+}
+
+.profile_button.mobile {
+    max-width: 100px;
+}
+
 @media screen and (max-width: 425px) {
     .mobile_menu__burger
     {
@@ -63,9 +135,24 @@
     }
 }
 
+@media screen and (min-width: 425px) {
+    .menu__background {
+        background-color: rgba(0, 0, 0, 30%);
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .menu__nav {
+        background-color: #202020;
+        padding: 160px 0 90px;
+        width: 60vw;
+    }
+}
+
+
 /* Anim */
 
-.header__mobile_menu.open .mobile_menu__burger{
+.header__mobile_menu.open .mobile_menu__burger {
     transform: translateX(-50px);
     background-color: transparent;
 }
