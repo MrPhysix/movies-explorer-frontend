@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Routes, Route, Navigate, useNavigate,
 } from 'react-router-dom';
 import './App.css';
+import Preloader from '../Preloader/Preloader';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -31,8 +32,17 @@ function App() {
   ];
   const navigate = useNavigate();
   // states
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isLogged, setIsLogged] = useState(true);
-  // auth handlers
+  // handlers
+
+  useEffect(() => { // test
+    const handleLoading = () => {
+      setIsLoaded(!isLoaded);
+    };
+    setTimeout(handleLoading, 2500);
+  }, []);
+
   const handleLogOut = () => {
     setIsLogged(false);
     navigate('/');
@@ -43,59 +53,60 @@ function App() {
     setIsLogged(true);
     console.log('in');
   };
-
   return (
-    <>
-      {
+    isLoaded ? (
+      <>
+        {
         !pageNotFound && !pageLogin && !pageRegister
         && <Header isLogged={isLogged} handleLogIn={handleLogIn} />
       }
-      <Routes>
-        <Route
-          path="/*"
-          element={<Navigate to="/404" replace />}
-        />
-        <Route
-          path="/404"
-          element={<NotFoundPage />}
-        />
-        <Route
-          exact
-          path="/"
-          element={<Main />}
-        />
-        <Route
-          path="/movies"
-          element={(
-            <ProtectedRoute isLogged={isLogged}>
-              <Movies />
-            </ProtectedRoute>
+        <Routes>
+          <Route
+            path="/*"
+            element={<Navigate to="/404" replace />}
+          />
+          <Route
+            path="/404"
+            element={<NotFoundPage />}
+          />
+          <Route
+            exact
+            path="/"
+            element={<Main />}
+          />
+          <Route
+            path="/movies"
+            element={(
+              <ProtectedRoute isLogged={isLogged}>
+                <Movies />
+              </ProtectedRoute>
         )}
-        />
-        <Route
-          path="/saved-movies"
-          element={(
-            <ProtectedRoute isLogged={isLogged}>
-              <SavedMovies />
-            </ProtectedRoute>
+          />
+          <Route
+            path="/saved-movies"
+            element={(
+              <ProtectedRoute isLogged={isLogged}>
+                <SavedMovies />
+              </ProtectedRoute>
         )}
-        />
-        <Route
-          path="/profile"
-          element={<Profile handleLogOut={handleLogOut} />}
-        />
-        <Route
-          path="/signup"
-          element={<Register />}
-        />
-        <Route
-          path="/signin"
-          element={<Login />}
-        />
-      </Routes>
-      {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
-      <ScrollUpButton menuScrolled />
-    </>
+          />
+          <Route
+            path="/profile"
+            element={<Profile handleLogOut={handleLogOut} />}
+          />
+          <Route
+            path="/signup"
+            element={<Register />}
+          />
+          <Route
+            path="/signin"
+            element={<Login />}
+          />
+        </Routes>
+        {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
+        <ScrollUpButton menuScrolled />
+      </>
+    ) : <Preloader />
   );
 }
 
