@@ -31,6 +31,7 @@ function SearchForm() {
                 placeholder="Фильм"
                 onChange={handleChange}
                 value={inputValue}
+                required
               />
               <button className="search__input_reset button-hover" type="button" onClick={handleReset} aria-label="close" />
             </div>
