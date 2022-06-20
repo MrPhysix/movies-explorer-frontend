@@ -21,7 +21,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px;
+    padding: 15px 20px;
+    height: 80px;
 }
 
 .movies-card__title {
@@ -40,11 +41,22 @@
     color: #8B8B8B;
 }
 
-.movies-card__image {
+.movies-card__wrapper_image {
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 100%;
     width: 100%;
 }
 
+.movies-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .movies-card__button {
+    padding: 0;
     color: #fff;
     font-family: 'Inter', sans-serif;
     font-style: normal;
@@ -53,7 +65,7 @@
     text-align: center;
     margin: 20px auto;
     width: 100px;
-    height: 30px;
+    min-height: 30px;
     border: none;
     border-radius: 30px;
     background-color: #313131;

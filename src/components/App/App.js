@@ -31,17 +31,15 @@ function App() {
     usePage('/signup'),
   ];
   const navigate = useNavigate();
+
   // states
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLogged, setIsLogged] = useState(true);
   // handlers
 
-  useEffect(() => { // test
-    const handleLoading = () => {
-      setIsLoaded(!isLoaded);
-    };
-    setTimeout(handleLoading, 2500);
-  }, []);
+  const handleLoading = () => {
+    setIsLoaded(!isLoaded);
+  };
 
   const handleLogOut = () => {
     setIsLogged(false);
@@ -53,6 +51,12 @@ function App() {
     setIsLogged(true);
     console.log('in');
   };
+
+  // effects
+  useEffect(() => {
+    handleLoading();
+  }, []);
+
   return (
     isLoaded ? (
       <>
