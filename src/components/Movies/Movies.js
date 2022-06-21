@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -10,6 +10,7 @@ function Movies() {
   const [movies, setMovies] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [notFound, setNotFound] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
   //
   const onSubmit = useCallback(() => getCards(
     inputValue,
@@ -20,6 +21,10 @@ function Movies() {
   ), [inputValue]);
   //
 
+  useEffect(() => {
+    console.log(isFiltered);
+  }, [isFiltered]);
+
   return (
     <main className="movies">
       <SearchForm
@@ -28,6 +33,7 @@ function Movies() {
         setInputValue={setInputValue}
         setNotFound={setNotFound}
         setMovies={setMovies}
+        setIsFiltered={setIsFiltered}
         searched={movies.length > 1 && notFound === false}
       />
       <MoviesCardList movies={movies} notFound={notFound} isLoading={isLoading} />

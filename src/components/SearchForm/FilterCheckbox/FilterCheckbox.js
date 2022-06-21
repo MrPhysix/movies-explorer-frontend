@@ -1,11 +1,11 @@
 import React from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ innerText }) {
+function FilterCheckbox({ innerText, onClick }) {
   return (
     <div className="wrapper">
       <label htmlFor="checkbox" className="switch">
-        <input type="checkbox" id="checkbox" />
+        <input type="checkbox" id="checkbox" onClick={onClick} />
         <div className="slider" />
       </label>
       <p className="text">{innerText}</p>
