@@ -14,7 +14,7 @@ function HeaderButton({ optionStyles, text, path }) {
 
 function Header({ isLogged }) {
   const scrollPosition = useScrollPosition();
-  const isMobile = useResolution('768');
+  const isMobile = useResolution('0', '768');
 
   const style = `header ${scrollPosition > 0 && ' shadow'}`;
   //

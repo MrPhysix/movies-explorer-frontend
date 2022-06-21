@@ -23,7 +23,7 @@ function SearchForm({
   }
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log(inputValue.length);
+
     if (inputValue.length < 1 || inputValue.match(/^ *$/) !== null || inputValue === null) {
       alert('Нужно ввести ключевое слово');
       handleReset();

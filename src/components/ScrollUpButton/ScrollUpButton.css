@@ -8,7 +8,7 @@
     transition: transform .25s ease-in-out, opacity .2s ease-in-out;
     position: fixed;
     right: 1vw;
-    bottom: 5vw;
+    bottom: 0;
     border: none;
     border-radius: 50%;
     justify-content: center;
@@ -18,6 +18,6 @@
 }
 
 .show {
-    transform: scale(1);
+    transform: scale(1) translateY(-5vh);
     opacity: 1;
 }

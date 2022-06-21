@@ -3,10 +3,10 @@ import MoviesApi from './api/MoviesApi';
 export const ad = 1;
 
 // func
-export async function getCards(value, movies, setMovies, setNotFound) {
-  const list = await MoviesApi.getInitialCards();
+export async function getCards(value, movies, setMovies, setNotFound, setIsLoading) {
+  setIsLoading(true);
+  const list = await MoviesApi.getInitialCards().finally(() => setIsLoading(false));
 
-  console.log();
   const listRu = list.filter((item) => item.nameRU !== null
     && item.nameRU
       .toLowerCase()

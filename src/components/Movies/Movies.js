@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getCards } from '../../utils/movies';
 
 function Movies() {
+  // states
+  const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [notFound, setNotFound] = useState(false);
@@ -14,11 +16,10 @@ function Movies() {
     movies,
     setMovies,
     setNotFound,
+    setIsLoading,
   ), [inputValue]);
   //
 
-  useEffect(() => console.log(`notFound: ${notFound}`), [notFound]);
-  //
   return (
     <main className="movies">
       <SearchForm
@@ -29,7 +30,7 @@ function Movies() {
         setMovies={setMovies}
         searched={movies.length > 1 && notFound === false}
       />
-      <MoviesCardList ARR_LENGTH={12} movies={movies} notFound={notFound} />
+      <MoviesCardList movies={movies} notFound={notFound} isLoading={isLoading} />
     </main>
   );
 }
