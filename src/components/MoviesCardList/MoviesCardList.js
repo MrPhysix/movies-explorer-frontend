@@ -33,10 +33,6 @@ function MoviesCardList({
     if (isDesktop === true) setVisibleCards(12);
   }, [isMobile, isTablet, isDesktop]);
 
-  useEffect(() => {
-    console.log(visibleCards);
-  }, [visibleCards]);
-
   if (isLoading) {
     return (<Preloader style={{ minHeight: '50vh' }} />);
   }

@@ -5,12 +5,17 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getCards } from '../../utils/movies';
 
 function Movies() {
+  // storage
+  const storage = {
+    search: JSON.parse(localStorage.getItem('search')),
+    filter: JSON.parse(localStorage.getItem('filter')),
+  };
   // states
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [notFound, setNotFound] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(Boolean);
   //
   const onSubmit = useCallback(() => getCards(
     inputValue,
@@ -21,9 +26,25 @@ function Movies() {
   ), [inputValue]);
   //
 
+  useEffect(() => { // storage
+    if (storage) {
+      if (storage.search && storage.search.movies) setMovies(storage.search.movies);
+      if (storage.search && storage.search.value) setInputValue(storage.search.value);
+      if (storage.filter !== null) setIsFiltered(storage.filter);
+    }
+  }, [storage.filter]);
+
   useEffect(() => {
-    console.log(isFiltered);
+    console.log(`isFiltered : ${isFiltered}`);
   }, [isFiltered]);
+
+  const filterHandle = useCallback(
+    (checked) => {
+      setIsFiltered(checked);
+      localStorage.setItem('filter', JSON.stringify(checked));
+    },
+    [setIsFiltered],
+  );
 
   return (
     <main className="movies">
@@ -33,7 +54,8 @@ function Movies() {
         setInputValue={setInputValue}
         setNotFound={setNotFound}
         setMovies={setMovies}
-        setIsFiltered={setIsFiltered}
+        isFiltered={isFiltered}
+        filterHandle={filterHandle}
         searched={movies.length > 1 && notFound === false}
       />
       <MoviesCardList movies={movies} notFound={notFound} isLoading={isLoading} />

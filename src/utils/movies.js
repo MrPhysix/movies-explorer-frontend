@@ -20,7 +20,8 @@ export async function getCards(value, movies, setMovies, setNotFound, setIsLoadi
 
   if (mergedList.length < 1) setNotFound(true);
   else {
-    setMovies(mergedList);
+    await localStorage.setItem('search', JSON.stringify({ value, movies: mergedList }));
+    setMovies(JSON.parse(localStorage.getItem('search')).movies);
     setNotFound(false);
   }
 }
