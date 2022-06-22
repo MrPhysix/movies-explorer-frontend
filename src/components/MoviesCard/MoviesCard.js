@@ -16,6 +16,7 @@ function MoviesCard({ item, inSavedMovies }) {
 
   const handlerSave = () => {
     setIsSaved(!isSaved);
+    console.log(item);
   };
 
   return (

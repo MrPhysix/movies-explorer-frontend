@@ -16,6 +16,7 @@ import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import { handleSignIn } from '../../utils/user';
 //
 function App() {
   // routes etc
@@ -57,6 +58,9 @@ function App() {
     handleLoading();
   }, []);
 
+  // auth
+  const token = handleSignIn('yandex_qu228@yandex.ru', '123');
+  console.log(token);
   return (
     isLoaded ? (
       <>

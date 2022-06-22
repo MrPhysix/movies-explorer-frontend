@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './SearchForm.css';
 import SearchIcon from '../../images/search-icon.svg';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
@@ -7,9 +7,23 @@ import useResolution from '../../hooks/useResolution';
 function SearchForm({
   inputValue, setInputValue, onSubmit, setNotFound, setMovies, isFiltered, filterHandle, searched,
 }) {
+  // states
+  const [focused, setFocused] = useState(false);
+  const [placeholder, setPlaceholder] = useState('Фильм');
+  // hooks
   const resolution = useResolution(560);
   // refs
   const formRef = useRef();
+
+  // handlers
+  function onFocus() {
+    setFocused(true);
+  }
+
+  function onBlur() {
+    setFocused(false);
+  }
+
   function handleChange(evt) {
     setInputValue(evt.target.value);
   }
@@ -27,7 +41,7 @@ function SearchForm({
     evt.preventDefault();
 
     if (inputValue.length < 1 || inputValue.match(/^ *$/) !== null || inputValue === null) {
-      alert('Нужно ввести ключевое слово');
+      setPlaceholder('Нужно ввести ключевое слово');
       handleReset();
     } else onSubmit();
   }
@@ -36,11 +50,19 @@ function SearchForm({
     const checked = await evt.target.checked;
     filterHandle(checked);
   };
+  // effects
+  useEffect(() => {
+    if (focused) setPlaceholder('Фильм');
+  }, [focused]);
 
   return (
     <section className="search-form">
       <div className="search-form__wrapper">
-        <form className="search-form__form" onSubmit={handleSubmit} ref={formRef}>
+        <form
+          className="search-form__form"
+          onSubmit={handleSubmit}
+          ref={formRef}
+        >
           <label htmlFor="search__input" className="search">
             {
               !resolution && <img src={SearchIcon} alt="search icon" className="search__icon" />
@@ -49,9 +71,11 @@ function SearchForm({
               <input
                 type="search"
                 className="search__input"
-                placeholder="Фильм"
+                placeholder={placeholder}
                 onChange={handleChange}
                 value={inputValue}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 // required
               />
               <button className="search__input_reset button-hover" type="button" onClick={handleReset} aria-label="close" />
