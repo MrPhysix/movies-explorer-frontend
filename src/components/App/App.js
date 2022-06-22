@@ -19,6 +19,15 @@ import Login from '../Login/Login';
 import { handleSignIn } from '../../utils/user';
 //
 function App() {
+  const regEx = /^[a-zA-Zа-яА-ЯЁё\s\-]+$/;
+
+  const str = 'Pasha';
+  const strRu = 'Паша';
+  const strNo = '123@@$%%';
+  console.log(str.match(regEx));
+  console.log(strRu.match(regEx));
+  console.log(strNo.match(regEx));
+
   // routes etc
   const [
     pageNotFound,
@@ -35,7 +44,7 @@ function App() {
 
   // states
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
   // handlers
 
   const handleLoading = () => {
@@ -59,8 +68,8 @@ function App() {
   }, []);
 
   // auth
-  const token = handleSignIn('yandex_qu228@yandex.ru', '123');
-  console.log(token);
+  // const token = handleSignIn('yandex_qu228@yandex.ru', '123');
+  // console.log(token);
   return (
     isLoaded ? (
       <>
