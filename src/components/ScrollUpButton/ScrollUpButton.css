@@ -1,0 +1,23 @@
+.scroll-up_button {
+    display: flex;
+    width: 45px;
+    height: 45px;
+    background-color: #3DDC84;
+    transform: scale(0);
+    opacity: 0;
+    transition: transform .25s ease-in-out, opacity .2s ease-in-out;
+    position: fixed;
+    right: 1vw;
+    bottom: 5vw;
+    border: none;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, .5));
+}
+
+.show {
+    transform: scale(1);
+    opacity: 1;
+}

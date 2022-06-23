@@ -1,0 +1,58 @@
+.login {
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__wrapper {
+    width: 410px;
+}
+
+.login__logo_link {
+    width: fit-content;
+    height: fit-content;
+}
+
+.login__logo {
+    width: 38px;
+    padding: 0;
+    margin: 0;
+}
+
+.login__title {
+    margin: 40px 0;
+    padding: 0;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+@media screen and (max-width: 475px) {
+    .login{
+        width: 100vw;
+        padding: 0 30px;
+        align-items: flex-start;
+        margin-top: 60px;
+    }
+
+    .login__wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login__logo_link {
+        align-self: center;
+    }
+
+    .login__title {
+        align-self: center;
+    }
+
+    .login__title {
+        margin: 50px 0 80px;
+    }
+}

@@ -1,0 +1,129 @@
+.portfolio {
+    margin: 100px 0 125px;
+    max-width: 1440px;
+    padding: 0 70px;
+    width: 100%;
+}
+
+.portfolio__title {
+    padding: 0;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.1;
+    color: #8B8B8B;
+}
+
+.portfolio__pages {
+    padding: 0;
+    margin: 50px 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio__page {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.portfolio__page::before {
+    display: block;
+    content: '↗';
+    color: #fff;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 2;
+    letter-spacing: -0.04em;
+    opacity: 0;
+}
+
+.portfolio__page::after {
+    content: '';
+    display: block;
+    margin-top: 20px;
+    background-color: #424242;
+    width: 100%;
+    height: 1px;
+}
+
+.portfolio__page:last-child {
+    margin-bottom: 0;
+}
+
+.portfolio__page:last-child::after {
+    display: none;
+}
+
+.page__link {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.67;
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-align: start;
+}
+
+.page__link_arrow {
+    color: #fff;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .portfolio {
+        margin: 90px 0;
+        padding: 0 50px;
+        width: 100%;
+    }
+
+    .page__link {
+        font-size: 28px;
+        line-height: 1.8;
+        width: 100%;
+    }
+
+    .portfolio__page::after {
+        background-color: #E6E6E6;
+    }
+    .portfolio__page::before {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .portfolio {
+        margin: 70px 0;
+        padding: 0 20px;
+    }
+
+    .page__link {
+        font-size: 18px;
+        line-height: 1.56;
+    }
+
+    .portfolio__page::before {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    .portfolio__title {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+}

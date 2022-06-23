@@ -1,0 +1,29 @@
+.nav-tab {
+  background-color: #303030;
+  border-radius: 10px;
+  min-width: 80px;
+  max-width: 96px;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  border: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-tab:first-child {
+  margin: 0;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+
+  .nav-tab {
+    max-width: 85px;
+  }
+}

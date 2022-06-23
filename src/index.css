@@ -1,0 +1,33 @@
+@import url('./vendor/normalize.css');
+@import url('./vendor/css-effects.css');
+
+body,
+body::after,
+body::before {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #202020;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /*outline: 1px red solid;*/
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
+::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+input[type="password"]
+{
+  -webkit-text-security: disc;
+}
