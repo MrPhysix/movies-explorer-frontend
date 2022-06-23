@@ -6,7 +6,13 @@
 .button-hover:hover {
     opacity: .8;
 }
-
+.button-hover:disabled {
+    background-color: #282828;
+    cursor: cell;
+}
+.button-hover:disabled:hover {
+    opacity: 1;
+}
 .button-active {
     transform: scale(1);
     transition: all .25s ease-in-out;

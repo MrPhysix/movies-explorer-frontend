@@ -1,4 +1,4 @@
-import Auth from './auth';
+import Auth from './api/auth';
 
 export function handleSignIn(email, password) {
   Auth

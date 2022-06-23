@@ -16,18 +16,9 @@ import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import { handleSignIn } from '../../utils/user';
+import Auth from '../../utils/api/auth';
 //
 function App() {
-  const regEx = /^[a-zA-Zа-яА-ЯЁё\s\-]+$/;
-
-  const str = 'Pasha';
-  const strRu = 'Паша';
-  const strNo = '123@@$%%';
-  console.log(str.match(regEx));
-  console.log(strRu.match(regEx));
-  console.log(strNo.match(regEx));
-
   // routes etc
   const [
     pageNotFound,
@@ -46,20 +37,19 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   // handlers
-
   const handleLoading = () => {
     setIsLoaded(!isLoaded);
   };
-
-  const handleLogOut = () => {
-    setIsLogged(false);
-    navigate('/');
-    console.log('out');
-  };
-
-  const handleLogIn = () => {
-    setIsLogged(true);
-    console.log('in');
+  const handleSignUp = (name, email, password) => {
+    console.log(name);
+    console.log(email);
+    console.log(password);
+    Auth.signUp(name, email, password)
+      .then((res) => {
+        navigate('/signin');
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   // effects
@@ -75,7 +65,7 @@ function App() {
       <>
         {
         !pageNotFound && !pageLogin && !pageRegister
-        && <Header isLogged={isLogged} handleLogIn={handleLogIn} />
+        && <Header isLogged={isLogged} />
       }
         <Routes>
           <Route
@@ -109,11 +99,11 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<Profile handleLogOut={handleLogOut} />}
+            element={<Profile />}
           />
           <Route
             path="/signup"
-            element={<Register />}
+            element={<Register onSubmit={handleSignUp} />}
           />
           <Route
             path="/signin"

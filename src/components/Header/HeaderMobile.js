@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Logo from '../../images/logo.svg';
 import './HeaderMobile.css';
 import usePage from '../../hooks/usePage';
 
@@ -31,9 +30,6 @@ function HeaderMobile() {
   return (
     <>
       <div className="header__mobile_wrapper">
-        <Link to="/" className="header__mobile_logo">
-          <img src={Logo} alt="logo" />
-        </Link>
         <button
           className={style}
           type="button"

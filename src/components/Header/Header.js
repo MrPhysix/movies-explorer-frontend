@@ -21,25 +21,29 @@ function Header({ isLogged }) {
 
   return (
     <header className={style}>
-      {!isMobile ? (
-        <>
-          <div className="header__wrapper">
-            <Link to="/" className="header__logo">
-              <img src={Logo} alt="logo" />
-            </Link>
-            {
-          isLogged
-          && (
+      <div className="header__wrapper">
+        <Link to="/" className="header__logo">
+          <img src={Logo} alt="logo" />
+        </Link>
+        {
+          isLogged && !isMobile && (
             <nav className="header__menu">
               <Link to="/movies" className="menu_link menu_link_active link-hover">Фильмы</Link>
               <Link to="/saved-movies" className="menu_link link-hover">Сохранённые фильмы</Link>
             </nav>
           )
-        }
+      }
+      </div>
+      {
+        isLogged ? (
+          <div>
+            {
+            !isMobile
+              ? <Link to="/profile" className="profile_button button-hover">Аккаунт</Link>
+              : <HeaderMobile />
+          }
           </div>
-          {
-        isLogged
-          ? (<Link to="/profile" className="profile_button button-hover">Аккаунт</Link>)
+        )
           : (
             <nav className="header__auth">
               <HeaderButton
@@ -55,9 +59,6 @@ function Header({ isLogged }) {
             </nav>
           )
       }
-        </>
-      )
-        : <HeaderMobile isLogged={isLogged} />}
     </header>
   );
 }
