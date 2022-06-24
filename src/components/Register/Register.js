@@ -7,30 +7,24 @@ import FormElementInput from '../FormElement/FormElementInput/FormElementInput';
 import './Register.css';
 import { regEx } from '../../utils/consts';
 
+// test@test.ru : test@test.ru
 function Register({ onSubmit }) {
   // const
   const {
     values, errors, isFormValid, handleChange, resetForm,
   } = useFormValidator();
-  const { name, email, password } = values;
+  const { name, email, password } = values; // uncontrolled input warning
+
   // handlers
   const handleSubmit = useCallback((evt) => {
     evt.preventDefault();
-    console.log('onSBM');
-    console.log(name);
-    onSubmit(name, email, password);
+    onSubmit(name, email.toLowerCase(), password);
   }, [name, email, password]);
 
   // effects
   useEffect(() => {
     resetForm();
-  }, [resetForm]);
-
-  useEffect(() => {
-    console.log(name);
-    console.log(email);
-    console.log(password);
-  }, [name, email, password]);
+  }, []);
 
   return (
     <main className="register">

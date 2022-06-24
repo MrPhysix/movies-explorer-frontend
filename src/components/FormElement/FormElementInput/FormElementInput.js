@@ -20,11 +20,11 @@ function FormElementInput({
         defaultValue=""
         onChange={onChange}
         minLength={minLength}
-        maxLength={maxLength && maxLength}
+        maxLength={maxLength}
         required
       />
       <i className="form-element__divider" />
-      <p className="form-element__error">{errorText && errorText}</p>
+      <p className="form-element__error">{errorText}</p>
     </label>
   );
 }

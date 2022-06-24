@@ -1,0 +1,56 @@
+.info-tooltip {
+    min-width: 250px;
+    width: 100%;
+    min-height: 250px;
+    height: 100%;
+    font-family: Inter, sans-serif;
+    color: #fff;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-tooltip__image {
+    width: 150px;
+}
+
+.info-tooltip__title {
+    font-family: inherit;
+    font-weight: 400;
+    width: 100%;
+    font-size: 26px;
+    text-align: center;
+    white-space: pre-line;
+    margin: 25% 0 20px;
+}
+
+.info-tooltip__button {
+    background-color: #4285F4;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    min-width: 80px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 8px 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .info-tooltip__image {
+        width: 100px;
+    }
+
+    .info-tooltip__title {
+        font-size: 18px;
+    }
+
+}
+@media screen and (min-width: 768px) {
+    .info-tooltip__title {
+        min-width: 400px;
+        margin: 15% 0 20px;
+    }
+
+}

@@ -13,10 +13,11 @@ class Api {
   }
 
   async _checkResult(res) {
-    if (res.ok && res.status <= 300) {
+    if (res.ok) {
       return res.json();
     }
     const err = await res.json().then((data) => data.message);
+    console.log(err);
     return Promise.reject(new Error(err));
   }
 
@@ -27,9 +28,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({ name, email, password }),
     })
-      .then((res) => this._checkResult(res))
-      .then((res) => res)
-      .catch((err) => console.log(`signUp ${err}`));
+      .then((res) => this._checkResult(res));
   }
 
   signIn(email, password) {
@@ -40,22 +39,21 @@ class Api {
       body: JSON.stringify({ email, password }),
     })
       .then((res) => this._checkResult(res))
-      .then((data) => data.token)
-      .catch((err) => console.log(`signIn ${err}`));
+      .then((data) => data.token);
   }
 
-// function checkToken(token) {
-//   fetch(`${baseUrl}/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       ...baseHeaders,
-//       Authorization: `${token}`,
-//     },
-//   })
-//     .then((res) => _checkResult(res))
-//     .then((res) => res)
-//     .catch((err) => console.log(`checkToken err ${err}`));
-// }
+  checkToken(token) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        ...this._headers,
+        Authorization: `${token}`,
+      },
+    })
+      .then((res) => this._checkResult(res))
+      .then((res) => res)
+      .catch((err) => console.log(`checkToken err ${err}`));
+  }
 }
 const Auth = new Api(authConfig);
 export default Auth;

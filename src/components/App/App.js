@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useState,
+} from 'react';
 import {
   Routes, Route, Navigate, useNavigate,
 } from 'react-router-dom';
@@ -17,6 +19,8 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Auth from '../../utils/api/auth';
+import Popup from '../Popup/Popup';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 //
 function App() {
   // routes etc
@@ -31,35 +35,82 @@ function App() {
     usePage('/signin'),
     usePage('/signup'),
   ];
+  // const
   const navigate = useNavigate();
-
   // states
   const [isLoaded, setIsLoaded] = useState(false);
+  // user
+  const [userInfo, setUserInfo] = useState({});
+  const [signInInfo, setSignInInfo] = useState({});
   const [isLogged, setIsLogged] = useState(false);
+  const [infoTooltip, setInfoTooltip] = useState({});
   // handlers
   const handleLoading = () => {
-    setIsLoaded(!isLoaded);
+    setIsLoaded(true);
   };
-  const handleSignUp = (name, email, password) => {
-    console.log(name);
-    console.log(email);
-    console.log(password);
-    Auth.signUp(name, email, password)
-      .then((res) => {
-        navigate('/signin');
-        console.log(res);
+
+  // __auth
+  const handleSignIn = (email, password) => {
+    Auth.signIn(email, password)
+      .then((token) => {
+        if (token) {
+          console.log(`signIn data token ${token}`);
+          console.log(signInInfo);
+          localStorage.setItem('jwt', token);
+        }
+        navigate('/movies');
+        setIsLogged(true);
+        setSignInInfo({});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => new Error(err));
   };
+
+  const handleSignUp = (name, email, password) => {
+    Auth.signUp(name, email, password)
+      .then(() => {
+        setInfoTooltip({ isOpen: true, isFailed: false });
+        setSignInInfo({ email, password });
+      })
+      .catch((err) => {
+        setInfoTooltip({ isOpen: true, isFailed: true });
+        return new Error(err);
+      });
+  };
+  async function handleLocalStorageAuth() {
+    const jwt = localStorage.getItem('jwt');
+    const user = await Auth.checkToken(jwt);
+    if (!user) return;
+    setUserInfo(user);
+    setIsLogged(true);
+    console.log('user');
+    console.log(user);
+  }
+  // __popups
+  const handleCloseAppPopups = () => {
+    setInfoTooltip({ isOpen: false, isFailed: null });
+  };
+  //
+  const handleCloseInfoTooltip = useCallback(() => {
+    if (infoTooltip.isOpen && !infoTooltip.isFailed) {
+      handleSignIn(signInInfo.email, signInInfo.password);
+      handleCloseAppPopups();
+    }
+    handleCloseAppPopups();
+  }, [infoTooltip, signInInfo]);
 
   // effects
   useEffect(() => {
     handleLoading();
   }, []);
 
-  // auth
-  // const token = handleSignIn('yandex_qu228@yandex.ru', '123');
-  // console.log(token);
+  useEffect(() => {
+    console.log('userInfo');
+    console.log(userInfo);
+  }, [userInfo]);
+
+  useEffect(() => {
+    handleLocalStorageAuth().then(() => console.log('handleLocalStorageAuth'));
+  }, [isLogged]);
   return (
     isLoaded ? (
       <>
@@ -107,11 +158,19 @@ function App() {
           />
           <Route
             path="/signin"
-            element={<Login />}
+            element={<Login onSubmit={handleSignIn} />}
           />
         </Routes>
         {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
         <ScrollUpButton menuScrolled />
+        {
+          infoTooltip.isOpen
+          && (
+          <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
+            <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
+          </Popup>
+          )
+        }
       </>
     ) : <Preloader />
   );

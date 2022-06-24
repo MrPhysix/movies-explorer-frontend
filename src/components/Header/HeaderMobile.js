@@ -13,13 +13,13 @@ function HeaderMobile() {
   const style = `header__mobile_menu ${menuIsOpen && 'open'}`;
 
   // handlers
-  const handlerMenuOpen = () => {
+  const handleMenuOpen = () => {
     setMenuIsOpen(!menuIsOpen);
   };
 
   const handleOutsideClick = (evt) => {
     const outside = evt.target === evt.currentTarget;
-    return outside && handlerMenuOpen();
+    return outside && handleMenuOpen();
   };
 
   useEffect(() => { // scroll stop
@@ -33,7 +33,7 @@ function HeaderMobile() {
         <button
           className={style}
           type="button"
-          onClick={handlerMenuOpen}
+          onClick={handleMenuOpen}
         >
           <div className="mobile_menu__burger" />
         </button>
@@ -50,21 +50,21 @@ function HeaderMobile() {
             <ul className="menu__nav_links">
               <Link
                 to="/"
-                onClick={handlerMenuOpen}
+                onClick={handleMenuOpen}
                 className={`menu__nav_link link-hover ${pageMain && 'active'}`}
               >
                 Главная
               </Link>
               <Link
                 to="/movies"
-                onClick={handlerMenuOpen}
+                onClick={handleMenuOpen}
                 className={`menu__nav_link link-hover ${pageMovies && 'active'}`}
               >
                 Фильмы
               </Link>
               <Link
                 to="/saved-movies"
-                onClick={handlerMenuOpen}
+                onClick={handleMenuOpen}
                 className={`menu__nav_link link-hover ${pageSavedMovies && 'active'}`}
               >
                 Сохраненые фильмы
@@ -72,7 +72,7 @@ function HeaderMobile() {
             </ul>
             <Link
               to="/profile"
-              onClick={handlerMenuOpen}
+              onClick={handleMenuOpen}
               className="profile_button mobile button-hover"
             >
               Аккаунт

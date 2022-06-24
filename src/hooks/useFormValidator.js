@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 function useFormValidator() {
   const [values, setValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
-  const [isFormValid, setIsFormValid] = React.useState(false);
+  const [isFormValid, setIsValid] = React.useState(false);
 
   const handleChange = (evt) => {
     const { target } = evt;
@@ -11,21 +11,18 @@ function useFormValidator() {
     const { value } = target;
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
-    setIsFormValid(target.closest('form').checkValidity());
+    setIsValid(target.closest('form').checkValidity());
   };
 
-  const resetForm = useCallback(
-    (
-      restValues = {},
-      resetErrors = {},
-      resetIsFormValid = false,
-    ) => {
-      setValues(restValues);
-      setErrors(resetErrors);
-      setIsFormValid(resetIsFormValid);
-    },
-    [setValues, setErrors, setIsFormValid],
-  );
+  const resetForm = useCallback((
+    newValues = {},
+    newErrors = {},
+    newIsValid = false,
+  ) => {
+    setValues(newValues);
+    setErrors(newErrors);
+    setIsValid(newIsValid);
+  }, [setValues, setErrors, setIsValid]);
 
   return {
     values, setValues, errors, isFormValid, handleChange, resetForm,
