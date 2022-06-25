@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom';
 import './FormElement.css';
 
 function FormElement({
-  isFormValid,
-  onSubmit,
-  submitText,
-  underText,
-  linkToPath,
-  underLinkText,
+  isFormValid, onSubmit, submitText,
+  underText, linkToPath, underLinkText,
   children,
 }) {
   return (

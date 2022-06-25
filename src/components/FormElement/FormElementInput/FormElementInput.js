@@ -23,7 +23,7 @@ function FormElementInput({
         maxLength={maxLength}
         required
       />
-      <i className="form-element__divider" />
+      <i className={`form-element__divider ${errorText && 'error'}`} />
       <p className="form-element__error">{errorText}</p>
     </label>
   );

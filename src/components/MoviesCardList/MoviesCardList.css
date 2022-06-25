@@ -58,7 +58,7 @@
     .movies-cards-list_empty {
         padding: 50px 10px 80px;
     }
-    
+
     .movies-cards-list {
         padding: 50px 10px 80px;
         grid-template-columns: 1fr;

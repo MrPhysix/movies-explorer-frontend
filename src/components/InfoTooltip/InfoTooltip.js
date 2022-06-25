@@ -17,7 +17,7 @@ const infoTooltipConfig = {
 
 function InfoTooltip({ failed, handleClose }) {
   return (
-    <div className="info-tooltip">
+    <div className="info-tooltip fail">
       <img className="info-tooltip__image" src={failed ? infoTooltipConfig.fail.image : infoTooltipConfig.success.image} alt="process mark" />
       <h2 className="info-tooltip__title">{failed ? infoTooltipConfig.fail.title : infoTooltipConfig.success.title}</h2>
       <button

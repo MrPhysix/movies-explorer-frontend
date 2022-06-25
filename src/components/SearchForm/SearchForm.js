@@ -29,10 +29,12 @@ function SearchForm({
   }
 
   function handleReset() {
+    const token = localStorage.getItem('jwt');
     setInputValue('');
     setNotFound(false);
     setMovies([]);
     localStorage.clear();
+    localStorage.setItem('jwt', token);
     formRef.current.reset();
     filterHandle(false);
   }

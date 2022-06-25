@@ -38,7 +38,7 @@ function App() {
   // const
   const navigate = useNavigate();
   // states
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // user
   const [userInfo, setUserInfo] = useState({});
   const [signInInfo, setSignInInfo] = useState({});
@@ -46,11 +46,12 @@ function App() {
   const [infoTooltip, setInfoTooltip] = useState({});
   // handlers
   const handleLoading = () => {
-    setIsLoaded(true);
+    setIsLoading(false);
   };
 
   // __auth
   const handleSignIn = (email, password) => {
+    setIsLoading(true);
     Auth.signIn(email, password)
       .then((token) => {
         if (token) {
@@ -62,10 +63,15 @@ function App() {
         setIsLogged(true);
         setSignInInfo({});
       })
-      .catch((err) => new Error(err));
+      .catch((err) => {
+        setInfoTooltip({ isOpen: true, isFailed: true });
+        return new Error(err);
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleSignUp = (name, email, password) => {
+    setIsLoading(true);
     Auth.signUp(name, email, password)
       .then(() => {
         setInfoTooltip({ isOpen: true, isFailed: false });
@@ -74,7 +80,8 @@ function App() {
       .catch((err) => {
         setInfoTooltip({ isOpen: true, isFailed: true });
         return new Error(err);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
   async function handleLocalStorageAuth() {
     const jwt = localStorage.getItem('jwt');
@@ -112,7 +119,7 @@ function App() {
     handleLocalStorageAuth().then(() => console.log('handleLocalStorageAuth'));
   }, [isLogged]);
   return (
-    isLoaded ? (
+    !isLoading ? (
       <>
         {
         !pageNotFound && !pageLogin && !pageRegister
@@ -150,29 +157,24 @@ function App() {
           />
           <Route
             path="/profile"
-            element={<Profile />}
+            element={<Profile userInfo={userInfo} />}
           />
           <Route
             path="/signup"
-            element={<Register onSubmit={handleSignUp} />}
+            element={<Register onSubmit={handleSignUp} isLoading={isLoading} />}
           />
           <Route
             path="/signin"
-            element={<Login onSubmit={handleSignIn} />}
+            element={<Login onSubmit={handleSignIn} isLoading={isLoading} />}
           />
         </Routes>
         {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
         <ScrollUpButton menuScrolled />
-        {
-          infoTooltip.isOpen
-          && (
-          <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
-            <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
-          </Popup>
-          )
-        }
+        <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
+          <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
+        </Popup>
       </>
-    ) : <Preloader />
+    ) : <Preloader style={{ width: '100vw', height: '100vh' }} />
   );
 }
 

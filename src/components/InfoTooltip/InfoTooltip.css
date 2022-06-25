@@ -26,14 +26,16 @@
 }
 
 .info-tooltip__button {
+    text-transform: uppercase;
     background-color: #4285F4;
     border: none;
+    border-top: 2px #5897FE solid;
     border-radius: 20px;
     color: #fff;
     min-width: 80px;
     font-family: inherit;
-    font-weight: 600;
-    font-size: 18px;
+    font-weight: 400;
+    font-size: 16px;
     padding: 8px 30px;
 }
 
@@ -44,6 +46,10 @@
 
     .info-tooltip__title {
         font-size: 18px;
+    }
+
+    .info-tooltip__button {
+        font-size: 14px;
     }
 
 }

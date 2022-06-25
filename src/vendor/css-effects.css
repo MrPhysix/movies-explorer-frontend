@@ -8,6 +8,7 @@
 }
 .button-hover:disabled {
     background-color: #282828;
+    border-top: 2px #282828 solid;
     cursor: cell;
 }
 .button-hover:disabled:hover {

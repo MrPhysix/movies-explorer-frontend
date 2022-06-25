@@ -2,11 +2,16 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0, .5);
+    background-color: rgba(0,0,0, .35);
     z-index: 999999;
     display: flex;
     justify-content: center;
     align-items: center;
+    visibility: hidden;
+}
+
+.popup.open {
+    visibility: visible;
 }
 
 .popup__wrapper {
@@ -20,6 +25,12 @@
     border-radius: 20px;
     padding: 45px;
     box-shadow: 10px 15px 35px rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+}
+
+.popup__wrapper.fail {
+    /*outline: 2px #EE3465 solid;*/
+    /*box-shadow: 0 0 50px rgba(238, 52, 101, .25);*/
 }
 
 .popup__close-button {

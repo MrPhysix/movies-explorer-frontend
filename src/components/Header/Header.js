@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import { config, animated, useSpring } from 'react-spring';
 import Logo from '../../images/logo.svg';
 import HeaderMobile from './HeaderMobile';
 import useScrollPosition from '../../hooks/useScrollPosition';
@@ -13,17 +14,27 @@ function HeaderButton({ optionStyles, text, path }) {
 }
 
 function Header({ isLogged }) {
+  // hooks
   const scrollPosition = useScrollPosition();
   const isMobile = useResolution('0', '768');
-
+  // const
   const style = `header ${scrollPosition > 0 && ' shadow'}`;
+  // libs
+  const [anim, setAnim] = useState(false);
+  const spring = useSpring({
+    scale: 1,
+    transform: `rotateZ(${anim ? 360 : 0}deg)`,
+    config: config.wobbly,
+  });
+  const onClick = () => {
+    setAnim(!anim);
+  };
   //
-
   return (
     <header className={style}>
       <div className="header__wrapper">
         <Link to="/" className="header__logo">
-          <img src={Logo} alt="logo" />
+          <animated.img src={Logo} alt="logo" style={spring} onClick={onClick} />
         </Link>
         {
           isLogged && !isMobile && (

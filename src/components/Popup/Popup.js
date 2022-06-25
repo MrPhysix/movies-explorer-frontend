@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
 import './Popup.css';
+import { config, animated, useTransition } from 'react-spring';
 
 function Popup({ isOpen, handleClose, children }) {
+  // libs
+  const popupTransition = useTransition(isOpen, {
+    config: config.wobbly,
+    from: { scale: 0, opacity: 1 },
+    enter: { scale: 1, opacity: 1 },
+    leave: { scale: 0, opacity: 0 },
+  });
+
   // handlers
   const handleCloseByKey = (evt) => (evt.key === 'Escape')
     && handleClose() && evt.target.blur() && console.log('handleCloseByKey');
@@ -28,18 +37,22 @@ function Popup({ isOpen, handleClose, children }) {
     <div
       onClick={handleOutsideClick}
       aria-hidden="true"
-      className="popup"
+      className={`popup ${isOpen && 'open'}`}
     >
-      <div className="popup__wrapper">
-        {children}
-        <button
-          className="popup__close-button button-hover"
-          type="button"
-          onClick={handleClose}
-        >
-          &times;
-        </button>
-      </div>
+      {
+        popupTransition((style, item) => item && (
+        <animated.div className={`popup__wrapper ${children.props.failed && 'fail'}`} style={style}>
+          {children}
+          <button
+            className="popup__close-button button-hover"
+            type="button"
+            onClick={handleClose}
+          >
+            &times;
+          </button>
+        </animated.div>
+        ))
+      }
     </div>
   );
 }
