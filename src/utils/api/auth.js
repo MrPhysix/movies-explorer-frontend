@@ -54,6 +54,14 @@ class Api {
       .then((res) => res)
       .catch((err) => console.log(`checkToken err ${err}`));
   }
+
+  signOut() {
+    return fetch(`${this._baseUrl}/logout`, {
+      method: 'POST',
+      headers: this._headers,
+    })
+      .catch((err) => console.log(`signOut err ${err}`));
+  }
 }
 const Auth = new Api(authConfig);
 export default Auth;

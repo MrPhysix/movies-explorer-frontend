@@ -6,6 +6,7 @@ import Logo from '../../images/logo.svg';
 import HeaderMobile from './HeaderMobile';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import useResolution from '../../hooks/useResolution';
+import usePage from '../../hooks/usePage';
 
 function HeaderButton({ optionStyles, text, path }) {
   return (
@@ -14,11 +15,19 @@ function HeaderButton({ optionStyles, text, path }) {
 }
 
 function Header({ isLogged }) {
+  // sliderNav
+  const marker = document.querySelector('.header__menu::after');
+  console.log(marker);
   // hooks
   const scrollPosition = useScrollPosition();
   const isMobile = useResolution('0', '768');
   // const
   const style = `header ${scrollPosition > 0 && ' shadow'}`;
+  const [
+    pageMovies,
+    pageSavedMovies] = [
+    usePage('/movies'),
+    usePage('/saved-movies')];
   // libs
   const [anim, setAnim] = useState(false);
   const spring = useSpring({
@@ -39,8 +48,8 @@ function Header({ isLogged }) {
         {
           isLogged && !isMobile && (
             <nav className="header__menu">
-              <Link to="/movies" className="menu_link menu_link_active link-hover">Фильмы</Link>
-              <Link to="/saved-movies" className="menu_link link-hover">Сохранённые фильмы</Link>
+              <Link to="/movies" className={`menu_link link-hover ${pageMovies && 'active'}`}>Фильмы</Link>
+              <Link to="/saved-movies" className={`menu_link link-hover ${pageSavedMovies && 'active'}`}>Сохранённые фильмы</Link>
             </nav>
           )
       }

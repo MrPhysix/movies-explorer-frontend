@@ -18,9 +18,12 @@ import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import Auth from '../../utils/api/auth';
 import Popup from '../Popup/Popup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+//
+import Auth from '../../utils/api/auth';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import MainApi from '../../utils/api/MainApi';
 //
 function App() {
   // routes etc
@@ -40,7 +43,7 @@ function App() {
   // states
   const [isLoading, setIsLoading] = useState(true);
   // user
-  const [userInfo, setUserInfo] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [signInInfo, setSignInInfo] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState({});
@@ -83,15 +86,40 @@ function App() {
       })
       .finally(() => setIsLoading(false));
   };
+
   async function handleLocalStorageAuth() {
     const jwt = localStorage.getItem('jwt');
     const user = await Auth.checkToken(jwt);
     if (!user) return;
-    setUserInfo(user);
+    setCurrentUser(user);
     setIsLogged(true);
     console.log('user');
     console.log(user);
   }
+
+  const handleLogOut = () => {
+    setIsLoading(true);
+    Auth.signOut()
+      .then(() => {
+        setIsLogged(false);
+        localStorage.clear();
+      })
+      .finally(() => {
+        setIsLoading(false);
+        navigate('/');
+      });
+  };
+  // __user
+  const handleUpdateUser = (name, email) => {
+    setIsLoading(true);
+    MainApi.updateUser(name, email)
+      .then((res) => {
+        setCurrentUser((prev) => ({ ...prev, ...res }));
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
   // __popups
   const handleCloseAppPopups = () => {
     setInfoTooltip({ isOpen: false, isFailed: null });
@@ -105,76 +133,91 @@ function App() {
     handleCloseAppPopups();
   }, [infoTooltip, signInInfo]);
 
+  function getSavedMovies() {
+    MainApi.getSavedMovies().then((res) => {
+      console.log('getSavedMovies');
+      console.log(res);
+    });
+  }
+
   // effects
   useEffect(() => {
     handleLoading();
+    getSavedMovies();
   }, []);
 
   useEffect(() => {
-    console.log('userInfo');
-    console.log(userInfo);
-  }, [userInfo]);
+    console.log('currentUser APP');
+    console.log(currentUser);
+  }, [currentUser]);
 
   useEffect(() => {
     handleLocalStorageAuth().then(() => console.log('handleLocalStorageAuth'));
   }, [isLogged]);
   return (
-    !isLoading ? (
-      <>
-        {
-        !pageNotFound && !pageLogin && !pageRegister
-        && <Header isLogged={isLogged} />
-      }
-        <Routes>
-          <Route
-            path="/*"
-            element={<Navigate to="/404" replace />}
-          />
-          <Route
-            path="/404"
-            element={<NotFoundPage />}
-          />
-          <Route
-            exact
-            path="/"
-            element={<Main />}
-          />
-          <Route
-            path="/movies"
-            element={(
-              <ProtectedRoute isLogged={isLogged}>
-                <Movies />
-              </ProtectedRoute>
-        )}
-          />
-          <Route
-            path="/saved-movies"
-            element={(
-              <ProtectedRoute isLogged={isLogged}>
-                <SavedMovies />
-              </ProtectedRoute>
-        )}
-          />
-          <Route
-            path="/profile"
-            element={<Profile userInfo={userInfo} />}
-          />
-          <Route
-            path="/signup"
-            element={<Register onSubmit={handleSignUp} isLoading={isLoading} />}
-          />
-          <Route
-            path="/signin"
-            element={<Login onSubmit={handleSignIn} isLoading={isLoading} />}
-          />
-        </Routes>
-        {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
-        <ScrollUpButton menuScrolled />
-        <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
-          <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
-        </Popup>
-      </>
-    ) : <Preloader style={{ width: '100vw', height: '100vh' }} />
+    <CurrentUserContext.Provider value={currentUser}>
+      {!isLoading ? (
+        <>
+          {
+            !pageNotFound && !pageLogin && !pageRegister
+            && <Header isLogged={isLogged} />
+          }
+          <Routes>
+            <Route
+              path="/*"
+              element={<Navigate to="/404" replace />}
+            />
+            <Route
+              path="/404"
+              element={<NotFoundPage />}
+            />
+            <Route
+              exact
+              path="/"
+              element={<Main />}
+            />
+            <Route
+              path="/movies"
+              element={(
+                <ProtectedRoute isLogged={isLogged}>
+                  <Movies />
+                </ProtectedRoute>
+              )}
+            />
+            <Route
+              path="/saved-movies"
+              element={(
+                <ProtectedRoute isLogged={isLogged}>
+                  <SavedMovies />
+                </ProtectedRoute>
+              )}
+            />
+            <Route
+              path="/profile"
+              element={(
+                <Profile
+                  onLogOut={handleLogOut}
+                  onSubmit={handleUpdateUser}
+                />
+              )}
+            />
+            <Route
+              path="/signup"
+              element={<Register onSubmit={handleSignUp} isLoading={isLoading} />}
+            />
+            <Route
+              path="/signin"
+              element={<Login onSubmit={handleSignIn} isLoading={isLoading} />}
+            />
+          </Routes>
+          {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
+          <ScrollUpButton menuScrolled />
+          <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
+            <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
+          </Popup>
+        </>
+      ) : <Preloader style={{ width: '100vw', height: '100vh' }} />}
+    </CurrentUserContext.Provider>
   );
 }
 

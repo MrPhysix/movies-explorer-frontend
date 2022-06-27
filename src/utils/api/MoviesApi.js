@@ -1,10 +1,10 @@
 const apiConfig = {
-  baseUrl: 'https://api.nomoreparties.co',
+  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies.',
 };
 
 class Api {
   constructor({ baseUrl }) {
-    this._url = `${baseUrl}/beatfilm-movies`;
+    this._url = baseUrl;
   }
 
   _checkResult = (res) => {

@@ -52,7 +52,7 @@ function Register({ onSubmit, isLoading }) {
               value={name}
               onChange={handleChange}
               minLength="2"
-              maxLength="32"
+              maxLength="30"
             />
             <FormElementInput
               name="email"

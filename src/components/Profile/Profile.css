@@ -52,23 +52,43 @@
     max-width: 49%;
 }
 
-.info_line__text {
+.info_line__input {
+    caret-color: #3DDC84;
+    background-color: transparent;
+    border: none;
+    color: #fff;
     font-family: inherit;
     font-weight: 400;
     display: block;
-    text-align: right;
+    direction: ltr;
+    text-align: end;
     padding: 0;
-    margin: 0;
     max-width: 49%;
 }
 
+.info_line__input::placeholder {
+    color: #fff;
+}
+
+.info_line__input:focus {
+    outline: none;
+}
 
 .line__divider {
-    margin: 15px 0;
+    margin-bottom: 15px;
     padding: 0;
     width: 100%;
     height: 1px;
     background-color: #424242;
+}
+
+.info_line__error {
+    padding: 0;
+    margin: 10px 0 0;
+    font-size: 10px;
+    line-height: 1;
+    color: #EE3465;
+    min-height: 15px;
 }
 
 .profile__buttons {
