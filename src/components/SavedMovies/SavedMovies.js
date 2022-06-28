@@ -49,6 +49,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
         isFiltered={isFiltered}
         filterHandle={filterHandle}
         searched={movies.length > 1 && notFound === false}
+        inSavedMovies
       />
       <MoviesCardList
         inSavedMovies

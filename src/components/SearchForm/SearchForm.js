@@ -5,8 +5,12 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import useResolution from '../../hooks/useResolution';
 
 function SearchForm({
-  inputValue, setInputValue, onSubmit, setNotFound, setMovies, isFiltered, filterHandle, searched,
+  inputValue, setInputValue, onSubmit,
+  setNotFound, setMovies, isFiltered, filterHandle,
+  searched, inSavedMovies,
 }) {
+  console.log('inSavedMovies');
+  console.log(inSavedMovies);
   // states
   const [focused, setFocused] = useState(false);
   const [placeholder, setPlaceholder] = useState('Фильм');
@@ -84,8 +88,10 @@ function SearchForm({
             </div>
             <button className="search__button button-hover button-active" type="submit">Найти</button>
           </label>
-          {resolution && searched && <i className="divider" />}
-          {searched && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
+          {resolution && searched && !inSavedMovies && <i className="divider" />}
+          {searched && !inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
+          {resolution && inSavedMovies && <i className="divider" />}
+          {inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
         </form>
       </div>
     </section>
