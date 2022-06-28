@@ -15,9 +15,6 @@ function HeaderButton({ optionStyles, text, path }) {
 }
 
 function Header({ isLogged }) {
-  // sliderNav
-  const marker = document.querySelector('.header__menu::after');
-  console.log(marker);
   // hooks
   const scrollPosition = useScrollPosition();
   const isMobile = useResolution('0', '768');

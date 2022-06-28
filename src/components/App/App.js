@@ -47,6 +47,9 @@ function App() {
   const [signInInfo, setSignInInfo] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const [infoTooltip, setInfoTooltip] = useState({});
+  // movies
+  const [savedMovies, setSavedMovies] = useState([]);
+
   // handlers
   const handleLoading = () => {
     setIsLoading(false);
@@ -120,6 +123,13 @@ function App() {
         setIsLoading(false);
       });
   };
+
+  // __movies
+  async function getSavedMovies() {
+    const movies = await MainApi.getSavedMovies();
+    setSavedMovies(movies);
+  }
+
   // __popups
   const handleCloseAppPopups = () => {
     setInfoTooltip({ isOpen: false, isFailed: null });
@@ -133,18 +143,16 @@ function App() {
     handleCloseAppPopups();
   }, [infoTooltip, signInInfo]);
 
-  function getSavedMovies() {
-    MainApi.getSavedMovies().then((res) => {
-      console.log('getSavedMovies');
-      console.log(res);
-    });
-  }
-
   // effects
   useEffect(() => {
     handleLoading();
     getSavedMovies();
   }, []);
+
+  useEffect(() => {
+    console.log('App savedMovies');
+    console.log(savedMovies);
+  }, [savedMovies]);
 
   useEffect(() => {
     console.log('currentUser APP');
@@ -180,7 +188,7 @@ function App() {
               path="/movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <Movies />
+                  <Movies savedMovies={savedMovies} />
                 </ProtectedRoute>
               )}
             />
@@ -188,7 +196,7 @@ function App() {
               path="/saved-movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <SavedMovies />
+                  <SavedMovies savedMovies={savedMovies} />
                 </ProtectedRoute>
               )}
             />

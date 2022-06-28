@@ -2,44 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import MainApi from '../../utils/api/MainApi';
 
-function SavedMovies() {
+function SavedMovies({ savedMovies }) {
   // storage
   const storage = {
     search: JSON.parse(localStorage.getItem('savedSearch')),
     filter: JSON.parse(localStorage.getItem('savedFilter')),
   };
   // states
-  const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [notFound, setNotFound] = useState(false);
   const [isFiltered, setIsFiltered] = useState(Boolean);
   // handlers
-  function getSavedMovies() {
-    setIsLoading(true);
-    try {
-      MainApi.getSavedMovies()
-        .then((res) => setMovies(res))
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-  const onSubmit = useCallback(() => getSavedMovies(), [inputValue]);
+
+  const onSubmit = useCallback(() => console.log('onSbm'), [inputValue]);
   //
-
-  useEffect(() => {
-    getSavedMovies();
-  }, []);
-
-  useEffect(() => {
-    console.log(movies);
-  }, [movies]);
-
   useEffect(() => { // storage
     if (storage) {
       if (storage.search && storage.search.movies) setMovies(storage.search.movies);
@@ -72,7 +50,13 @@ function SavedMovies() {
         filterHandle={filterHandle}
         searched={movies.length > 1 && notFound === false}
       />
-      <MoviesCardList inSavedMovies movies={movies} notFound={notFound} isLoading={isLoading} />
+      <MoviesCardList
+        inSavedMovies
+        movies={savedMovies}
+        savedMovies={savedMovies}
+        notFound={notFound}
+        isLoading={false}
+      />
     </main>
   );
 }

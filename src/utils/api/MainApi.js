@@ -63,10 +63,6 @@ class Api {
   }
 
   createSavedMovie(movie) {
-    console.log('movie');
-    console.log(movie);
-    console.log('movie.image.url');
-    console.log(this._moviesUrl + movie.image.formats.thumbnail.url);
     return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: this._getHeaders(),
@@ -83,6 +79,16 @@ class Api {
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
       }),
+    })
+      .then((res) => this._checkResult(res))
+      .catch((err) => console.log(err));
+  }
+
+  removeSavedMovie(movieId) {
+    console.log(movieId);
+    return fetch(`${this._baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: this._getHeaders(),
     })
       .then((res) => this._checkResult(res))
       .catch((err) => console.log(err));

@@ -1,10 +1,14 @@
+import MainApi from './MainApi';
+
 const apiConfig = {
-  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies.',
+  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+  getSavedMovies: MainApi.getSavedMovies(),
 };
 
 class Api {
-  constructor({ baseUrl }) {
+  constructor({ baseUrl, getSavedMovies }) {
     this._url = baseUrl;
+    this._getSavedMovies = getSavedMovies;
   }
 
   _checkResult = (res) => {
@@ -15,6 +19,8 @@ class Api {
   };
 
   async getInitialCards() {
+    const saved = await this._getSavedMovies;
+    console.log(saved);
     return fetch(`${this._url}`)
       .then((res) => this._checkResult(res));
   }

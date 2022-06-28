@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getCards } from '../../utils/movies';
 
-function Movies() {
+function Movies({ savedMovies }) {
   // storage
   const storage = {
     search: JSON.parse(localStorage.getItem('search')),
@@ -58,7 +58,12 @@ function Movies() {
         filterHandle={filterHandle}
         searched={movies.length > 1 && notFound === false}
       />
-      <MoviesCardList movies={movies} notFound={notFound} isLoading={isLoading} />
+      <MoviesCardList
+        movies={movies}
+        notFound={notFound}
+        isLoading={isLoading}
+        savedMovies={savedMovies}
+      />
     </main>
   );
 }

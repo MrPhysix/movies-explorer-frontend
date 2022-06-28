@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import useResolution from '../../hooks/useResolution';
 
 function MoviesCardList({
-  inSavedMovies, movies, notFound, isLoading,
+  inSavedMovies, movies, savedMovies, notFound, isLoading,
 }) {
   const [
     isMobile,
@@ -26,6 +26,11 @@ function MoviesCardList({
   };
 
   // effects
+
+  useEffect(() => {
+    console.log('savedMovies');
+    console.log(savedMovies);
+  }, [savedMovies]);
 
   useEffect(() => {
     if (isMobile === true) setVisibleCards(5);
@@ -54,6 +59,7 @@ function MoviesCardList({
               key={i}
               item={item}
               inSavedMovies={inSavedMovies}
+              savedMovies={savedMovies}
             />
           ))
       }
