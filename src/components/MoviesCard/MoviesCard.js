@@ -6,7 +6,9 @@ import MainApi from '../../utils/api/MainApi';
 
 const apiUrl = 'https://api.nomoreparties.co';
 
-function MoviesCard({ item, inSavedMovies, savedMovies }) {
+function MoviesCard({
+  item, inSavedMovies, savedMovies, setSavedMovies,
+}) {
   const [isSaved, setIsSaved] = useState(false);
   // handlers
   function getHourMinuteTime(duration) {
@@ -16,23 +18,34 @@ function MoviesCard({ item, inSavedMovies, savedMovies }) {
   }
 
   const handlerSave = async () => {
-    console.log(isSaved);
     if (!inSavedMovies) {
       if (isSaved) {
-        const savedMovieId = await savedMovies.find(
+        const savedMovieId = savedMovies.find(
           (savedMovie) => item.id === savedMovie.movieId,
         )._id;
-        MainApi.removeSavedMovie(savedMovieId);
+        await MainApi.removeSavedMovie(savedMovieId);
+        const newArr = await MainApi.getSavedMovies();
+
+        setSavedMovies(newArr);
         setIsSaved(false);
+
         console.log('remove card');
+      } else if (!isSaved && !inSavedMovies) {
+        await MainApi.createSavedMovie(item);
+        const newArr = await MainApi.getSavedMovies();
+
+        setSavedMovies(newArr);
+        setIsSaved(true);
+
+        console.log('like card');
       }
-      return !isSaved && !inSavedMovies && MainApi.createSavedMovie(item)
-        .then((res) => {
-          console.log(res);
-          setIsSaved(true);
-        });
+    } else {
+      await MainApi.removeSavedMovie(item._id);
+      const newArr = await MainApi.getSavedMovies();
+
+      setSavedMovies(newArr);
+      console.log('remove card from saved-movies');
     }
-    return MainApi.removeSavedMovie(item._id);
   };
 
   useEffect(() => {

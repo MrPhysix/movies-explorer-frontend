@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getCards } from '../../utils/movies';
 
-function Movies({ savedMovies }) {
+function Movies({ savedMovies, setSavedMovies }) {
   // storage
   const storage = {
     search: JSON.parse(localStorage.getItem('search')),
@@ -63,6 +63,7 @@ function Movies({ savedMovies }) {
         notFound={notFound}
         isLoading={isLoading}
         savedMovies={savedMovies}
+        setSavedMovies={setSavedMovies}
       />
     </main>
   );

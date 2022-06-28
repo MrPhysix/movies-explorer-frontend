@@ -188,7 +188,7 @@ function App() {
               path="/movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <Movies savedMovies={savedMovies} />
+                  <Movies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
                 </ProtectedRoute>
               )}
             />
@@ -196,7 +196,7 @@ function App() {
               path="/saved-movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <SavedMovies savedMovies={savedMovies} />
+                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
                 </ProtectedRoute>
               )}
             />

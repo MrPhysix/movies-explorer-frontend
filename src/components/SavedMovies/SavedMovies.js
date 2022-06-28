@@ -3,7 +3,7 @@ import './SavedMovies.css';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 
-function SavedMovies({ savedMovies }) {
+function SavedMovies({ savedMovies, setSavedMovies }) {
   // storage
   const storage = {
     search: JSON.parse(localStorage.getItem('savedSearch')),
@@ -54,6 +54,7 @@ function SavedMovies({ savedMovies }) {
         inSavedMovies
         movies={savedMovies}
         savedMovies={savedMovies}
+        setSavedMovies={setSavedMovies}
         notFound={notFound}
         isLoading={false}
       />

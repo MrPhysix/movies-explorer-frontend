@@ -5,7 +5,8 @@ import Preloader from '../Preloader/Preloader';
 import useResolution from '../../hooks/useResolution';
 
 function MoviesCardList({
-  inSavedMovies, movies, savedMovies, notFound, isLoading,
+  inSavedMovies, movies, savedMovies,
+  setSavedMovies, notFound, isLoading,
 }) {
   const [
     isMobile,
@@ -59,6 +60,7 @@ function MoviesCardList({
               key={i}
               item={item}
               inSavedMovies={inSavedMovies}
+              setSavedMovies={setSavedMovies}
               savedMovies={savedMovies}
             />
           ))
