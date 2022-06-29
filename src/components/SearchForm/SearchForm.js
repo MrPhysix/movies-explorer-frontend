@@ -6,12 +6,13 @@ import useResolution from '../../hooks/useResolution';
 
 function SearchForm({
   inputValue, setInputValue, onSubmit,
-  setNotFound, setMovies, isFiltered, filterHandle,
-  searched, inSavedMovies,
+  setNotFound, movies, setMovies, isFiltered, setIsFiltered, handleFilter,
+  searched, inSavedMovies, savedMovies, setSavedMovies,
 }) {
   // states
   const [focused, setFocused] = useState(false);
   const [placeholder, setPlaceholder] = useState('Фильм');
+
   // hooks
   const resolution = useResolution(560);
   // refs
@@ -31,12 +32,16 @@ function SearchForm({
   }
 
   function handleReset() {
+    if (inSavedMovies) setSavedMovies(savedMovies);
+    console.log('movies: ', movies);
+    console.log('savedMovies: ', savedMovies);
     setInputValue('');
     setNotFound(false);
     setMovies([]);
     localStorage.removeItem('search');
     formRef.current.reset();
-    filterHandle(false);
+    handleFilter(false);
+    setIsFiltered(false);
   }
 
   function handleSubmit(evt) {
@@ -50,7 +55,8 @@ function SearchForm({
 
   const handleCheckbox = async (evt) => {
     const checked = await evt.target.checked;
-    filterHandle(checked);
+    console.log(checked);
+    handleFilter(checked);
   };
   // effects
   useEffect(() => {
