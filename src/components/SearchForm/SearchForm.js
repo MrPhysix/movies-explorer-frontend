@@ -5,18 +5,26 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import useResolution from '../../hooks/useResolution';
 
 function SearchForm({
-  inputValue, setInputValue, onSubmit,
-  setNotFound, movies, setMovies, isFiltered, setIsFiltered, handleFilter,
-  searched, inSavedMovies, savedMovies, setSavedMovies,
+  inSavedMovies,
+  onSubmit,
+  searchValue,
+  handleChange,
+  onSearchReset,
 }) {
+  // const
+  const isFiltered = !true;
+
+  // refs
+  const formRef = useRef();
+
   // states
+  const [isSearched, setIsSearched] = useState(false);
+
   const [focused, setFocused] = useState(false);
   const [placeholder, setPlaceholder] = useState('Фильм');
 
   // hooks
   const resolution = useResolution(560);
-  // refs
-  const formRef = useRef();
 
   // handlers
   function onFocus() {
@@ -27,41 +35,34 @@ function SearchForm({
     setFocused(false);
   }
 
-  function handleChange(evt) {
-    setInputValue(evt.target.value);
-  }
-
   function handleReset() {
-    if (inSavedMovies) setSavedMovies(savedMovies);
-    console.log('movies: ', movies);
-    console.log('savedMovies: ', savedMovies);
-    setInputValue('');
-    setNotFound(false);
-    setMovies([]);
-    localStorage.removeItem('search');
     formRef.current.reset();
-    handleFilter(false);
-    setIsFiltered(false);
+    onSearchReset();
+    setIsSearched(false);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    if (inputValue.length < 1 || inputValue.match(/^ *$/) !== null || inputValue === null) {
+    if (!searchValue || searchValue.length < 1) {
       setPlaceholder('Нужно ввести ключевое слово');
-      handleReset();
-    } else onSubmit();
+      return handleReset();
+    }
+    setIsSearched(true);
+    return onSubmit();
   }
 
-  const handleCheckbox = async (evt) => {
-    const checked = await evt.target.checked;
-    console.log(checked);
-    handleFilter(checked);
+  const handleCheckbox = (evt) => {
+    console.log(evt);
   };
   // effects
   useEffect(() => {
     if (focused) setPlaceholder('Фильм');
   }, [focused]);
+
+  useEffect(() => {
+    console.log(isSearched);
+  }, [isSearched]);
 
   return (
     <section className="search-form">
@@ -77,11 +78,12 @@ function SearchForm({
             }
             <div className="search__input_wrapper">
               <input
+                name="search"
                 type="search"
                 className="search__input"
                 placeholder={placeholder}
                 onChange={handleChange}
-                value={inputValue}
+                value={searchValue}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 // required
@@ -90,8 +92,8 @@ function SearchForm({
             </div>
             <button className="search__button button-hover button-active" type="submit">Найти</button>
           </label>
-          {resolution && searched && !inSavedMovies && <i className="divider" />}
-          {searched && !inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
+          {resolution && isSearched && !inSavedMovies && <i className="divider" />}
+          {isSearched && !inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
           {resolution && inSavedMovies && <i className="divider" />}
           {inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
         </form>

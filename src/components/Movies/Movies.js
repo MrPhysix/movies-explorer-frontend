@@ -1,87 +1,66 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { getCards, getShortFilteredCards } from '../../utils/movies';
-import { shortMoviesDuration } from '../../utils/consts';
+import { getSortedMovies } from '../../utils/movies';
+import useFormValidator from '../../hooks/useFormValidator';
 
 function Movies({ savedMovies, setSavedMovies }) {
-  // storage
-  const storage = {
-    search: JSON.parse(localStorage.getItem('search')),
-    filter: JSON.parse(localStorage.getItem('filter')),
-  };
+  // consts
   // states
   const [isLoading, setIsLoading] = useState(false);
+
   const [movies, setMovies] = useState([]);
-  const [inputValue, setInputValue] = useState('');
   const [notFound, setNotFound] = useState(false);
-  const [isFiltered, setIsFiltered] = useState(false);
-  //
-  const getSearchedCards = useCallback(() => getCards(
-    inputValue,
-    movies,
-    setMovies,
-    setNotFound,
-    setIsLoading,
-  ), [inputValue]);
+
+  // form hook
+  const form = useFormValidator();
+  const { search } = form.values;
+  const { handleChange, resetForm } = form;
 
   // handlers
-  const filterHandle = useCallback(
-    (checked) => {
-      setIsFiltered(checked);
-      localStorage.setItem('filter', JSON.stringify(checked));
+  const handleSubmit = useCallback(
+    () => {
+      if (search) {
+        setIsLoading(true);
+        getSortedMovies(search, true).then((list) => {
+          if (list.length > 0) {
+            setMovies(list);
+          } else setNotFound(true);
+          setIsLoading(false);
+        });
+      }
     },
-    [setIsFiltered],
+    [search],
   );
 
+  const onSearchReset = () => {
+    setNotFound(false);
+    setMovies([]);
+    resetForm();
+  };
+
   // effects
-  useEffect(() => { // storage
-    if (storage) {
-      if (storage.search && storage.search.movies) setMovies(storage.search.movies);
-      if (storage.search && storage.search.value) setInputValue(storage.search.value);
-      if (storage.filter !== null) setIsFiltered(storage.filter);
-    }
-    console.log('inputValue: ', inputValue);
-    console.log('isFiltered: ', isFiltered);
-    console.log('movies: ', movies);
-  }, [storage.filter]);
-
   useEffect(() => {
-    if (isFiltered) {
-      const newMovies = getShortFilteredCards(movies, shortMoviesDuration);
-      setMovies(newMovies);
-    }
-    if (!isFiltered) {
-      if (storage.search !== null) setMovies(storage.search.movies);
-      setMovies([]);
-    }
-  }, [isFiltered]);
-
-  useEffect(() => {
-    if (!isFiltered) setMovies(movies);
-  }, [movies]);
-
-  useEffect(() => {
+    console.log('savedMovies');
+    console.log(savedMovies);
+    console.log('movies');
     console.log(movies);
-  }, [movies]);
+  }, [movies, savedMovies]);
 
   useEffect(() => {
-    console.log('notFound: ', notFound);
-  }, [notFound]);
+    console.log('search');
+    console.log(search);
+  }, [search]);
 
   return (
     <main className="movies">
       <SearchForm
-        onSubmit={getSearchedCards}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-        setNotFound={setNotFound}
-        setMovies={setMovies}
-        isFiltered={isFiltered}
-        filterHandle={filterHandle}
-        // searched={movies.length > 1 && notFound === false}
-        searched
+        searchValue={search}
+        handleChange={handleChange}
+        onSubmit={handleSubmit}
+        onSearchReset={onSearchReset}
+        inSavedMovies={false}
       />
       <MoviesCardList
         movies={movies}

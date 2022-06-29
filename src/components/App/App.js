@@ -12,7 +12,7 @@ import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
 import ScrollUpButton from '../ScrollUpButton/ScrollUpButton';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import SavedMovies from '../SavedMovies/SavedMovies';
+// import SavedMovies from '../SavedMovies/SavedMovies';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
@@ -184,14 +184,14 @@ function App() {
                 </ProtectedRoute>
               )}
             />
-            <Route
-              path="/saved-movies"
-              element={(
-                <ProtectedRoute isLogged={isLogged}>
-                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
-                </ProtectedRoute>
-              )}
-            />
+            {/* <Route */}
+            {/*  path="/saved-movies" */}
+            {/*  element={( */}
+            {/*    <ProtectedRoute isLogged={isLogged}> */}
+            {/*      <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} /> */}
+            {/*    </ProtectedRoute> */}
+            {/*  )} */}
+            {/* /> */}
             <Route
               path="/profile"
               element={(
