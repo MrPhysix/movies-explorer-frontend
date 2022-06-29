@@ -48,7 +48,6 @@ function Profile({ onLogOut, onSubmit }) {
   // handlers
   const handleSubmit = useCallback((evt) => {
     evt.preventDefault();
-    console.log('evt');
     onSubmit(inputValue.name, inputValue.email);
   }, [inputValue]);
 
@@ -59,14 +58,7 @@ function Profile({ onLogOut, onSubmit }) {
 
   useEffect(() => {
     setInputValue({ name, email });
-    console.log('currentUser');
-    console.log(currentUser);
   }, [currentUser]);
-
-  useEffect(() => {
-    console.log('inputValue');
-    console.log(inputValue);
-  }, [inputValue]);
 
   return (
     <main className="profile">

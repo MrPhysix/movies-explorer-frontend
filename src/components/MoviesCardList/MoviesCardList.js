@@ -8,6 +8,7 @@ function MoviesCardList({
   inSavedMovies, movies, savedMovies,
   setSavedMovies, notFound, isLoading,
 }) {
+  // hooks
   const [
     isMobile,
     isTablet,
@@ -18,6 +19,7 @@ function MoviesCardList({
   ];
   // states
   const [visibleCards, setVisibleCards] = useState(0);
+
   // handlers
   const handleShowMore = () => {
     setVisibleCards((prev) => {
@@ -27,12 +29,6 @@ function MoviesCardList({
   };
 
   // effects
-
-  useEffect(() => {
-    console.log('savedMovies');
-    console.log(savedMovies);
-  }, [savedMovies]);
-
   useEffect(() => {
     if (isMobile === true) setVisibleCards(5);
     if (isTablet === true) setVisibleCards(8);

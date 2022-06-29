@@ -9,8 +9,6 @@ function SearchForm({
   setNotFound, setMovies, isFiltered, filterHandle,
   searched, inSavedMovies,
 }) {
-  console.log('inSavedMovies');
-  console.log(inSavedMovies);
   // states
   const [focused, setFocused] = useState(false);
   const [placeholder, setPlaceholder] = useState('Фильм');
@@ -33,12 +31,10 @@ function SearchForm({
   }
 
   function handleReset() {
-    const token = localStorage.getItem('jwt');
     setInputValue('');
     setNotFound(false);
     setMovies([]);
-    localStorage.clear();
-    localStorage.setItem('jwt', token);
+    localStorage.removeItem('search');
     formRef.current.reset();
     filterHandle(false);
   }

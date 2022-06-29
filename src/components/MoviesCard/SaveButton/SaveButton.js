@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import checkMarkIcon from '../../../images/check-mark.svg';
 import crossMarkIcon from '../../../images/cross-mark.svg';
 
 function SaveButton({ isSaved, onClick, cardInSaved }) {
   const style = `movies-card__button button-hover button-active ${isSaved && ' button__is-saved'}`;
-
-  useEffect(() => {
-    console.log(isSaved);
-  }, [isSaved]);
 
   return (
     !cardInSaved ? (

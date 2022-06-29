@@ -23,28 +23,24 @@ function MoviesCard({
         const savedMovieId = savedMovies.find(
           (savedMovie) => item.id === savedMovie.movieId,
         )._id;
+
         await MainApi.removeSavedMovie(savedMovieId);
         const newArr = await MainApi.getSavedMovies();
 
         setSavedMovies(newArr);
         setIsSaved(false);
-
-        console.log('remove card');
       } else if (!isSaved && !inSavedMovies) {
         await MainApi.createSavedMovie(item);
         const newArr = await MainApi.getSavedMovies();
 
         setSavedMovies(newArr);
         setIsSaved(true);
-
-        console.log('like card');
       }
     } else {
       await MainApi.removeSavedMovie(item._id);
       const newArr = await MainApi.getSavedMovies();
 
       setSavedMovies(newArr);
-      console.log('remove card from saved-movies');
     }
   };
 

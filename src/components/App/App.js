@@ -56,6 +56,14 @@ function App() {
   };
 
   // __auth
+  async function handleLocalStorageAuth() {
+    const jwt = localStorage.getItem('jwt');
+    const user = jwt && await Auth.checkToken(jwt);
+    if (!user) return;
+    setCurrentUser(user);
+    setIsLogged(true);
+  }
+
   const handleSignIn = (email, password) => {
     setIsLoading(true);
     Auth.signIn(email, password)
@@ -65,9 +73,11 @@ function App() {
           console.log(signInInfo);
           localStorage.setItem('jwt', token);
         }
-        navigate('/movies');
+        handleLocalStorageAuth();
+      }).then(() => {
         setIsLogged(true);
         setSignInInfo({});
+        navigate('/movies');
       })
       .catch((err) => {
         setInfoTooltip({ isOpen: true, isFailed: true });
@@ -90,25 +100,18 @@ function App() {
       .finally(() => setIsLoading(false));
   };
 
-  async function handleLocalStorageAuth() {
-    const jwt = localStorage.getItem('jwt');
-    const user = await Auth.checkToken(jwt);
-    if (!user) return;
-    setCurrentUser(user);
-    setIsLogged(true);
-    console.log('user');
-    console.log(user);
-  }
-
   const handleLogOut = () => {
     setIsLoading(true);
     Auth.signOut()
       .then(() => {
         setIsLogged(false);
         localStorage.clear();
+        setCurrentUser({});
+        setSavedMovies([]);
       })
       .finally(() => {
         setIsLoading(false);
+        console.log('navigated');
         navigate('/');
       });
   };
@@ -123,7 +126,6 @@ function App() {
         setIsLoading(false);
       });
   };
-
   // __movies
   async function getSavedMovies() {
     const movies = await MainApi.getSavedMovies();
@@ -146,21 +148,11 @@ function App() {
   // effects
   useEffect(() => {
     handleLoading();
-    getSavedMovies();
-  }, []);
+    if (isLogged) getSavedMovies();
+  }, [isLogged]);
 
   useEffect(() => {
-    console.log('App savedMovies');
-    console.log(savedMovies);
-  }, [savedMovies]);
-
-  useEffect(() => {
-    console.log('currentUser APP');
-    console.log(currentUser);
-  }, [currentUser]);
-
-  useEffect(() => {
-    handleLocalStorageAuth().then(() => console.log('handleLocalStorageAuth'));
+    if (!isLogged) handleLocalStorageAuth();
   }, [isLogged]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -203,10 +195,12 @@ function App() {
             <Route
               path="/profile"
               element={(
-                <Profile
-                  onLogOut={handleLogOut}
-                  onSubmit={handleUpdateUser}
-                />
+                <ProtectedRoute isLogged={isLogged}>
+                  <Profile
+                    onLogOut={handleLogOut}
+                    onSubmit={handleUpdateUser}
+                  />
+                </ProtectedRoute>
               )}
             />
             <Route
