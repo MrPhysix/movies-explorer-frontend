@@ -10,6 +10,8 @@ function SearchForm({
   searchValue,
   handleChange,
   onSearchReset,
+  onCheckBoxClick,
+  setIsSorted,
 }) {
   // const
   const isFiltered = !true;
@@ -53,7 +55,8 @@ function SearchForm({
   }
 
   const handleCheckbox = (evt) => {
-    console.log(evt);
+    console.log(evt.target.checked);
+    onCheckBoxClick();
   };
   // effects
   useEffect(() => {
@@ -63,6 +66,13 @@ function SearchForm({
   useEffect(() => {
     console.log(isSearched);
   }, [isSearched]);
+
+  useEffect(() => {
+    if (!searchValue || searchValue.length === 0) {
+      setIsSearched(false);
+      setIsSorted(false);
+    }
+  }, [searchValue]);
 
   return (
     <section className="search-form">

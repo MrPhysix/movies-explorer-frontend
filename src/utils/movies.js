@@ -47,32 +47,32 @@ import MoviesApi from './api/MoviesApi';
 //   }
 // }
 
-export function getSavedSearchedCards(value, movies) {
-  console.log('value');
-  console.log(value);
-  console.log('movies');
-  console.log(movies);
+// export function getSavedSearchedCards(value, movies) {
+//   console.log('value');
+//   console.log(value);
+//   console.log('movies');
+//   console.log(movies);
+//
+//   const list = movies;
+//
+//   const listRu = list.filter((item) => item.nameRU !== null
+//     && item.nameRU
+//       .toLowerCase()
+//       .includes(value.length > 1 && value.toLowerCase()));
+//   const listEn = list.filter((item) => item.nameEN !== null
+//     && item.nameEN
+//       .toLowerCase()
+//       .includes(value.length > 1 && value.toLowerCase()));
+//
+//   const mergedList = [...new Set([...listRu, ...listEn])];
+//   return mergedList;
+// }
 
-  const list = movies;
-
-  const listRu = list.filter((item) => item.nameRU !== null
-    && item.nameRU
-      .toLowerCase()
-      .includes(value.length > 1 && value.toLowerCase()));
-  const listEn = list.filter((item) => item.nameEN !== null
-    && item.nameEN
-      .toLowerCase()
-      .includes(value.length > 1 && value.toLowerCase()));
-
-  const mergedList = [...new Set([...listRu, ...listEn])];
-  return mergedList;
+export async function getShortFilteredCards(movies) {
+  return movies.filter((item) => item.duration < 80);
 }
 
-export function getShortFilteredCards(movies, minutes) {
-  return movies.filter((item) => item.duration < minutes);
-}
-
-export async function getSortedMovies(searchValue, saved) {
+export async function getSearchedMovies(searchValue, saved) {
   const list = saved && await MoviesApi.getInitialCards();
   const listRu = list.filter((item) => item.nameRU !== null
     && item.nameRU
