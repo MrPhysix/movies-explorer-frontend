@@ -2,6 +2,11 @@
     display: flex;
 }
 
+.wrapper.disabled {
+    opacity: .3;
+}
+
+
 .switch {
     position: relative;
     display: inline-block;

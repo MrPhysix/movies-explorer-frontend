@@ -11,11 +11,8 @@ function SearchForm({
   handleChange,
   onSearchReset,
   onCheckBoxClick,
-  setIsSorted,
+  isSorted,
 }) {
-  // const
-  const isFiltered = !true;
-
   // refs
   const formRef = useRef();
 
@@ -45,7 +42,7 @@ function SearchForm({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-
+    setIsSearched(false);
     if (!searchValue || searchValue.length < 1) {
       setPlaceholder('Нужно ввести ключевое слово');
       return handleReset();
@@ -55,7 +52,7 @@ function SearchForm({
   }
 
   const handleCheckbox = (evt) => {
-    console.log(evt.target.checked);
+    console.log(evt.target);
     onCheckBoxClick();
   };
   // effects
@@ -64,15 +61,17 @@ function SearchForm({
   }, [focused]);
 
   useEffect(() => {
+    const storageSearch = JSON.parse(localStorage.getItem('search'));
+    if (storageSearch) setIsSearched(true);
+    else setIsSearched(false);
     console.log(isSearched);
+    console.log(inSavedMovies);
   }, [isSearched]);
 
   useEffect(() => {
-    if (!searchValue || searchValue.length === 0) {
-      setIsSearched(false);
-      setIsSorted(false);
-    }
-  }, [searchValue]);
+    console.log('isSearched');
+    console.log(isSearched);
+  }, [isSearched]);
 
   return (
     <section className="search-form">
@@ -102,10 +101,13 @@ function SearchForm({
             </div>
             <button className="search__button button-hover button-active" type="submit">Найти</button>
           </label>
-          {resolution && isSearched && !inSavedMovies && <i className="divider" />}
-          {isSearched && !inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
-          {resolution && inSavedMovies && <i className="divider" />}
-          {inSavedMovies && <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isFiltered={isFiltered} />}
+          {resolution && <i className="divider" />}
+          <FilterCheckbox
+            isSearched={isSearched}
+            innerText="Короткометражки"
+            onClick={handleCheckbox}
+            isSorted={isSorted}
+          />
         </form>
       </div>
     </section>
@@ -113,3 +115,11 @@ function SearchForm({
 }
 
 export default SearchForm;
+
+// {resolution && isSearched && !inSavedMovies && <i className="divider" />}
+// {isSearched && !inSavedMovies &&
+// <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isSorted={isSorted} />}
+// {resolution && inSavedMovies && <i className="divider" />}
+// {inSavedMovies &&
+// <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isSorted={isSorted} />}
+//

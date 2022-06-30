@@ -56,3 +56,13 @@
 .form-element__error::first-letter {
     text-transform: capitalize;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    -webkit-background-clip: text;
+    background: none !important;
+    -webkit-transition-delay: 9999s;
+}

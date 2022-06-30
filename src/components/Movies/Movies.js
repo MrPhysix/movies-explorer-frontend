@@ -14,6 +14,7 @@ function Movies({ savedMovies, setSavedMovies }) {
   const [originMovies, setOriginMovies] = useState([]);
 
   const [isSorted, setIsSorted] = useState(Boolean);
+  const [lastSearch, setLastSearch] = useState('');
   const [notFound, setNotFound] = useState(false);
 
   // form hook
@@ -22,7 +23,6 @@ function Movies({ savedMovies, setSavedMovies }) {
   const { handleChange, resetForm } = form;
 
   // handlers
-
   const getInitialMovies = () => {
     getSearchedMovies(search, true).then((list) => {
       if (list.length > 0) {
@@ -46,16 +46,15 @@ function Movies({ savedMovies, setSavedMovies }) {
         setIsLoading(true);
         getInitialMovies();
       }
-    },
     [search],
   );
 
   const onSearchReset = async () => {
     setMovies([]);
     setNotFound(false);
+    setLastSearch('');
     resetForm();
     localStorage.removeItem('search');
-    localStorage.removeItem('filter');
     localStorage.removeItem('movies');
   };
 
@@ -65,47 +64,22 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   // effects
   useEffect(() => {
-    console.log('savedMovies');
-    console.log(savedMovies);
-    console.log('movies');
-    console.log(movies);
-  }, [movies, savedMovies]);
-
-  useEffect(() => {
-    console.log('search');
-    console.log(search);
     if (search && search.length > 0) {
       localStorage.setItem('search', JSON.stringify(search));
     }
+    setLastSearch(search);
   }, [search]);
 
   useEffect(() => {
-    console.log('originMovies');
-    console.log(originMovies);
     if (originMovies && originMovies.length > 0) {
       localStorage.setItem('movies', JSON.stringify(originMovies));
     }
   }, [originMovies]);
 
   useEffect(() => {
-    const storage = {
-      search: JSON.parse(localStorage.getItem('search')),
-      movies: JSON.parse(localStorage.getItem('movies')),
-      filter: JSON.parse(localStorage.getItem('filter')),
-    };
-    // resetForm();
-    setNotFound(false);
-    setIsSorted(false);
-
-    if (storage) {
-      if (storage.filter) setNotFound(storage.filter);
-      if (storage.movies && storage.movies.length > 0) setMovies(storage.movies);
-    }
-
-    console.log(storage);
     console.log('isSorted');
-    console.log(isSorted);
-  }, []);
+    setIsSorted(isSorted);
+  }, [isSorted]);
 
   useEffect(() => {
     if (isSorted) {
@@ -114,20 +88,42 @@ function Movies({ savedMovies, setSavedMovies }) {
       setMovies(originMovies);
       setNotFound(false);
     }
-    console.log('isSorted');
-    console.log(isSorted);
-    localStorage.setItem('filter', JSON.stringify(isSorted));
   }, [isSorted]);
+
+  useEffect(() => {
+    const storage = {
+      search: JSON.parse(localStorage.getItem('search')),
+      movies: JSON.parse(localStorage.getItem('movies')),
+    };
+    resetForm();
+    setNotFound(false);
+
+    if (storage) {
+      if (storage.filter) setIsSorted(storage.filter);
+      if (storage.movies && storage.movies.length > 0) {
+        setMovies(storage.movies);
+        setOriginMovies(storage.movies);
+      }
+      if (storage.search && storage.search.length > 0) setLastSearch(storage.search);
+    }
+    console.log('storage.movies');
+    console.log(storage.movies);
+  }, []);
+
+  useEffect(() => {
+    console.log('movies');
+    console.log(movies);
+  }, [movies]);
 
   return (
     <main className="movies">
       <SearchForm
-        searchValue={search}
+        searchValue={lastSearch}
+        isSorted={isSorted}
         handleChange={handleChange}
         onSubmit={handleSubmit}
         onSearchReset={onSearchReset}
         onCheckBoxClick={onCheckBoxClick}
-        setIsSorted={setIsSorted}
         inSavedMovies={false}
       />
       <MoviesCardList
