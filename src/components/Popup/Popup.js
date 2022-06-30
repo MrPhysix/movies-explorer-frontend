@@ -13,7 +13,7 @@ function Popup({ isOpen, handleClose, children }) {
 
   // handlers
   const handleCloseByKey = (evt) => (evt.key === 'Escape')
-    && handleClose() && evt.target.blur() && console.log('handleCloseByKey');
+    && handleClose() && evt.target.blur();
 
   const handleOutsideClick = (evt) => {
     const outside = evt.target === evt.currentTarget;

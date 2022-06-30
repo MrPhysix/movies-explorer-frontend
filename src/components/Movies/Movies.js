@@ -24,7 +24,7 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   // handlers
   const getInitialMovies = () => {
-    getSearchedMovies(search, true).then((list) => {
+    getSearchedMovies(search).then((list) => {
       if (list.length > 0) {
         setOriginMovies(list);
         setMovies(list);
@@ -46,6 +46,7 @@ function Movies({ savedMovies, setSavedMovies }) {
         setIsLoading(true);
         getInitialMovies();
       }
+    },
     [search],
   );
 
@@ -77,7 +78,6 @@ function Movies({ savedMovies, setSavedMovies }) {
   }, [originMovies]);
 
   useEffect(() => {
-    console.log('isSorted');
     setIsSorted(isSorted);
   }, [isSorted]);
 
@@ -106,14 +106,7 @@ function Movies({ savedMovies, setSavedMovies }) {
       }
       if (storage.search && storage.search.length > 0) setLastSearch(storage.search);
     }
-    console.log('storage.movies');
-    console.log(storage.movies);
   }, []);
-
-  useEffect(() => {
-    console.log('movies');
-    console.log(movies);
-  }, [movies]);
 
   return (
     <main className="movies">

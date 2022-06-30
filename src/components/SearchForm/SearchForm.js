@@ -51,8 +51,7 @@ function SearchForm({
     return onSubmit();
   }
 
-  const handleCheckbox = (evt) => {
-    console.log(evt.target);
+  const handleCheckbox = () => {
     onCheckBoxClick();
   };
   // effects
@@ -64,13 +63,6 @@ function SearchForm({
     const storageSearch = JSON.parse(localStorage.getItem('search'));
     if (storageSearch) setIsSearched(true);
     else setIsSearched(false);
-    console.log(isSearched);
-    console.log(inSavedMovies);
-  }, [isSearched]);
-
-  useEffect(() => {
-    console.log('isSearched');
-    console.log(isSearched);
   }, [isSearched]);
 
   return (
@@ -102,12 +94,23 @@ function SearchForm({
             <button className="search__button button-hover button-active" type="submit">Найти</button>
           </label>
           {resolution && <i className="divider" />}
-          <FilterCheckbox
-            isSearched={isSearched}
-            innerText="Короткометражки"
-            onClick={handleCheckbox}
-            isSorted={isSorted}
-          />
+          {inSavedMovies
+            ? (
+              <FilterCheckbox
+                isSearched
+                innerText="Короткометражки"
+                onClick={handleCheckbox}
+                isSorted={isSorted}
+              />
+            )
+            : (
+              <FilterCheckbox
+                isSearched={isSearched}
+                innerText="Короткометражки"
+                onClick={handleCheckbox}
+                isSorted={isSorted}
+              />
+            )}
         </form>
       </div>
     </section>
@@ -115,11 +118,3 @@ function SearchForm({
 }
 
 export default SearchForm;
-
-// {resolution && isSearched && !inSavedMovies && <i className="divider" />}
-// {isSearched && !inSavedMovies &&
-// <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isSorted={isSorted} />}
-// {resolution && inSavedMovies && <i className="divider" />}
-// {inSavedMovies &&
-// <FilterCheckbox innerText="Короткометражки" onClick={handleCheckbox} isSorted={isSorted} />}
-//

@@ -12,7 +12,7 @@ import Movies from '../Movies/Movies';
 import Footer from '../Footer/Footer';
 import ScrollUpButton from '../ScrollUpButton/ScrollUpButton';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-// import SavedMovies from '../SavedMovies/SavedMovies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import usePage from '../../hooks/usePage';
 import Profile from '../Profile/Profile';
@@ -69,8 +69,6 @@ function App() {
     Auth.signIn(email, password)
       .then((token) => {
         if (token) {
-          console.log(`signIn data token ${token}`);
-          console.log(signInInfo);
           localStorage.setItem('jwt', token);
         }
         handleLocalStorageAuth();
@@ -111,7 +109,6 @@ function App() {
       })
       .finally(() => {
         setIsLoading(false);
-        console.log('navigated');
         navigate('/');
       });
   };
@@ -184,14 +181,14 @@ function App() {
                 </ProtectedRoute>
               )}
             />
-            {/* <Route */}
-            {/*  path="/saved-movies" */}
-            {/*  element={( */}
-            {/*    <ProtectedRoute isLogged={isLogged}> */}
-            {/*      <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} /> */}
-            {/*    </ProtectedRoute> */}
-            {/*  )} */}
-            {/* /> */}
+            <Route
+              path="/saved-movies"
+              element={(
+                <ProtectedRoute isLogged={isLogged}>
+                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+                </ProtectedRoute>
+              )}
+            />
             <Route
               path="/profile"
               element={(

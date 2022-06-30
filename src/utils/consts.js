@@ -6,3 +6,4 @@ export const regEx = {
 
 // movies
 export const shortMoviesDuration = 40;
+export const moviesApiUrl = 'https://api.nomoreparties.co';

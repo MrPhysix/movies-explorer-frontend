@@ -3,8 +3,8 @@ import './MoviesCard.css';
 import SaveButton from './SaveButton/SaveButton';
 import ExternalLink from '../ExternalLink/ExternalLink';
 import MainApi from '../../utils/api/MainApi';
-
-const apiUrl = 'https://api.nomoreparties.co';
+//
+import { moviesApiUrl } from '../../utils/consts';
 
 function MoviesCard({
   item, inSavedMovies, savedMovies, setSavedMovies,
@@ -52,7 +52,7 @@ function MoviesCard({
 
   const getMovieImg = () => {
     if (!inSavedMovies) {
-      return `${apiUrl}${item.image.url}`;
+      return `${moviesApiUrl}${item.image.url}`;
     }
     return item.image;
   };

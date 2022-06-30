@@ -8,7 +8,6 @@ import Preloader from '../Preloader/Preloader';
 import './Register.css';
 import { regEx } from '../../utils/consts';
 
-// test@test.ru : test@test.ru
 function Register({ onSubmit, isLoading }) {
   // const
   const {

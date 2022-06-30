@@ -8,8 +8,6 @@ import useFormValidator from '../../hooks/useFormValidator';
 import { regEx } from '../../utils/consts';
 import Preloader from '../Preloader/Preloader';
 
-// test@test.ru : test@test.ru
-
 function Login({ onSubmit, isLoading }) {
   // const
   const {
@@ -19,8 +17,6 @@ function Login({ onSubmit, isLoading }) {
   // handlers
   const handleSubmit = useCallback((evt) => {
     evt.preventDefault();
-    console.log('handle');
-    console.log(email, password);
     onSubmit(email.toLowerCase(), password);
   }, [email, password]);
 
