@@ -124,11 +124,4 @@
     .profile__button {
         font-size: 12px;
     }
-
-    .profile__buttons {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translate(-50%, 0);
-    }
 }
