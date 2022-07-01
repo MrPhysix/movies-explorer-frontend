@@ -63,7 +63,6 @@ function App() {
     if (!user) return;
     setIsLogged(true);
     setCurrentUser(user);
-    navigate(location.pathname);
   }
 
   const handleSignIn = async (email, password) => {
@@ -142,7 +141,11 @@ function App() {
 
   // effects
   useEffect(() => {
-    if (!isLogged) handleLocalStorageAuth();
+    if (!isLogged) {
+      handleLocalStorageAuth().then(() => {
+        navigate(location.pathname);
+      });
+    }
   }, [isLogged]);
 
   useEffect(() => {
