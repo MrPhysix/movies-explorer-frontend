@@ -2,7 +2,7 @@ import React, {
   useCallback, useEffect, useState,
 } from 'react';
 import {
-  Routes, Route, Navigate, useNavigate,
+  Routes, Route, Navigate, useNavigate, useLocation,
 } from 'react-router-dom';
 import './App.css';
 import Preloader from '../Preloader/Preloader';
@@ -40,6 +40,7 @@ function App() {
   ];
   // const
   const navigate = useNavigate();
+  const location = useLocation();
   // states
   const [isLoading, setIsLoading] = useState(true);
   // user
@@ -60,28 +61,23 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     const user = jwt && await Auth.checkToken(jwt);
     if (!user) return;
-    setCurrentUser(user);
     setIsLogged(true);
+    setCurrentUser(user);
+    navigate(location.pathname);
   }
 
-  const handleSignIn = (email, password) => {
+  const handleSignIn = async (email, password) => {
     setIsLoading(true);
-    Auth.signIn(email, password)
-      .then((token) => {
-        if (token) {
-          localStorage.setItem('jwt', token);
-        }
-        handleLocalStorageAuth();
-      }).then(() => {
-        setIsLogged(true);
-        setSignInInfo({});
-        navigate('/movies');
-      })
-      .catch((err) => {
-        setInfoTooltip({ isOpen: true, isFailed: true });
-        return new Error(err);
-      })
-      .finally(() => setIsLoading(false));
+    try {
+      const token = await Auth.signIn(email, password);
+      await localStorage.setItem('jwt', token);
+      await setSignInInfo({});
+      await navigate('/movies');
+      return token && handleLocalStorageAuth();
+    } catch (err) {
+      setInfoTooltip({ isOpen: true, isFailed: true });
+      return new Error(err);
+    }
   };
 
   const handleSignUp = (name, email, password) => {
@@ -134,23 +130,26 @@ function App() {
     setInfoTooltip({ isOpen: false, isFailed: null });
   };
   //
-  const handleCloseInfoTooltip = useCallback(() => {
+  const handleCloseInfoTooltip = useCallback(async () => {
     if (infoTooltip.isOpen && !infoTooltip.isFailed) {
-      handleSignIn(signInInfo.email, signInInfo.password);
+      await handleSignIn(signInInfo.email, signInInfo.password);
       handleCloseAppPopups();
     }
     handleCloseAppPopups();
+    console.log('storage jwt');
+    console.log(JSON.stringify(localStorage.getItem('jwt')));
   }, [infoTooltip, signInInfo]);
 
   // effects
+  useEffect(() => {
+    if (!isLogged) handleLocalStorageAuth();
+  }, [isLogged]);
+
   useEffect(() => {
     handleLoading();
     if (isLogged) getSavedMovies();
   }, [isLogged]);
 
-  useEffect(() => {
-    if (!isLogged) handleLocalStorageAuth();
-  }, [isLogged]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       {!isLoading ? (
@@ -202,11 +201,19 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<Register onSubmit={handleSignUp} isLoading={isLoading} />}
+              element={(
+                <ProtectedRoute isLogged={!isLogged}>
+                  <Register onSubmit={handleSignUp} isLoading={isLoading} />
+                </ProtectedRoute>
+              )}
             />
             <Route
               path="/signin"
-              element={<Login onSubmit={handleSignIn} isLoading={isLoading} />}
+              element={(
+                <ProtectedRoute isLogged={!isLogged}>
+                  <Login onSubmit={handleSignIn} isLoading={isLoading} />
+                </ProtectedRoute>
+              )}
             />
           </Routes>
           {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
