@@ -17,10 +17,7 @@ class Api {
   async getInitialCards() {
     return fetch(`${this._url}`)
       .then((res) => this._checkResult(res))
-      .then((res) => {
-        console.log(res);
-        return res;
-      });
+      .then((res) => res);
   }
 }
 
