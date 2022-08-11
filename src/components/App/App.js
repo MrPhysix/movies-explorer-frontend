@@ -123,7 +123,6 @@ function App() {
       })
       .finally(() => setIsLoading(false));
   };
-
   const handleLogOut = () => {
     setIsLoading(true);
     Auth.signOut()
@@ -166,8 +165,6 @@ function App() {
       handleCloseAppPopups();
     }
     handleCloseAppPopups();
-    console.log('storage jwt');
-    console.log(JSON.stringify(localStorage.getItem('jwt')));
   }, [infoTooltip, signInInfo]);
 
   // effects
@@ -180,17 +177,6 @@ function App() {
     }
     navigate(location.pathname);
   }, []);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('jwt');
-  //   if (token) {
-  //     Auth
-  //       .checkToken(token)
-  //       .then((res) => console.log(res));
-  //
-  //     // navigate(location.pathname)
-  //   }
-  // }, []);
 
   useEffect(() => {
     handleLoading();
@@ -223,7 +209,10 @@ function App() {
               path="/movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <Movies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+                  <Movies
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                  />
                 </ProtectedRoute>
               )}
             />

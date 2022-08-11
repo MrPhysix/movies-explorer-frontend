@@ -62,7 +62,10 @@ class Api {
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
-      headers: this._getHeaders(),
+      headers: {
+        ...this._headers,
+        Authorization: `${localStorage.getItem('jwt')}`,
+      },
     })
       .then((res) => this._checkResult(res));
   }
@@ -86,17 +89,16 @@ class Api {
       }),
     })
       .then((res) => this._checkResult(res))
-      .catch((err) => console.log(err));
+      .catch((err) => new Error(err));
   }
 
   removeSavedMovie(movieId) {
-    console.log(movieId);
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
     })
       .then((res) => this._checkResult(res))
-      .catch((err) => console.log(err));
+      .catch((err) => new Error(err));
   }
 }
 
