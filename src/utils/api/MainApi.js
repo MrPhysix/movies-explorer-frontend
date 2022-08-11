@@ -1,5 +1,4 @@
 const apiConfig = {
-  jwt: localStorage.getItem('jwt'),
   baseUrl: 'https://api.mr-movies.nomoredomains.xyz',
   moviesUrl: 'https://api.nomoreparties.co',
   headers: {
@@ -10,28 +9,38 @@ const apiConfig = {
 class Api {
   constructor({
     baseUrl, moviesUrl,
-    headers, jwt,
+    headers,
   }) {
     this._baseUrl = baseUrl;
     this._moviesUrl = moviesUrl;
     this._headers = headers;
-    this._jwt = jwt;
   }
 
-  async _checkResult(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    const err = await res.json().then((data) => data.message);
-    console.log(err);
-    console.log(res);
-    return Promise.reject(new Error(err));
+  _checkResult = (res) => {
+    if (res.ok) return res.json();
+
+    return res.json()
+      .then((err) => Promise.reject(new Error(`${err.message} [${res.status}:${res.statusText}]`)));
+  };
+
+  _getToken() {
+    return localStorage.getItem('jwt');
   }
+
+  // async _checkResult(res) {
+  //   if (res.ok) {
+  //     return res.json();
+  //   }
+  //   const err = await res.json().then((data) => data.message);
+  //   console.log(err);
+  //   console.log(res);
+  //   return Promise.reject(new Error(err));
+  // }
 
   _getHeaders() {
     return {
       ...this._headers,
-      Authorization: `${this._jwt}`,
+      Authorization: `${this._getToken()}`,
     };
   }
 

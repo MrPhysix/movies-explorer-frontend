@@ -2,7 +2,8 @@ import React, {
   useCallback, useEffect, useState,
 } from 'react';
 import {
-  Routes, Route, Navigate, useNavigate, useLocation,
+  Routes, Route, Navigate,
+  useNavigate, useLocation,
 } from 'react-router-dom';
 import './App.css';
 import Preloader from '../Preloader/Preloader';
@@ -57,27 +58,57 @@ function App() {
   };
 
   // __auth
-  function handleLocalStorageAuth() {
+  const handleLocalStorageAuth = (path) => {
     const jwt = localStorage.getItem('jwt');
-    const user = jwt && Auth.checkToken(jwt);
-    if (!user) return;
-    setIsLogged(true);
-    setCurrentUser(user);
-  }
-
-  const handleSignIn = async (email, password) => {
-    setIsLoading(true);
-    try {
-      const token = await Auth.signIn(email, password);
-      await localStorage.setItem('jwt', token);
-      await setSignInInfo({});
-      await navigate('/movies');
-      return token && handleLocalStorageAuth();
-    } catch (err) {
-      setInfoTooltip({ isOpen: true, isFailed: true });
-      return new Error(err);
+    if (jwt) {
+      Auth
+        .checkToken(jwt)
+        .then((data) => {
+          if (data) {
+            setCurrentUser(data);
+            setIsLogged(true);
+          }
+        })
+        .then(() => {
+          if (path) navigate(path);
+        })
+        .catch((err) => new Error(err));
     }
   };
+
+  const handleSignIn = (email, password) => {
+    setIsLoading(true);
+    Auth
+      .signIn(email, password)
+      .then((token) => {
+        if (token) {
+          localStorage.setItem('jwt', token);
+          handleLocalStorageAuth('/movies');
+        }
+      })
+      .catch((err) => {
+        setInfoTooltip({ isOpen: true, isFailed: true });
+        return new Error(err);
+      })
+      .finally(() => {
+        setSignInInfo({});
+        setIsLoading(false);
+      });
+  };
+
+  // const handleSignIn = async (email, password) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const token = await Auth.signIn(email, password);
+  //     await localStorage.setItem('jwt', token);
+  //     await setSignInInfo({});
+  //     await navigate('/movies');
+  //     return token && handleLocalStorageAuth();
+  //   } catch (err) {
+  //     setInfoTooltip({ isOpen: true, isFailed: true });
+  //     return new Error(err);
+  //   }
+  // };
 
   const handleSignUp = (name, email, password) => {
     setIsLoading(true);
@@ -141,11 +172,25 @@ function App() {
 
   // effects
   useEffect(() => {
-    if (!isLogged) {
+    const token = localStorage.getItem('jwt');
+
+    if (!isLogged && token) {
+      setIsLogged(true);
       handleLocalStorageAuth();
     }
     navigate(location.pathname);
-  }, [isLogged]);
+  }, []);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('jwt');
+  //   if (token) {
+  //     Auth
+  //       .checkToken(token)
+  //       .then((res) => console.log(res));
+  //
+  //     // navigate(location.pathname)
+  //   }
+  // }, []);
 
   useEffect(() => {
     handleLoading();

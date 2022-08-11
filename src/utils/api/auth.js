@@ -12,30 +12,38 @@ class Api {
     this._headers = headers;
   }
 
-  async _checkResult(res) {
+  _getToken() {
+    return localStorage.getItem('jwt');
+  }
+
+  _getHeaders() {
+    return {
+      ...this._headers,
+      Authorization: `${this._getToken()}`,
+    };
+  }
+
+  _checkResult(res) {
     if (res.ok) {
       return res.json();
     }
-    const err = await res.json().then((data) => data.message);
-    console.log(err);
+    const err = res.json().then((data) => data.message);
     return Promise.reject(new Error(err));
   }
 
   signUp(name, email, password) {
-    console.log('sign up');
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({ name, email, password }),
     })
       .then((res) => this._checkResult(res));
   }
 
   signIn(email, password) {
-    console.log('signIn');
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this._getHeaders(),
       body: JSON.stringify({ email, password }),
     })
       .then((res) => this._checkResult(res))
@@ -58,7 +66,7 @@ class Api {
   signOut() {
     return fetch(`${this._baseUrl}/logout`, {
       method: 'POST',
-      headers: this._headers,
+      headers: this._getHeaders(),
     })
       .catch((err) => console.log(`signOut err ${err}`));
   }
