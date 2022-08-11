@@ -57,9 +57,9 @@ function App() {
   };
 
   // __auth
-  async function handleLocalStorageAuth() {
+  function handleLocalStorageAuth() {
     const jwt = localStorage.getItem('jwt');
-    const user = jwt && await Auth.checkToken(jwt);
+    const user = jwt && Auth.checkToken(jwt);
     if (!user) return;
     setIsLogged(true);
     setCurrentUser(user);
@@ -142,10 +142,9 @@ function App() {
   // effects
   useEffect(() => {
     if (!isLogged) {
-      handleLocalStorageAuth().then(() => {
-        navigate(location.pathname);
-      });
+      handleLocalStorageAuth();
     }
+    navigate(location.pathname);
   }, [isLogged]);
 
   useEffect(() => {

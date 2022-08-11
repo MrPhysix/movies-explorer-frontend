@@ -28,10 +28,6 @@ class Api {
     return Promise.reject(new Error(err));
   }
 
-  _getToken() {
-    this._jwt = localStorage.getItem('jwt');
-  }
-
   _getHeaders() {
     return {
       ...this._headers,
