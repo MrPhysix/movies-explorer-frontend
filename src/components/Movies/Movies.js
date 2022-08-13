@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -17,6 +17,9 @@ function Movies({ savedMovies, setSavedMovies }) {
   const [lastSearch, setLastSearch] = useState('');
   const [notFound, setNotFound] = useState(false);
 
+  const [isSearched, setIsSearched] = useState(Boolean);
+  const [checkboxIsActive, setCheckboxIsActive] = useState(false);
+
   // form hook
   const form = useFormValidator();
   const { search } = form.values;
@@ -24,89 +27,149 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   // handlers
   const getInitialMovies = () => {
-    getSearchedMovies(search).then((list) => {
-      if (list.length > 0) {
-        setOriginMovies(list);
-        setMovies(list);
+    getSearchedMovies(search)
+      .then((list) => {
+        localStorage.setItem('movies', JSON.stringify(list));
+        console.log('list');
+        console.log(list);
+        if (list.length > 0) {
+          setNotFound(false);
+          setOriginMovies(list);
+          setMovies(list);
+          setCheckboxIsActive(true);
+        } else {
+          setNotFound(true);
+          setCheckboxIsActive(false);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const getSortedMovies = (list) => {
+    getShortFilteredCards(list).then((res) => {
+      if (res && res.length > 0) {
+        setMovies(res);
+        setNotFound(false);
       } else setNotFound(true);
-      setIsLoading(false);
     });
   };
 
-  const getSortedMovies = () => {
-    getShortFilteredCards(movies).then((res) => {
-      if (res && res.length > 0) setMovies(res);
-      else setNotFound(true);
-    });
+  const handleSubmit = () => {
+    console.log('handleSubmit');
+
+    if (search && search.length > 0) {
+      getInitialMovies();
+      localStorage.setItem('search', JSON.stringify(search));
+      setIsSearched(true);
+    }
   };
 
-  const handleSubmit = useCallback(
-    () => {
-      if (!isSorted && search) {
-        setIsLoading(true);
-        getInitialMovies();
-      }
-    },
-    [search],
-  );
-
-  const onSearchReset = async () => {
+  const onSearchReset = () => {
     setMovies([]);
+    setOriginMovies([]);
     setNotFound(false);
     setLastSearch('');
+    setIsSorted(false);
+    setIsSearched(false);
+    setNotFound(false);
     resetForm();
     localStorage.removeItem('search');
     localStorage.removeItem('movies');
+    localStorage.removeItem('filter');
   };
 
   const onCheckBoxClick = () => {
     setIsSorted(!isSorted);
-  };
-
-  // effects
-  useEffect(() => {
-    if (search && search.length > 0) {
-      localStorage.setItem('search', JSON.stringify(search));
-    }
-    setLastSearch(search);
-  }, [search]);
-
-  useEffect(() => {
-    if (originMovies && originMovies.length > 0) {
-      localStorage.setItem('movies', JSON.stringify(originMovies));
-    }
-  }, [originMovies]);
-
-  useEffect(() => {
-    setIsSorted(isSorted);
-  }, [isSorted]);
-
-  useEffect(() => {
-    if (isSorted) {
-      getSortedMovies();
+    if (!isSorted) {
+      getSortedMovies(movies);
     } else {
       setMovies(originMovies);
       setNotFound(false);
     }
+    localStorage.setItem('filter', !isSorted);
+  };
+
+  // const getLocalStorage = () => {
+  //
+  //
+  //   // if (storage && storage.search && storage.movies && storage.filter) {
+  //   //   setLastSearch(storage.search);
+  //   //   setIsSorted(storage.filter);
+  //   //
+  //   //   if (storage.movies.length > 0) {
+  //   //     setMovies(storage.movies);
+  //   //     setOriginMovies(storage.movies);
+  //   //   } else setNotFound(true);
+  //   // }
+  //
+  //   return storage;
+  // };
+
+  // effects
+
+  useEffect(() => {
+    setLastSearch(search);
+  }, [search]);
+
+  useEffect(() => {
+    if (!search || search === '' || search < 1) {
+      console.log('search 0');
+      setCheckboxIsActive(false);
+      setIsSearched(false);
+    }
+  }, [search]);
+
+  // useEffect(() => {
+  //   console.log(isSearched);
+  // }, [isSearched]);
+
+  // useEffect(() => {
+  //   if (isSorted) {
+  //     getSortedMovies();
+  //   } else {
+  //     setMovies(originMovies);
+  //     setNotFound(false);
+  //   }
+  //   localStorage.setItem('filter', isSorted);
+  // }, [isSorted]);
+
+  useEffect(() => {
+    const storageInfo = {
+      search: JSON.parse(localStorage.getItem('search')),
+      movies: JSON.parse(localStorage.getItem('movies')),
+      filter: JSON.parse(localStorage.getItem('filter')),
+    };
+
+    if (storageInfo.search) setLastSearch(storageInfo.search);
+    if (storageInfo.movies) {
+      setIsSearched(true);
+      setMovies(storageInfo.movies);
+      setOriginMovies(storageInfo.movies);
+    }
+    if (storageInfo.filter) {
+      setOriginMovies(storageInfo.movies);
+      setIsSorted(storageInfo.filter);
+      setCheckboxIsActive(true);
+      getSortedMovies(storageInfo.movies);
+      console.log('getSortedMovies');
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   console.log('originMovies');
+  //   console.log(originMovies);
+  //   console.log('movies');
+  //   console.log(movies);
+  // }, [movies, originMovies]);
+  //
+  useEffect(() => {
+    console.log('isSorted');
+    console.log(isSorted);
   }, [isSorted]);
 
   useEffect(() => {
-    const storage = {
-      search: JSON.parse(localStorage.getItem('search')),
-      movies: JSON.parse(localStorage.getItem('movies')),
-    };
-    resetForm();
-    setNotFound(false);
-
-    if (storage) {
-      if (storage.filter) setIsSorted(storage.filter);
-      if (storage.movies && storage.movies.length > 0) {
-        setMovies(storage.movies);
-        setOriginMovies(storage.movies);
-      }
-      if (storage.search && storage.search.length > 0) setLastSearch(storage.search);
-    }
-  }, []);
+    if (isSearched && !notFound) setCheckboxIsActive(true);
+  }, [isSearched, notFound]);
 
   return (
     <main className="movies">
@@ -118,6 +181,9 @@ function Movies({ savedMovies, setSavedMovies }) {
         onSearchReset={onSearchReset}
         onCheckBoxClick={onCheckBoxClick}
         inSavedMovies={false}
+        checkboxIsActive={checkboxIsActive}
+        isSearched={isSearched}
+        setIsSearched={setIsSearched}
       />
       <MoviesCardList
         movies={movies}

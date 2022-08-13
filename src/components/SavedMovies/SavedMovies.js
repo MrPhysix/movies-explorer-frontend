@@ -54,6 +54,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
     setMovies(savedMovies);
     setNotFound(false);
     setLastSearch('');
+    setIsSorted(false);
     resetForm();
     localStorage.removeItem('savedSearch');
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
@@ -123,7 +124,6 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
         onSubmit={handleSubmit}
         onSearchReset={onSearchReset}
         onCheckBoxClick={onCheckBoxClick}
-        inSavedMovies
       />
       <MoviesCardList
         movies={movies}

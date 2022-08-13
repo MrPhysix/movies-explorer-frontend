@@ -2,14 +2,16 @@ import React from 'react';
 import './FilterCheckbox.css';
 
 function FilterCheckbox({
-  isSearched, innerText, onClick, isSorted,
+  innerText, onClick, isSorted,
+  checkboxIsActive,
 }) {
   return (
-    <div className={`wrapper ${!isSearched && 'disabled'}`}>
+    <div className={`wrapper ${!checkboxIsActive && 'disabled'}`}>
       <label htmlFor="checkbox" className="switch">
         <input
-          disabled={!isSearched}
+          disabled={!checkboxIsActive}
           defaultChecked={isSorted}
+          checked={isSorted}
           type="checkbox"
           id="checkbox"
           onClick={onClick}

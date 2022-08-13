@@ -9,6 +9,9 @@ export async function getSearchedMovies(searchValue, movies) {
   const list = !movies
     ? await MoviesApi.getInitialCards()
     : movies;
+
+  console.log(list.filter((item) => item.duration < 40));
+
   const listRu = list.filter((item) => item.nameRU !== null
     && item.nameRU
       .toLowerCase()
