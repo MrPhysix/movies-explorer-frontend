@@ -149,10 +149,10 @@ function App() {
       });
   };
   // __movies
-  async function getSavedMovies() {
+  const getSavedMovies = async () => {
     const movies = await MainApi.getSavedMovies();
     setSavedMovies(movies);
-  }
+  };
 
   // __popups
   const handleCloseAppPopups = () => {
@@ -220,7 +220,10 @@ function App() {
               path="/saved-movies"
               element={(
                 <ProtectedRoute isLogged={isLogged}>
-                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+                  <SavedMovies
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                  />
                 </ProtectedRoute>
               )}
             />

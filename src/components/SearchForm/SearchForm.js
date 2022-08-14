@@ -47,7 +47,6 @@ function SearchForm({
       setPlaceholder('Нужно ввести ключевое слово');
       return handleReset();
     }
-    // localStorage.setItem('search', JSON.stringify(searchValue));
     setIsSearched(true);
     return onSubmit();
   }

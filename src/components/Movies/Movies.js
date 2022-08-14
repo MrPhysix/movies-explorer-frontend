@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -26,12 +26,11 @@ function Movies({ savedMovies, setSavedMovies }) {
   const { handleChange, resetForm } = form;
 
   // handlers
-  const getInitialMovies = () => {
-    getSearchedMovies(search)
+  const getInitialMovies = (value) => {
+    setIsLoading(true);
+    getSearchedMovies(value)
       .then((list) => {
         localStorage.setItem('movies', JSON.stringify(list));
-        console.log('list');
-        console.log(list);
         if (list.length > 0) {
           setNotFound(false);
           setOriginMovies(list);
@@ -54,15 +53,20 @@ function Movies({ savedMovies, setSavedMovies }) {
     });
   };
 
-  const handleSubmit = () => {
-    console.log('handleSubmit');
-
+  const handleSubmit = useCallback(() => {
     if (search && search.length > 0) {
-      getInitialMovies();
+      getInitialMovies(search);
+      if (isSorted) {
+        setMovies([]);
+        getSearchedMovies(search)
+          .then((res) => {
+            getSortedMovies(res);
+          });
+      }
       localStorage.setItem('search', JSON.stringify(search));
       setIsSearched(true);
     }
-  };
+  }, [search, isSorted]);
 
   const onSearchReset = () => {
     setMovies([]);
@@ -71,7 +75,6 @@ function Movies({ savedMovies, setSavedMovies }) {
     setLastSearch('');
     setIsSorted(false);
     setIsSearched(false);
-    setNotFound(false);
     resetForm();
     localStorage.removeItem('search');
     localStorage.removeItem('movies');
@@ -89,24 +92,7 @@ function Movies({ savedMovies, setSavedMovies }) {
     localStorage.setItem('filter', !isSorted);
   };
 
-  // const getLocalStorage = () => {
-  //
-  //
-  //   // if (storage && storage.search && storage.movies && storage.filter) {
-  //   //   setLastSearch(storage.search);
-  //   //   setIsSorted(storage.filter);
-  //   //
-  //   //   if (storage.movies.length > 0) {
-  //   //     setMovies(storage.movies);
-  //   //     setOriginMovies(storage.movies);
-  //   //   } else setNotFound(true);
-  //   // }
-  //
-  //   return storage;
-  // };
-
   // effects
-
   useEffect(() => {
     setLastSearch(search);
   }, [search]);
@@ -116,22 +102,10 @@ function Movies({ savedMovies, setSavedMovies }) {
       console.log('search 0');
       setCheckboxIsActive(false);
       setIsSearched(false);
+      setIsSorted(false);
+      // localStorage.removeItem('filter');
     }
   }, [search]);
-
-  // useEffect(() => {
-  //   console.log(isSearched);
-  // }, [isSearched]);
-
-  // useEffect(() => {
-  //   if (isSorted) {
-  //     getSortedMovies();
-  //   } else {
-  //     setMovies(originMovies);
-  //     setNotFound(false);
-  //   }
-  //   localStorage.setItem('filter', isSorted);
-  // }, [isSorted]);
 
   useEffect(() => {
     const storageInfo = {
@@ -151,21 +125,8 @@ function Movies({ savedMovies, setSavedMovies }) {
       setIsSorted(storageInfo.filter);
       setCheckboxIsActive(true);
       getSortedMovies(storageInfo.movies);
-      console.log('getSortedMovies');
     }
   }, []);
-
-  // useEffect(() => {
-  //   console.log('originMovies');
-  //   console.log(originMovies);
-  //   console.log('movies');
-  //   console.log(movies);
-  // }, [movies, originMovies]);
-  //
-  useEffect(() => {
-    console.log('isSorted');
-    console.log(isSorted);
-  }, [isSorted]);
 
   useEffect(() => {
     if (isSearched && !notFound) setCheckboxIsActive(true);

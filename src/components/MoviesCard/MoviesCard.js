@@ -7,7 +7,7 @@ import MainApi from '../../utils/api/MainApi';
 import { moviesApiUrl } from '../../utils/consts';
 
 function MoviesCard({
-  item, inSavedMovies, savedMovies, setSavedMovies,
+  item, inSavedMovies, savedMovies, setSavedMovies, movies,
 }) {
   const [isSaved, setIsSaved] = useState(false);
   // handlers
@@ -21,58 +21,40 @@ function MoviesCard({
     // && item.owner === currentUser._id
     if (!inSavedMovies) {
       if (isSaved) {
+        console.log(savedMovies);
+        console.log(savedMovies.find(
+          (savedMovie) => item.id === savedMovie.movieId,
+        ));
         const savedMovieId = savedMovies.find(
           (savedMovie) => item.id === savedMovie.movieId,
         )._id;
         await MainApi.removeSavedMovie(savedMovieId);
         const newArr = await MainApi.getSavedMovies();
 
-        setSavedMovies(newArr);
         setIsSaved(false);
+        setSavedMovies(newArr);
       } else if (!isSaved && !inSavedMovies) {
         await MainApi.createSavedMovie(item);
         const newArr = await MainApi.getSavedMovies();
 
-        setSavedMovies(newArr);
         setIsSaved(true);
+        setSavedMovies(newArr);
       }
     } else {
+      console.log(item);
       await MainApi.removeSavedMovie(item._id);
       const newArr = await MainApi.getSavedMovies();
 
+      setIsSaved(false);
       setSavedMovies(newArr);
     }
   };
 
-  // const handlerSave = async () => {
-  //   if (!inSavedMovies) {
-  //     if (isSaved) {
-  //       console.log('!inSavedMovies + isSaved');
-  //     } else if (!isSaved && !inSavedMovies) {
-  //       console.log('!inSavedMovies + !isSaved');
-  //       const a = await MainApi.createSavedMovie(item);
-  //       console.log(a);
-  //       const newArr = await MainApi.getSavedMovies();
-  //       console.log(newArr);
-  //
-  //       setSavedMovies(newArr);
-  //       // setIsSaved(true);
-  //     }
-  //   } else {
-  //     console.log('inSavedMovies + isSaved || inSavedMovies + !isSaved');
-  //     const b = await MainApi.removeSavedMovie(item._id);
-  //     console.log(b);
-  //     const newArr = await MainApi.getSavedMovies();
-  //     console.log(newArr);
-  //     setSavedMovies(newArr);
-  //   }
-  // };
-  // && movie.owner === currentUser._id
   useEffect(() => {
-    const saved = !inSavedMovies && savedMovies.some((movie) => movie.movieId === item.id);
-    if (!inSavedMovies) setIsSaved(saved);
+    const saved = savedMovies && savedMovies.some((movie) => movie.movieId === item.id);
+    if (!inSavedMovies) return setIsSaved(saved);
     return inSavedMovies && setIsSaved(true);
-  }, [savedMovies]);
+  }, [savedMovies, movies]);
 
   const getMovieImg = () => {
     if (!inSavedMovies) {

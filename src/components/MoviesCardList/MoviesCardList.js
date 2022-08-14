@@ -58,6 +58,7 @@ function MoviesCardList({
               inSavedMovies={inSavedMovies}
               setSavedMovies={setSavedMovies}
               savedMovies={savedMovies}
+              movies={movies}
             />
           ))
       }

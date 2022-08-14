@@ -1,16 +1,12 @@
 import MoviesApi from './api/MoviesApi';
 import { shortMoviesDuration } from './consts';
 
-export async function getShortFilteredCards(movies) {
-  return movies.filter((item) => item.duration < shortMoviesDuration);
-}
-
 export async function getSearchedMovies(searchValue, movies) {
   const list = !movies
     ? await MoviesApi.getInitialCards()
     : movies;
 
-  console.log(list.filter((item) => item.duration < 40));
+  // console.log(list.filter((item) => item.duration < 40)); чек короткометражки
 
   const listRu = list.filter((item) => item.nameRU !== null
     && item.nameRU
@@ -22,4 +18,8 @@ export async function getSearchedMovies(searchValue, movies) {
       .includes(searchValue.length > 1 && searchValue.toLowerCase()));
 
   return [...new Set([...listRu, ...listEn])];
+}
+
+export async function getShortFilteredCards(movies) {
+  return movies.filter((item) => item.duration < shortMoviesDuration);
 }
