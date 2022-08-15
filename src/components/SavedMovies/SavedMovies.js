@@ -19,6 +19,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   const [notFound, setNotFound] = useState(false);
 
   const [isSearched, setIsSearched] = useState(Boolean);
+  const [checkboxIsActive, setCheckboxIsActive] = useState(true);
 
   // form hook
   const form = useFormValidator();
@@ -53,7 +54,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
       getInitialMovies(search);
       if (isSorted) {
         setMovies([]);
-        getSearchedMovies(search)
+        getSearchedMovies(search, savedMovies)
           .then((res) => {
             setOriginMovies(res);
             getSortedMovies(res);
@@ -89,6 +90,13 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   }, [search]);
 
   useEffect(() => {
+    setCheckboxIsActive(!notFound);
+    if (notFound) {
+      setIsSorted(false);
+    }
+  }, [notFound]);
+
+  useEffect(() => {
     setOriginMovies(savedMovies);
     setMovies(savedMovies);
   }, []);
@@ -107,7 +115,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
         onSearchReset={onSearchReset}
         onCheckBoxClick={onCheckBoxClick}
         inSavedMovies
-        checkboxIsActive
+        checkboxIsActive={checkboxIsActive}
         isSearched={isSearched}
         setIsSearched={setIsSearched}
       />
