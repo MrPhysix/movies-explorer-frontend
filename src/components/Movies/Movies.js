@@ -26,7 +26,7 @@ function Movies({ savedMovies, setSavedMovies }) {
   const { handleChange, resetForm } = form;
 
   // handlers
-  const getInitialMovies = (value) => {
+  const getInitialSearchedMovies = (value) => {
     setIsLoading(true);
     getSearchedMovies(value)
       .then((list) => {
@@ -55,7 +55,7 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   const handleSubmit = useCallback(() => {
     if (search && search.length > 0) {
-      getInitialMovies(search);
+      getInitialSearchedMovies(search);
       if (isSorted) {
         setMovies([]);
         getSearchedMovies(search)
@@ -75,6 +75,7 @@ function Movies({ savedMovies, setSavedMovies }) {
     setLastSearch('');
     setIsSorted(false);
     setIsSearched(false);
+    setCheckboxIsActive(false);
     resetForm();
     localStorage.removeItem('search');
     localStorage.removeItem('movies');
@@ -99,7 +100,6 @@ function Movies({ savedMovies, setSavedMovies }) {
 
   useEffect(() => {
     if (!search || search === '' || search < 1) {
-      console.log('search 0');
       setCheckboxIsActive(false);
       setIsSearched(false);
       setIsSorted(false);

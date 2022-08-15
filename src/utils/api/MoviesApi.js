@@ -14,10 +14,9 @@ class Api {
     return Promise.reject(new Error(`Ошибка: ${res.status}`));
   };
 
-  async getInitialCards() {
+  getInitialCards() {
     return fetch(`${this._url}`)
-      .then((res) => this._checkResult(res))
-      .then((res) => res);
+      .then((res) => this._checkResult(res));
   }
 }
 

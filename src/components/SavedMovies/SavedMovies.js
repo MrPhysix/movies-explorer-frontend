@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getSearchedMovies, getShortFilteredCards } from '../../utils/movies';
 import useFormValidator from '../../hooks/useFormValidator';
-import MainApi from '../../utils/api/MainApi';
+// import MainApi from '../../utils/api/MainApi';
 
 function SavedMovies({ savedMovies, setSavedMovies }) {
   // const
@@ -12,13 +12,13 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const [movies, setMovies] = useState([]);
+  const [originMovies, setOriginMovies] = useState([]);
 
   const [isSorted, setIsSorted] = useState(Boolean);
   const [lastSearch, setLastSearch] = useState('');
   const [notFound, setNotFound] = useState(false);
 
   const [isSearched, setIsSearched] = useState(Boolean);
-  const [checkboxIsActive, setCheckboxIsActive] = useState(false);
 
   // form hook
   const form = useFormValidator();
@@ -26,15 +26,14 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   const { handleChange, resetForm } = form;
 
   // handlers
-  const getInitialMovies = () => {
+  const getInitialMovies = (value) => {
     setIsLoading(true);
-    getSearchedMovies(search, savedMovies).then((list) => {
+    getSearchedMovies(value, savedMovies).then((list) => {
       if (list.length > 0) {
         setNotFound(false);
+        setOriginMovies(list);
         setMovies(list);
-        setCheckboxIsActive(true);
       } else {
-        setCheckboxIsActive(false);
         setNotFound(true);
       }
     }).finally(() => setIsLoading(false));
@@ -49,16 +48,6 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
     });
   };
 
-  // const handleSubmit = useCallback(
-  //   () => {
-  //     if (!isSorted && search) {
-  //       setIsLoading(true);
-  //       getInitialMovies();
-  //     }
-  //   },
-  //   [search],
-  // );
-
   const handleSubmit = useCallback(() => {
     if (search && search.length > 0) {
       getInitialMovies(search);
@@ -66,23 +55,13 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
         setMovies([]);
         getSearchedMovies(search)
           .then((res) => {
+            setOriginMovies(res);
             getSortedMovies(res);
           });
       }
-      localStorage.setItem('savedSearch', JSON.stringify(search));
       setIsSearched(true);
     }
   }, [search, isSorted]);
-
-  // const onSearchReset = async () => {
-  //   setMovies(savedMovies);
-  //   setNotFound(false);
-  //   setLastSearch('');
-  //   setIsSorted(false);
-  //   resetForm();
-  //   localStorage.removeItem('savedSearch');
-  //   localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-  // };
 
   const onSearchReset = () => {
     setNotFound(false);
@@ -90,8 +69,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
     setIsSorted(false);
     setIsSearched(false);
     resetForm();
-    localStorage.removeItem('savedSearch');
-    localStorage.removeItem('savedFilter');
+    setOriginMovies(savedMovies);
     setMovies(savedMovies);
   };
 
@@ -100,10 +78,9 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
     if (!isSorted) {
       getSortedMovies(movies);
     } else {
-      setMovies(savedMovies);
+      setMovies(originMovies);
       setNotFound(false);
     }
-    localStorage.setItem('savedFilter', !isSorted);
   };
 
   // effects
@@ -112,54 +89,13 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   }, [search]);
 
   useEffect(() => {
-    if (!search || search === '' || search < 1) {
-      console.log('search 0');
-      setCheckboxIsActive(false);
-      setIsSearched(false);
-      setIsSorted(false);
-      // localStorage.removeItem('savedFilter');
-    }
-  }, [search]);
-
-  useEffect(() => {
-    if (isSorted) {
-      getSortedMovies(savedMovies);
-    } else {
-      setMovies(savedMovies);
-      setNotFound(false);
-    }
-  }, [isSorted]);
-
-  useEffect(() => {
-    const storageInfo = {
-      search: JSON.parse(localStorage.getItem('savedSearch')),
-      filter: JSON.parse(localStorage.getItem('savedFilter')),
-    };
-    if (storageInfo.search) setLastSearch(storageInfo.search);
-
-    if (storageInfo.filter) {
-      setIsSorted(storageInfo.filter);
-      setCheckboxIsActive(true);
-      getSortedMovies(savedMovies);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isSearched && !notFound) setCheckboxIsActive(true);
-  }, [isSearched, notFound]);
-
-  useEffect(() => {
-    MainApi.getSavedMovies()
-      .then((res) => setSavedMovies(res));
-  }, []);
-
-  useEffect(() => {
-    console.log(savedMovies);
-  }, [savedMovies]);
-
-  useEffect(() => {
+    setOriginMovies(savedMovies);
     setMovies(savedMovies);
   }, []);
+  //
+  useEffect(() => {
+    setMovies(savedMovies);
+  }, [savedMovies]);
 
   return (
     <main className="movies">
@@ -171,7 +107,7 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
         onSearchReset={onSearchReset}
         onCheckBoxClick={onCheckBoxClick}
         inSavedMovies
-        checkboxIsActive={checkboxIsActive}
+        checkboxIsActive
         isSearched={isSearched}
         setIsSearched={setIsSearched}
       />

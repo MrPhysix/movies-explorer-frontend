@@ -148,7 +148,8 @@ function App() {
         setIsLoading(false);
       });
   };
-  // __movies
+    // __movies
+
   const getSavedMovies = async () => {
     const movies = await MainApi.getSavedMovies();
     setSavedMovies(movies);
