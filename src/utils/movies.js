@@ -11,11 +11,11 @@ export async function getSearchedMovies(searchValue, movies) {
   const listRu = list.filter((item) => item.nameRU !== null
     && item.nameRU
       .toLowerCase()
-      .includes(searchValue.length > 1 && searchValue.toLowerCase()));
+      .includes(searchValue.length > 0 && searchValue.toLowerCase()));
   const listEn = list.filter((item) => item.nameEN !== null
     && item.nameEN
       .toLowerCase()
-      .includes(searchValue.length > 1 && searchValue.toLowerCase()));
+      .includes(searchValue.length > 0 && searchValue.toLowerCase()));
 
   return [...new Set([...listRu, ...listEn])];
 }

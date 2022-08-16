@@ -18,7 +18,6 @@ function SearchForm({
   const formRef = useRef();
 
   // states
-
   const [focused, setFocused] = useState(false);
   const [placeholder, setPlaceholder] = useState('Фильм');
 
@@ -58,13 +57,6 @@ function SearchForm({
   useEffect(() => {
     if (focused) setPlaceholder('Фильм');
   }, [focused]);
-
-  // useEffect(() => {
-  //   const search = localStorage.getItem('search');
-  //   if (!search || search.length < 1) {
-  //     handleReset();
-  //   }
-  // }, [searchValue]);
 
   return (
     <section className="search-form">
