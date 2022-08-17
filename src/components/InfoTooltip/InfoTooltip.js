@@ -6,7 +6,8 @@ import failMarkIcon from '../../images/fail-mark.svg';
 
 const infoTooltipConfig = {
   success: {
-    title: 'Вы успешно зарегистрировались!',
+    title: 'Успешно',
+    regTitle: 'Вы успешно зарегистрировались!',
     image: successMarkIcon,
   },
   fail: {
@@ -15,11 +16,15 @@ const infoTooltipConfig = {
   },
 };
 
-function InfoTooltip({ failed, handleClose }) {
+function InfoTooltip({ infoTooltip, handleClose }) {
+  const failed = infoTooltip.isFailed;
+  const successText = infoTooltip.auth
+    ? infoTooltipConfig.success.regTitle
+    : infoTooltipConfig.success.title;
   return (
     <div className="info-tooltip fail">
       <img className="info-tooltip__image" src={failed ? infoTooltipConfig.fail.image : infoTooltipConfig.success.image} alt="process mark" />
-      <h2 className="info-tooltip__title">{failed ? infoTooltipConfig.fail.title : infoTooltipConfig.success.title}</h2>
+      <h2 className="info-tooltip__title">{failed ? infoTooltipConfig.fail.title : successText}</h2>
       <button
         onClick={handleClose}
         className="info-tooltip__button button-hover"

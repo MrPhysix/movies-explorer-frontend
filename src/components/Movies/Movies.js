@@ -41,16 +41,19 @@ function Movies({ savedMovies, setSavedMovies }) {
           setCheckboxIsActive(false);
         }
       })
+      .catch((err) => new Error(err))
       .finally(() => setIsLoading(false));
   };
 
   const getSortedMovies = (list) => {
-    getShortFilteredCards(list).then((res) => {
-      if (res && res.length > 0) {
-        setMovies(res);
-        setNotFound(false);
-      } else setNotFound(true);
-    });
+    getShortFilteredCards(list)
+      .then((res) => {
+        if (res && res.length > 0) {
+          setMovies(res);
+          setNotFound(false);
+        } else setNotFound(true);
+      })
+      .catch((err) => new Error(err));
   };
 
   const handleSubmit = useCallback(() => {
@@ -61,7 +64,8 @@ function Movies({ savedMovies, setSavedMovies }) {
         getSearchedMovies(search)
           .then((res) => {
             getSortedMovies(res);
-          });
+          })
+          .catch((err) => new Error(err));
       }
       localStorage.setItem('search', JSON.stringify(search));
       setIsSearched(true);

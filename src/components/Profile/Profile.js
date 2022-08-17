@@ -8,7 +8,7 @@ import { regEx } from '../../utils/consts';
 
 function ProfileInfoLine({
   name, labelText, errorText,
-  placeholderText, pattern, value,
+  pattern, value,
   onChange, minLength, maxLength,
 }) {
   return (
@@ -20,11 +20,11 @@ function ProfileInfoLine({
           id={name}
           className="info_line__input"
           value={value}
-          placeholder={placeholderText}
           pattern={pattern}
           onChange={onChange}
           minLength={minLength}
           maxLength={maxLength}
+          required
         />
       </div>
       <p className="info_line__error">{errorText}</p>
@@ -40,9 +40,10 @@ function Profile({ onLogOut, onSubmit }) {
   //
   const nameCapitalized = name && name[0].toUpperCase() + name.slice(1);
   const {
-    values, errors, isFormValid, handleChange, resetForm,
+    values, setValues, errors, isFormValid, handleChange,
   } = useFormValidator();
-  const isActive = !isFormValid || (name === values.name || email === values.email);
+  const isActive = !isFormValid;
+
   // states
   const [inputValue, setInputValue] = useState({ name, email });
   // handlers
@@ -53,8 +54,8 @@ function Profile({ onLogOut, onSubmit }) {
 
   // effects
   useEffect(() => {
-    resetForm();
-  }, []);
+    setValues({ name: currentUser.name, email: currentUser.email });
+  }, [currentUser]);
 
   useEffect(() => {
     setInputValue({ name, email });
@@ -73,7 +74,6 @@ function Profile({ onLogOut, onSubmit }) {
             name="name"
             labelText="Имя"
             errorText={errors.name}
-            placeholderText={nameCapitalized}
             pattern={regEx.name}
             value={values.name}
             onChange={(evt) => {
@@ -88,7 +88,6 @@ function Profile({ onLogOut, onSubmit }) {
             name="email"
             labelText="Email"
             errorText={errors.email}
-            placeholderText={email}
             pattern={regEx.email}
             value={values.email}
             onChange={(evt) => {

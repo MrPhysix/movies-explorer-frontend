@@ -27,16 +27,6 @@ class Api {
     return localStorage.getItem('jwt');
   }
 
-  // async _checkResult(res) {
-  //   if (res.ok) {
-  //     return res.json();
-  //   }
-  //   const err = await res.json().then((data) => data.message);
-  //   console.log(err);
-  //   console.log(res);
-  //   return Promise.reject(new Error(err));
-  // }
-
   _getHeaders() {
     return {
       ...this._headers,
@@ -55,7 +45,8 @@ class Api {
       }),
     })
       .then((res) => this._checkResult(res))
-      .then((res) => res);
+      .then((res) => res)
+      .catch((err) => new Error(err));
   }
 
   // movies
@@ -67,7 +58,8 @@ class Api {
         Authorization: `${localStorage.getItem('jwt')}`,
       },
     })
-      .then((res) => this._checkResult(res));
+      .then((res) => this._checkResult(res))
+      .catch((err) => new Error(err));
   }
 
   createSavedMovie(movie) {

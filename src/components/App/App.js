@@ -96,25 +96,11 @@ function App() {
       });
   };
 
-  // const handleSignIn = async (email, password) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const token = await Auth.signIn(email, password);
-  //     await localStorage.setItem('jwt', token);
-  //     await setSignInInfo({});
-  //     await navigate('/movies');
-  //     return token && handleLocalStorageAuth();
-  //   } catch (err) {
-  //     setInfoTooltip({ isOpen: true, isFailed: true });
-  //     return new Error(err);
-  //   }
-  // };
-
   const handleSignUp = (name, email, password) => {
     setIsLoading(true);
     Auth.signUp(name, email, password)
       .then(() => {
-        setInfoTooltip({ isOpen: true, isFailed: false });
+        setInfoTooltip({ isOpen: true, isFailed: false, auth: true });
         setSignInInfo({ email, password });
       })
       .catch((err) => {
@@ -132,11 +118,13 @@ function App() {
         setCurrentUser({});
         setSavedMovies([]);
       })
+      .catch((err) => new Error(err))
       .finally(() => {
         setIsLoading(false);
         navigate('/');
       });
   };
+
   // __user
   const handleUpdateUser = (name, email) => {
     setIsLoading(true);
@@ -144,12 +132,17 @@ function App() {
       .then((res) => {
         setCurrentUser((prev) => ({ ...prev, ...res }));
       })
-      .finally(() => {
+      .then(() => {
+        setInfoTooltip({ isOpen: true, isFailed: false });
         setIsLoading(false);
+      })
+      .catch((err) => {
+        setInfoTooltip({ isOpen: true, isFailed: true });
+        return new Error(err);
       });
   };
-    // __movies
 
+  // __movies
   const getSavedMovies = async () => {
     const movies = await MainApi.getSavedMovies();
     setSavedMovies(movies);
@@ -161,7 +154,7 @@ function App() {
   };
   //
   const handleCloseInfoTooltip = useCallback(async () => {
-    if (infoTooltip.isOpen && !infoTooltip.isFailed) {
+    if (infoTooltip.isOpen && !infoTooltip.isFailed && infoTooltip.auth) {
       await handleSignIn(signInInfo.email, signInInfo.password);
       handleCloseAppPopups();
     }
@@ -259,7 +252,7 @@ function App() {
           {!pageNotFound && !pageProfile && !pageLogin && !pageRegister && <Footer />}
           <ScrollUpButton menuScrolled />
           <Popup isOpen={infoTooltip.isOpen} handleClose={handleCloseInfoTooltip}>
-            <InfoTooltip failed={infoTooltip.isFailed} handleClose={handleCloseInfoTooltip} />
+            <InfoTooltip infoTooltip={infoTooltip} handleClose={handleCloseInfoTooltip} />
           </Popup>
         </>
       ) : <Preloader style={{ width: '100vw', height: '100vh' }} />}

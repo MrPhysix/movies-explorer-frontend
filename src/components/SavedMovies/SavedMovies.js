@@ -29,24 +29,29 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
   // handlers
   const getInitialMovies = (value) => {
     setIsLoading(true);
-    getSearchedMovies(value, savedMovies).then((list) => {
-      if (list.length > 0) {
-        setNotFound(false);
-        setOriginMovies(list);
-        setMovies(list);
-      } else {
-        setNotFound(true);
-      }
-    }).finally(() => setIsLoading(false));
+    getSearchedMovies(value, savedMovies)
+      .then((list) => {
+        if (list.length > 0) {
+          setNotFound(false);
+          setOriginMovies(list);
+          setMovies(list);
+        } else {
+          setNotFound(true);
+        }
+      })
+      .catch((err) => new Error(err))
+      .finally(() => setIsLoading(false));
   };
 
   const getSortedMovies = (list) => {
-    getShortFilteredCards(list).then((res) => {
-      if (res && res.length > 0) {
-        setMovies(res);
-        setNotFound(false);
-      } else setNotFound(true);
-    });
+    getShortFilteredCards(list)
+      .then((res) => {
+        if (res && res.length > 0) {
+          setMovies(res);
+          setNotFound(false);
+        } else setNotFound(true);
+      })
+      .catch((err) => new Error(err));
   };
 
   const handleSubmit = useCallback(() => {
@@ -58,7 +63,8 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
           .then((res) => {
             setOriginMovies(res);
             getSortedMovies(res);
-          });
+          })
+          .catch((err) => new Error(err));
       }
       setIsSearched(true);
     }

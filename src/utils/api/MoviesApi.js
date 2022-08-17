@@ -16,7 +16,8 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._url}`)
-      .then((res) => this._checkResult(res));
+      .then((res) => this._checkResult(res))
+      .catch((err) => new Error(err));
   }
 }
 

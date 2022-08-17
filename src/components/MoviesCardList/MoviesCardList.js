@@ -45,15 +45,14 @@ function MoviesCardList({
       </div>
     );
   }
-
   if (movies.length > 0) {
     return (
       <>
         <ul className="movies-cards-list">
           {
-          movies.slice(0, visibleCards).map((item, i) => (
+          movies.slice(0, visibleCards).map((item) => (
             <MoviesCard
-              key={i}
+              key={item.id}
               item={item}
               inSavedMovies={inSavedMovies}
               setSavedMovies={setSavedMovies}
