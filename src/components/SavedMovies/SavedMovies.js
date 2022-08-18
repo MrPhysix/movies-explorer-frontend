@@ -4,7 +4,6 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { getSearchedMovies, getShortFilteredCards } from '../../utils/movies';
 import useFormValidator from '../../hooks/useFormValidator';
-// import MainApi from '../../utils/api/MainApi';
 
 function SavedMovies({ savedMovies, setSavedMovies }) {
   // const
@@ -85,11 +84,11 @@ function SavedMovies({ savedMovies, setSavedMovies }) {
     if (!isSorted) {
       getSortedMovies(movies);
     } else {
-      setMovies(originMovies);
+      if (isSearched) setMovies(originMovies);
+      if (!isSearched) setMovies(savedMovies);
       setNotFound(false);
     }
   };
-
   // effects
   useEffect(() => {
     setLastSearch(search);

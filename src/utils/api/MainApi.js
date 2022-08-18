@@ -45,8 +45,8 @@ class Api {
       }),
     })
       .then((res) => this._checkResult(res))
-      .then((res) => res)
-      .catch((err) => new Error(err));
+      .then((res) => res);
+    // .catch((err) => new Error(err));
   }
 
   // movies
@@ -58,8 +58,8 @@ class Api {
         Authorization: `${localStorage.getItem('jwt')}`,
       },
     })
-      .then((res) => this._checkResult(res))
-      .catch((err) => new Error(err));
+      .then((res) => this._checkResult(res));
+    // .catch((err) => new Error(err));
   }
 
   createSavedMovie(movie) {
@@ -80,8 +80,8 @@ class Api {
         nameEN: movie.nameEN,
       }),
     })
-      .then((res) => this._checkResult(res))
-      .catch((err) => new Error(err));
+      .then((res) => this._checkResult(res));
+    // .catch((err) => new Error(err));
   }
 
   removeSavedMovie(movieId) {
@@ -89,8 +89,8 @@ class Api {
       method: 'DELETE',
       headers: this._getHeaders(),
     })
-      .then((res) => this._checkResult(res))
-      .catch((err) => new Error(err));
+      .then((res) => this._checkResult(res));
+    // .catch((err) => new Error(err));
   }
 }
 

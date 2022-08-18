@@ -37,8 +37,8 @@ class Api {
       headers: this._getHeaders(),
       body: JSON.stringify({ name, email, password }),
     })
-      .then((res) => this._checkResult(res))
-      .catch((err) => new Error(err));
+      .then((res) => this._checkResult(res));
+    // .catch((err) => new Error(err));
   }
 
   signIn(email, password) {
@@ -48,8 +48,8 @@ class Api {
       body: JSON.stringify({ email, password }),
     })
       .then((res) => this._checkResult(res))
-      .then((data) => data.token)
-      .catch((err) => new Error(err));
+      .then((data) => data.token);
+    // .catch((err) => new Error(err));
   }
 
   checkToken(token) {
@@ -61,8 +61,8 @@ class Api {
       },
     })
       .then((res) => this._checkResult(res))
-      .then((res) => res)
-      .catch((err) => new Error(err));
+      .then((res) => res);
+    // .catch((err) => new Error(err));
   }
 
   signOut() {
@@ -70,8 +70,8 @@ class Api {
       method: 'POST',
       headers: this._getHeaders(),
     })
-      .then((res) => this._checkResult(res))
-      .catch((err) => new Error(err));
+      .then((res) => this._checkResult(res));
+    // .catch((err) => new Error(err));
   }
 }
 const Auth = new Api(authConfig);

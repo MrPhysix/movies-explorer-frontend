@@ -41,7 +41,6 @@ function MoviesCard({
         setSavedMovies(newArr);
       }
     } else {
-      console.log(item);
       await MainApi.removeSavedMovie(item._id);
       const newArr = await MainApi.getSavedMovies();
 
