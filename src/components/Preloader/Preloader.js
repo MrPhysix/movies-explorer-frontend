@@ -1,9 +1,9 @@
 import React from 'react';
 import './Preloader.css';
 
-function Preloader() {
+function Preloader({ style }) {
   return (
-    <div className="preloader">
+    <div className="preloader" style={style}>
       <div className="preloader__container">
         <span className="preloader__round" />
       </div>

@@ -36,7 +36,6 @@
 }
 
 .search__input {
-    text-transform: capitalize;
     margin-left: 10px;
     padding-right: 25px;
     width: 100%;
@@ -50,12 +49,13 @@
     color: #fff;
 }
 
-.search__input::placeholder {
-    text-transform: capitalize;
-    color: #8B8B8B;
+.search__input.error .search__input::placeholder {
+    color: red;
     font-family: inherit;
     transition: opacity .35s ease-in-out;
 }
+
+.search__input::placeholder
 
 .search__input:focus::-webkit-input-placeholder{
     opacity: .3;
@@ -143,5 +143,12 @@
     }
     .search__input {
         font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .search-form__form::after {
+        font-size: 14px;
+        bottom: -30px;
     }
 }

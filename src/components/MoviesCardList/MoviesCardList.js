@@ -1,34 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Preloader from '../Preloader/Preloader';
+import useResolution from '../../hooks/useResolution';
 
-import cardListHandle from '../../utils/cardListHandle';
+function MoviesCardList({
+  inSavedMovies, movies, savedMovies,
+  setSavedMovies, notFound, isLoading,
+}) {
+  // hooks
+  const [
+    isMobile,
+    isTablet,
+    isDesktop] = [
+    useResolution('0', '480'),
+    useResolution('561', '1024'),
+    useResolution('1025'),
+  ];
+  // states
+  const [visibleCards, setVisibleCards] = useState(0);
 
-function MoviesCardList({ ARR_LENGTH, inSavedMovies }) {
-  const [movies, setMovies] = useState(cardListHandle(ARR_LENGTH));
+  // handlers
+  const handleShowMore = () => {
+    setVisibleCards((prev) => {
+      if (prev === movies.length) return prev;
+      return prev + 3;
+    });
+  };
 
-  function showMoreCards() {
-    const newArr = cardListHandle(ARR_LENGTH);
-    setMovies([...movies, ...newArr]);
-  }
-
+  // effects
   useEffect(() => {
-    setMovies(cardListHandle(ARR_LENGTH));
-  }, [ARR_LENGTH]);
+    if (isMobile === true) setVisibleCards(5);
+    if (isTablet === true) setVisibleCards(8);
+    if (isDesktop === true) setVisibleCards(12);
+  }, [isMobile, isTablet, isDesktop]);
 
-  return (
-    <>
-      <ul className="movies-cards-list">
+  if (isLoading) {
+    return (<Preloader style={{ minHeight: '50vh' }} />);
+  }
+  if (notFound) {
+    return (
+      <div className="movies-cards-list_empty">
+        <div className="movies-cards-list_empty__not-found">Ничего не найдено</div>
+      </div>
+    );
+  }
+  if (movies.length > 0) {
+    return (
+      <>
+        <ul className="movies-cards-list">
+          {
+          movies.slice(0, visibleCards).map((item) => (
+            <MoviesCard
+              key={item.id}
+              item={item}
+              inSavedMovies={inSavedMovies}
+              setSavedMovies={setSavedMovies}
+              savedMovies={savedMovies}
+              movies={movies}
+            />
+          ))
+      }
+        </ul>
         {
-        movies.map((item, i) => <MoviesCard key={i} item={item} inSavedMovies={inSavedMovies} />)
-      }
-      </ul>
-      {
-        (ARR_LENGTH >= 12)
-        && <button className="show-more-button button-hover" type="button" onClick={() => showMoreCards()}>Еще</button>
-      }
-    </>
-  );
+        visibleCards < movies.length && <button className="show-more-button button-hover" type="button" onClick={handleShowMore}>Еще</button>
+}
+      </>
+    );
+  }
+  return (<div className="movies-cards-list_empty" />);
 }
 
 export default MoviesCardList;
+
+// {
+//   (ARR_LENGTH >= 12)
+//   && <button className="show-more-button button-hover" type="button">Еще</button>
+// }

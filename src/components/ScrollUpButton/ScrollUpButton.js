@@ -5,7 +5,7 @@ import Image from '../../images/scroll-up.svg';
 import useScrollPosition from '../../hooks/useScrollPosition';
 
 function ScrollUpButton() {
-  const scrolled = Boolean(useScrollPosition() > 100);
+  const scrolled = Boolean(useScrollPosition() > window.innerHeight);
   const style = `scroll-up_button button-hover ${scrolled && ' show'}`;
 
   return (

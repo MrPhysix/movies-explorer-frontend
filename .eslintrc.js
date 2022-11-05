@@ -20,8 +20,9 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/prop-types': ['off'],
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-underscore-dangle': ['off'],
     'react/no-array-index-key': ['off'],
     'react/jsx-boolean-value': ['error', 'never', { always: ['personal'] }],
+    'class-methods-use-this': ['off'],
   },
 };
