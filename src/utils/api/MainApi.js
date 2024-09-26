@@ -1,5 +1,5 @@
 const apiConfig = {
-  baseUrl: 'https://api.mr-movies.nomoredomains.xyz',
+  baseUrl: 'https://movies-explorer-api-production-ec1b.up.railway.app',
   moviesUrl: 'https://api.nomoreparties.co',
   headers: {
     'Content-Type': 'application/json',
@@ -7,10 +7,7 @@ const apiConfig = {
 };
 
 class Api {
-  constructor({
-    baseUrl, moviesUrl,
-    headers,
-  }) {
+  constructor({ baseUrl, moviesUrl, headers }) {
     this._baseUrl = baseUrl;
     this._moviesUrl = moviesUrl;
     this._headers = headers;
@@ -18,9 +15,14 @@ class Api {
 
   _checkResult = (res) => {
     if (res.ok) return res.json();
-
-    return res.json()
-      .then((err) => Promise.reject(new Error(`${err.message} [${res.status}:${res.statusText}]`)));
+    /* eslint-disable */
+    return res
+      .json()
+      .then((err) =>
+        Promise.reject(
+          new Error(`${err.message} [${res.status}:${res.statusText}]`)
+        )
+      );
   };
 
   _getToken() {
@@ -57,8 +59,7 @@ class Api {
         ...this._headers,
         Authorization: `${localStorage.getItem('jwt')}`,
       },
-    })
-      .then((res) => this._checkResult(res));
+    }).then((res) => this._checkResult(res));
     // .catch((err) => new Error(err));
   }
 
@@ -79,8 +80,7 @@ class Api {
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
       }),
-    })
-      .then((res) => this._checkResult(res));
+    }).then((res) => this._checkResult(res));
     // .catch((err) => new Error(err));
   }
 
@@ -88,8 +88,7 @@ class Api {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
-    })
-      .then((res) => this._checkResult(res));
+    }).then((res) => this._checkResult(res));
     // .catch((err) => new Error(err));
   }
 }

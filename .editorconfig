@@ -31,3 +31,12 @@ trim_trailing_whitespace = false
 # Denotes whether file should end with a newline
 # Possible values - true, false
 insert_final_newline = true
+
+[*.js]
+single_quote = true
+
+[*.ts]
+single_quote = true
+
+[*.json]
+single_quote = false

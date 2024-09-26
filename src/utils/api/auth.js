@@ -1,5 +1,5 @@
 const authConfig = {
-  baseUrl: 'https://api.mr-movies.nomoredomains.xyz',
+  baseUrl: 'https://movies-explorer-api-production-ec1b.up.railway.app',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -34,17 +34,20 @@ class Api {
   signUp(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
-      headers: this._getHeaders(),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ name, email, password }),
-    })
-      .then((res) => this._checkResult(res));
+    }).then((res) => this._checkResult(res));
     // .catch((err) => new Error(err));
   }
 
   signIn(email, password) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      headers: this._getHeaders(),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password }),
     })
       .then((res) => this._checkResult(res))
@@ -69,8 +72,7 @@ class Api {
     return fetch(`${this._baseUrl}/logout`, {
       method: 'POST',
       headers: this._getHeaders(),
-    })
-      .then((res) => this._checkResult(res));
+    }).then((res) => this._checkResult(res));
     // .catch((err) => new Error(err));
   }
 }
