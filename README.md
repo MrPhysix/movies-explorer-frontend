@@ -12,7 +12,7 @@
 
 
 ## Links 🔗
-#### Главная [MrMovies](https://mr-movies.nomoredomai.nomoreparties.sbs/ "Movies")
+#### Главная [MrMovies](https://mr-movies-explorer.vercel.app/ "Movies")
 ___
 [API](https://github.com/MrPhysix/movies-explorer-api)
 
